@@ -39,8 +39,8 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     res = "你在公三小？"
-    if msg in "道路交通管理處罰條例" :
-        res = "自己查啦！幹"
+    if msg in ["道路交通管理處罰條例","道交條例"] :
+        res = "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012"
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text= res))
