@@ -43,7 +43,7 @@ def handle_message(event):
         res = "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012"
     if msg in "波多野結衣" :
         res = ImageSendMessage(
-            original_content_url = "https://cdn.hk01.com/di/media/images/3895328/org/3ea2d853dbd88a56c3697de9cd93a489.jpg/LVKqUsm0o90uaFYsRQv-2OETMrfMJFxktntG37Z7Rt8?v=w640"
+            original_content_url = "https://cdn.hk01.com/di/media/images/3895328/org/3ea2d853dbd88a56c3697de9cd93a489.jpg/LVKqUsm0o90uaFYsRQv-2OETMrfMJFxktntG37Z7Rt8?v=w640",
             preview_image_url = "https://cdn.hk01.com/di/media/images/3895328/org/3ea2d853dbd88a56c3697de9cd93a489.jpg/LVKqUsm0o90uaFYsRQv-2OETMrfMJFxktntG37Z7Rt8?v=w640"
             )
     line_bot_api.reply_message(
