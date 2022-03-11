@@ -53,24 +53,34 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    title='this is menu1',
-                    text='description1',
+                    title='交通類',
+                    text='點選下面按鈕',
                     actions=[
                         PostbackAction(
-                            label='postback1',
-                            display_text='postback text1',
-                            data='action=buy&itemid=1'
+                            label='法律',
+                            display_text='法律',
+                        ),
+                        PostbackAction(
+                            label='常用表格',
+                            display_text='常用表格',
+                        ),
+                        PostbackAction(
+                            label='舉發小幫手',
+                            display_text='舉發小幫手',
                         )
                     ]
                 ),
                 CarouselColumn(
-                    title='this is menu2',
-                    text='description2',
+                    title='刑事類',
+                    text='點選下面按鈕',
                     actions=[
                         PostbackAction(
-                            label='postback2',
-                            display_text='postback text2',
-                            data='action=buy&itemid=2'
+                            label='法律',
+                            display_text='法律',
+                        ),
+                        PostbackAction(
+                            label='常用表格',
+                            display_text='常用表格',
                         )
                     ]
                 )
