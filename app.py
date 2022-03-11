@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage
 )
 
 app = Flask(__name__)
@@ -38,7 +38,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    if event.message.text in ["新源結衣","新垣結衣"] :
+    if event.message.text in ["新源結衣","新垣結衣","あらがきゆい","Aragaki Yui"] :
         image_message = ImageSendMessage(
         original_content_url='https://static.rti.org.tw/assets/thumbnails/2021/04/21/10662432411cdc37527532b8196daf04.jpg',
         preview_image_url='https://static.rti.org.tw/assets/thumbnails/2021/04/21/10662432411cdc37527532b8196daf04.jpg'
@@ -48,8 +48,29 @@ def handle_message(event):
         text_message = TextSendMessage(text='嗨~~~')
         line_bot_api.reply_message(event.reply_token,text_message)
     else :
-        text_message = TextSendMessage(text='Plz enter correct text.')
-        line_bot_api.reply_message(event.reply_token,text_message)
+        buttons_template = TemplateSendMessage(
+        alt_text='Buttons Template',
+        template=ButtonsTemplate(
+            thumbnail_image_url='https://example.com/image.jpg',
+            title='Menu',
+            text='Please select',
+            actions=[
+                PostbackAction(
+                    label='postback',
+                    display_text='postback text',
+                    data='action=buy&itemid=1'
+                ),
+                MessageAction(
+                    label='message',
+                    text='message text'
+                ),
+                URIAction(
+                    label='uri',
+                    uri='http://example.com/'
+                )
+            ]
+        )
+    )
 
 
 
