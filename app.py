@@ -41,7 +41,7 @@ def handle_message(event):
     res = "你在公三小？"
     if msg in ["道路交通管理處罰條例","道交條例"] :
         res = "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012"
-    if msg in "波多野結衣" :
+    elif msg in "波多野結衣" :
         res = ImageSendMessage(
             original_content_url = "https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg",
             preview_image_url = "https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg")
