@@ -38,25 +38,15 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    res = "你在公三小？"
     if event.message.text == "girl" :
         image_message = ImageSendMessage(
-        original_content_url='https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg',
-        preview_image_url='https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg'
+        original_content_url='https://static.rti.org.tw/assets/thumbnails/2021/04/21/10662432411cdc37527532b8196daf04.jpg',
+        preview_image_url='https://static.rti.org.tw/assets/thumbnails/2021/04/21/10662432411cdc37527532b8196daf04.jpg'
         )
         line_bot_api.reply_message(event.reply_token,image_message)
     elif event.message.text == "hi" :
-        text_message = TextSendMessage(text='hi, fuck you!')
+        text_message = TextSendMessage(text='hi')
         line_bot_api.reply_message(event.reply_token,text_message)
-
-        
-        # line_bot_api.reply_message(
-        # event.reply_token,
-        # TextSendMessage(text= "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012"))
-    # elif event.message.text in "波多野結衣" :
-    #     line_bot_api.reply_message(
-    #     event.reply_token,
-    #     ImageSendMessage(original_content_url="https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg",preview_image_url="https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg"))
 
 
 
