@@ -39,11 +39,11 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     res = "你在公三小？"
-    if msg in ["道路交通管理處罰條例","道交條例"] :
+    if event.message.text in ["道路交通管理處罰條例","道交條例"] :
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text= "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012"))
-    elif msg in "波多野結衣" :
+    elif event.message.text in "波多野結衣" :
         line_bot_api.reply_message(
         event.reply_token,
         ImageSendMessage(original_content_url="https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg",preview_image_url="https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg"))
