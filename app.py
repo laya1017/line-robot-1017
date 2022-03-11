@@ -53,25 +53,34 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    title='交通類',
-                    text='點擊下面按鈕',
+                    title='this is menu1',
+                    text='description1',
                     actions=[
                         PostbackAction(
-                            label='法律',
-                            display_text='法律',
-                            data='法律'
+                            label='postback1',
+                            display_text='postback text1',
+                            data='action=buy&itemid=1'
                         ),
-                        PostbackAction(
-                            label='常用表格',
-                            display_text='常用表格',
-                            data='常用表格'
+                        MessageAction(
+                            label='message1',
+                            text='message text1'
+                        ),
+                        URIAction(
+                            label='uri1',
+                            uri='http://example.com/1'
                         )
                     ]
                 ),
                 CarouselColumn(
+                    thumbnail_image_url='https://example.com/item2.jpg',
                     title='this is menu2',
                     text='description2',
                     actions=[
+                        PostbackAction(
+                            label='postback2',
+                            display_text='postback text2',
+                            data='action=buy&itemid=2'
+                        ),
                         PostbackAction(
                             label='postback2',
                             display_text='postback text2',
@@ -81,7 +90,7 @@ def handle_message(event):
                 )
             ]
         )
-    )
+)
         line_bot_api.reply_message(event.reply_token,carousel_template_message)
 
 
