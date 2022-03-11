@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,URIAction
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,CarouselTemplate,CarouselColumn
 )
 
 app = Flask(__name__)
@@ -48,41 +48,35 @@ def handle_message(event):
         text_message = TextSendMessage(text='嗨~~~')
         line_bot_api.reply_message(event.reply_token,text_message)
     else :
-        buttons_template = TemplateSendMessage(
-        alt_text='Buttons Template',
-        template=ButtonsTemplate(
-            
-            title="案件類別",
-            text='想要查詢的項目點選下面',
-            actions=[
-                PostbackTemplateAction(
-                    label='刑事類',
-                    text='刑事類',
-                    data = '刑事類'
+        carousel_template_message = TemplateSendMessage(
+        alt_text='Carousel template',
+        template=CarouselTemplate(
+            columns=[
+                CarouselColumn(
+                    title='this is menu1',
+                    text='description1',
+                    actions=[
+                        PostbackAction(
+                            label='postback1',
+                            display_text='postback text1',
+                            data='action=buy&itemid=1'
+                        )
+                    ]
                 ),
-                PostbackTemplateAction(
-                    label='交通類',
-                    text='交通類',
-                    data = '交通類'
-                ),
-                PostbackTemplateAction(
-                    label='行政類',
-                    text='行政類',
-                    data = '行政類'
-                ),
-                PostbackTemplateAction(
-                    label='民防類',
-                    text='民防類',
-                    data = '民防類'
-                ),
-                PostbackTemplateAction(
-                    label='戶口類',
-                    text='戶口類',
-                    data = '戶口類'
+                CarouselColumn(
+                    title='this is menu2',
+                    text='description2',
+                    actions=[
+                        PostbackAction(
+                            label='postback2',
+                            display_text='postback text2',
+                            data='action=buy&itemid=2'
+                        )
+                    ]
                 )
             ]
         )
-        )
+    )
         line_bot_api.reply_message(event.reply_token,buttons_template)
 
 
