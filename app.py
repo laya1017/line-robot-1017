@@ -44,8 +44,8 @@ def handle_message(event):
         preview_image_url='https://static.rti.org.tw/assets/thumbnails/2021/04/21/10662432411cdc37527532b8196daf04.jpg'
         )
         line_bot_api.reply_message(event.reply_token,image_message)
-    elif event.message.text == "hi" :
-        text_message = TextSendMessage(text='hi')
+    elif event.message.text in ["hi","Hi","HI","hI"] :
+        text_message = TextSendMessage(text='嗨~~~')
         line_bot_api.reply_message(event.reply_token,text_message)
     else :
         text_message = TextSendMessage(text='Plz enter correct text.')
