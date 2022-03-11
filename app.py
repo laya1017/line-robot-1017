@@ -39,12 +39,17 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     res = "你在公三小？"
-    if event.message.text in ["波多野結衣"] :
+    if event.message.text == "波多野結衣" :
         image_message = ImageSendMessage(
         original_content_url='https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg',
         preview_image_url='https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg'
         )
         line_bot_api.reply_message(event.reply_token,image_message)
+    elif event.message.text == "hi" :
+        text_message = TextSendMessage(text='hi, fuck you!')
+        line_bot_api.reply_message(event.reply_token,text_message)
+
+        
         # line_bot_api.reply_message(
         # event.reply_token,
         # TextSendMessage(text= "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012"))
