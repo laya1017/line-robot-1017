@@ -38,7 +38,9 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    res = "我只會回這句。"
+    res = "你在公三小？"
+    if msg in "道路交通管理處罰條例" :
+        res = "自己查啦！幹"
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text= res))
