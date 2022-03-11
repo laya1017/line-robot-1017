@@ -51,22 +51,17 @@ def handle_message(event):
         buttons_template = TemplateSendMessage(
         alt_text='Buttons Template',
         template=ButtonsTemplate(
-            thumbnail_image_url='https://example.com/image.jpg',
-            title='Menu',
-            text='Please select',
+            
+            title="案件類別",
+            text='想要查詢的項目點選下面',
             actions=[
-                PostbackAction(
-                    label='postback',
-                    display_text='postback text',
-                    data='action=buy&itemid=1'
+                MessageAction(
+                    label='刑事類',
+                    text='刑事類'
                 ),
                 MessageAction(
-                    label='message',
-                    text='message text'
-                ),
-                URIAction(
-                    label='uri',
-                    uri='http://example.com/'
+                    label='交通類',
+                    text='交通類'
                 )
             ]
         )
