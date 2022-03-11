@@ -46,9 +46,7 @@ def handle_message(event):
     elif msg in "波多野結衣" :
         line_bot_api.reply_message(
         event.reply_token,
-        ImageSendMessage(
-            original_content_url='https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg',
-            preview_image_url='https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg'))
+        ImageSendMessage(original_content_url="https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg",preview_image_url="https://img.ruten.com.tw/s2/e/2e/00/22019535630848_115.jpg"))
 
 
 
