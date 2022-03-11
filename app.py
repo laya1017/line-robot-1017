@@ -47,6 +47,8 @@ def handle_message(event):
     elif event.message.text == "hi" :
         text_message = TextSendMessage(text='hi')
         line_bot_api.reply_message(event.reply_token,text_message)
+    else :
+        text_message = TextSendMessage(text='Plz enter correct text.')
 
 
 
