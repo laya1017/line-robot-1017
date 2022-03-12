@@ -53,30 +53,34 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    title='this is menu1',
+                    title='汽機車違規',
                     text='description1',
                     actions=[
                         PostbackAction(
-                            label='postback1',
-                            display_text='postback text1',
-                            data='action=buy&itemid=1'
+                            label='牌照、駕照違規',
+                            display_text='牌照、駕照違規',
+                            data='牌照、駕照違規'
+                        ),
+                        PostbackAction(
+                            label='駕駛行為違規',
+                            display_text='駕駛行為違規',
+                            data='駕駛行為違規'
                         )
                     ]
                 ),
                 CarouselColumn(
-                    thumbnail_image_url='https://example.com/item2.jpg',
-                    title='this is menu2',
+                    title='慢車違規',
                     text='description2',
                     actions=[
                         PostbackAction(
-                            label='postback2',
-                            display_text='postback text2',
-                            data='action=buy&itemid=2'
+                            label='一般性違規',
+                            display_text='一般性違規',
+                            data='一般性違規'
                         ),
                         PostbackAction(
-                            label='postback2',
-                            display_text='postback text2',
-                            data='action=buy&itemid=2'
+                            label='駕駛行為違規',
+                            display_text='駕駛行為違規',
+                            data='駕駛行為違規'
                         )
                     ]
                 )
