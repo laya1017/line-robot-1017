@@ -47,47 +47,11 @@ def handle_message(event):
     elif event.message.text in ["hi","Hi","HI","hI"] :
         text_message = TextSendMessage(text='嗨~~~')
         line_bot_api.reply_message(event.reply_token,text_message)
-    else :
-        carousel_template_message = TemplateSendMessage(
-        alt_text='Carousel template',
-        template=CarouselTemplate(
-            columns=[
-                CarouselColumn(
-                    title='汽機車違規',
-                    text='description1',
-                    actions=[
-                        PostbackAction(
-                            label='牌照、駕照違規',
-                            display_text='牌照、駕照違規',
-                            data='牌照、駕照違規'
-                        ),
-                        PostbackAction(
-                            label='駕駛行為違規',
-                            display_text='駕駛行為違規',
-                            data='駕駛行為違規'
-                        )
-                    ]
-                ),
-                CarouselColumn(
-                    title='慢車違規',
-                    text='description2',
-                    actions=[
-                        PostbackAction(
-                            label='一般性違規',
-                            display_text='一般性違規',
-                            data='一般性違規'
-                        ),
-                        PostbackAction(
-                            label='駕駛行為違規',
-                            display_text='駕駛行為違規',
-                            data='駕駛行為違規'
-                        )
-                    ]
-                )
-            ]
-        )
-)
-        line_bot_api.reply_message(event.reply_token,carousel_template_message)
+    elif event.message.text in ["查法條"] :
+        text_message = TextSendMessage(text="您要以何種方式查詢？")
+        if event.message.text == "條號":
+            text_message = TextSendMessage(text='測試中')
+        line_bot_api.reply_message(event.reply_token,text_message)
 
 
 
