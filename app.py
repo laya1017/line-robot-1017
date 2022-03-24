@@ -50,7 +50,7 @@ def handle_message(event):
     elif event.message.text in ["查法條"] :
         text_message = TextSendMessage(text="您要以何種方式查詢？")
         line_bot_api.reply_message(event.reply_token,text_message)
-        if event.message.text == "條號":
+        if event.message.text in ["條號"]:
             text_message = TextSendMessage(text='測試中')
             line_bot_api.reply_message(event.reply_token,text_message)
 
