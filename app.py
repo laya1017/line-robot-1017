@@ -9,7 +9,9 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,CarouselTemplate,CarouselColumn
 )
-
+import pandas as pd
+df = pd.read_csv("data.csv")
+df.set_index("Nos",inplace = True)
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
@@ -34,6 +36,17 @@ def callback():
 
     return 'OK'
 
+def Content_finder(words):
+    temp = df
+    keys = words.split(" ")
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    result = []
+    for i in range(0,len(temp)):
+        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+    return "".join(result).strip("\n")
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -47,12 +60,13 @@ def handle_message(event):
     elif event.message.text in ["hi","Hi","HI","hI"] :
         text_message = TextSendMessage(text='嗨~~~')
         line_bot_api.reply_message(event.reply_token,text_message)
-    elif event.message.text in ["查法條"] :
-        text_message = TextSendMessage(text="您要以何種方式查詢？")
+    elif "@" in event.message.text :
+        result = Content_finder((event.message.text).replace("@",""))
+        # print(laws.Content_finder(msg))
+        # print(msg)
+        text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         line_bot_api.reply_message(event.reply_token,text_message)
-        if event.message.text in ["條號"]:
-            text_message = TextSendMessage(text='測試中')
-            line_bot_api.reply_message(event.reply_token,text_message)
+        
 
 
 
