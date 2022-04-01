@@ -124,6 +124,27 @@ def Other_QnA():
         )
     return QA
 #all carousel templates
+
+#all buttom templates
+def searchTutorial():
+    st = TemplateSendMessage(alt_text='如何查詢法條？',
+    template=ButtonsTemplate(
+        title='如何查詢法條？',
+        text='目前有：依"條號"查詢以及"關鍵字"查詢。',
+        actions=[
+            MessageAction(
+                label='依條號查詢教學',
+                text='searchByArticles'
+                ),
+            MessageAction(
+                label='依關鍵字查詢教學',
+                text='searchByKeywors'
+                )
+        ]
+    )
+    )
+    return st
+#all buttom templates
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
@@ -162,9 +183,17 @@ def handle_message(event):
     elif event.message.text in ["hi","Hi","HI","hI"] :
         text_message = TextSendMessage(text='嗨~~~')
         line_bot_api.reply_message(event.reply_token,text_message)
+    # elif event.message.text == "[[怎麼查詢法條]]" :
+    #     text_message = TextSendMessage(text="第一種-以關鍵字搜尋：\n按左下角類似鍵盤的按鈕，然後在對話發送欄區打@記號，然後在@後方打上關鍵字，例如：@闖紅燈。\n也可使用多條件查詢，例如：@執照 未領(中間用空白區隔)。\n第二種-以條號搜尋：\n先打$記號，然後接續打上阿拉伯數字條號，格式為$條,項,款。例如：$48 即可得到48條所有內容；輸入$48,1，即可得到48條1項所有條款；輸入$48,1,2，即可得到48條1項2款(有的法條只有條及款，例如49條2款，應輸入$49,,2即可得到該內容。")
+    #     line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text == "[[怎麼查詢法條]]" :
-        text_message = TextSendMessage(text="第一種-以關鍵字搜尋：\n按左下角類似鍵盤的按鈕，然後在對話發送欄區打@記號，然後在@後方打上關鍵字，例如：@闖紅燈。\n也可使用多條件查詢，例如：@執照 未領(中間用空白區隔)。\n第二種-以條號搜尋：\n先打$記號，然後接續打上阿拉伯數字條號，格式為$條,項,款。例如：$48 即可得到48條所有內容；輸入$48,1，即可得到48條1項所有條款；輸入$48,1,2，即可得到48條1項2款(有的法條只有條及款，例如49條2款，應輸入$49,,2即可得到該內容。")
-        line_bot_api.reply_message(event.reply_token,text_message)
+        line_bot_api.reply_message(event.searchTutorial())
+    elif event.message.text == "searchByArticles" :
+        text_message = TextSendMessage(text="以條號搜尋：\n先打$記號，然後接續打上阿拉伯數字條號，格式為$條,項,款。例如：$48 即可得到48條所有內容；輸入$48,1，即可得到48條1項所有條款；輸入$48,1,2，即可得到48條1項2款(有的法條只有條及款，例如49條2款，應輸入$49,,2即可得到該內容。")
+        line_bot_api.reply_message(event.text_message)
+    elif event.message.text == "searchByKeywors" :
+        text_message = TextSendMessage(text="以關鍵字搜尋：\n按左下角類似鍵盤的按鈕，然後在對話發送欄區打@記號，然後在@後方打上關鍵字，例如：@闖紅燈。\n也可使用多條件查詢，例如：@執照 未領(中間用空白區隔)。")
+        line_bot_api.reply_message(event.text_message)
     elif "@" in event.message.text : # Use Content_finder function to find laws
         result = Content_finder((event.message.text).replace("@",""))
         text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
