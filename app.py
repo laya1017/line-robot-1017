@@ -22,7 +22,7 @@ def getText(_list):
     result_text = []
     for i in range(0,len(result_df)):
         result_text.append(result_df.index[i] + "：\n" + result_df["Contents"][i] + "\n處罰：" + result_df["Punishment"][i] + "\n註記：\n" + result_df["Remark"][i].strip("\n") + "\n")
-    return "".join(result_text)
+    return "".join(result_text).strip("\n")
 def listByArticle(A = ""):
     df = pd.read_csv("data.csv")
     df.set_index("Nos",inplace = True)
