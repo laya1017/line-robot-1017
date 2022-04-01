@@ -84,8 +84,7 @@ def Content_finder(words):
 
 
 #all carousel templates
-def Other_QnA(): 
-    TemplateSendMessage(
+Other_QnA = TemplateSendMessage(
         alt_text = 'Carousel template',
         template = CarouselTemplate(
             columns=[
@@ -206,7 +205,7 @@ def handle_message(event):
         text_message = TextSendMessage(text="Sorry 還沒開放喔!")
         line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text == "[[交通常見問題]]" : 
-        line_bot_api.reply_message(event.reply_token,Other_QnA())
+        line_bot_api.reply_message(event.reply_token,Other_QnA)
     elif event.message.text == "#處罰機關如何判斷？" :
         text_message = TextSendMessage(text="依據違反道路交通管理事件統一裁罰基準及處理細則第25條規定：\n舉發汽車違反道路交通管理事件，以汽車所有人為處罰對象者，移送其車籍地處罰機關處理；以駕駛人或乘客為處罰對象者，移送其駕籍地處罰機關處理；駕駛人或乘客未領有駕駛執照者，移送其戶籍地處罰機關處理。但有下列情形之一者，移送行為地處罰機關處理：\n一、汽車肇事致人傷亡。\n二、抗拒稽查致傷害。\n三、汽車駕駛人或乘客未領有駕駛執照且無法查明其戶籍所在地。\n四、汽車買賣業或汽車修理業違反本條例第五十七條規定。\n五、汽車駕駛人違反本條例第三十五條規定。\n計程車駕駛人有本條例第三十六條或第三十七條之情形，應受吊扣執業登記證或廢止執業登記處分者，移送其辦理執業登記之警察機關處理。\n以大眾捷運系統營運機構為被通知人舉發違反道路交通管理事件者，移送其營運機構監督機關所在地處罰機關處理。")
         line_bot_api.reply_message(event.reply_token,text_message)
