@@ -168,40 +168,40 @@ def handle_message(event):
         result = Content_finder((event.message.text).replace("@",""))
         text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         line_bot_api.reply_message(event.reply_token,text_message)
-    elif "$" in event.message.text : # Use number function to find laws
-        words = (event.message.text).replace($)
-        keys = words.split(",")
-        a = keys[0]
-        try:
-            p = keys[1]
-        except IndexError:
-            p = ""
-        try:
-            s = keys[2]
-        except IndexError:
-            s = "" 
-        A = listByArticle(a)
-        P = listByPara(p)
-        S = listBySub(s)
-        result = list(set(A) & set(P) & set(S))
-        if result == [] :
-            if set(A) & set(P) != set(): 
-                result = set(A) & set(P)
-                if result & set(S) != set():
-                    result = list(result & set(S))
-                else:
-                    result = list(set(A) & set(P))
-            elif set(A) & set(P) == set():
-                result = set(A)
-                if result & set(S) != set():
-                    result = list(result & set(S))
-                else:
-                    result = list(set(A))
-            else:
-                result = list(set(A))
-        result.sort(key = sort.index)
-        text_message = TextSendMessage(text=getText(result))
-        line_bot_api.reply_message(event.reply_token,text_message)
+    # elif "$" in event.message.text : # Use number function to find laws
+    #     words = (event.message.text).replace($)
+    #     keys = words.split(",")
+    #     a = keys[0]
+    #     try:
+    #         p = keys[1]
+    #     except IndexError:
+    #         p = ""
+    #     try:
+    #         s = keys[2]
+    #     except IndexError:
+    #         s = "" 
+    #     A = listByArticle(a)
+    #     P = listByPara(p)
+    #     S = listBySub(s)
+    #     result = list(set(A) & set(P) & set(S))
+    #     if result == [] :
+    #         if set(A) & set(P) != set(): 
+    #             result = set(A) & set(P)
+    #             if result & set(S) != set():
+    #                 result = list(result & set(S))
+    #             else:
+    #                 result = list(set(A) & set(P))
+    #         elif set(A) & set(P) == set():
+    #             result = set(A)
+    #             if result & set(S) != set():
+    #                 result = list(result & set(S))
+    #             else:
+    #                 result = list(set(A))
+    #         else:
+    #             result = list(set(A))
+    #     result.sort(key = sort.index)
+    #     text_message = TextSendMessage(text=getText(result))
+    #     line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text == "[[酒(毒)駕專區]]" :
         text_message = TextSendMessage(text="Sorry 還沒開放喔!")
         line_bot_api.reply_message(event.reply_token,text_message)
