@@ -167,7 +167,7 @@ def handle_message(event):
         result = Content_finder((event.message.text).replace("@",""))
         text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         line_bot_api.reply_message(event.reply_token,text_message)
-    elif "$" in event.message.text : 123# Use number function to find laws
+    elif "$" in event.message.text : # Use number function to find laws
         words = (event.message.text).replace("$","")
         keys = words.split(",")
         a = keys[0]
