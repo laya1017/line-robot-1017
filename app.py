@@ -131,5 +131,8 @@ def handle_message(event):
     elif event.message.text == "#哪些違規不得郵繳？" :
         text_message = TextSendMessage(text="依交通部108.07.16.交路字第1080021339號函：\n第十二條\n第十三條\n第十五條第一項第二款、第五款\n第十六條第一項第五款\n第十七條\n第十八條\n第十八條之一\n第二十條\n第二十一條\n第二十一條之一\n第二十三條\n第二十四條\n第二十六條\n第二十七條第二項\n第二十九條第四項\n第二十九條之二第三項、第五項\n第三十條第三項\n第三十一條第四項\n第三十四條後段\n第三十五條第一項至第五項、第七項\n第三十六條第二項、第三項\n第三十七條\n第四十三條\n第四十五條第二項、第三項\n第五十四條\n第六十條第一項\n第六十一條\n第六十二條第一項、第四項及第五項")
         line_bot_api.reply_message(event.reply_token,text_message)
+    elif ["打炮","機掰","幹你娘","丁福氣"] in event.message.text :
+        text_message = TextSendMessage(text="不要輸入那些屋ㄟ某欸啦....")
+        line_bot_api.reply_message(event.reply_token,text_message)
 if __name__ == "__main__":
     app.run()
