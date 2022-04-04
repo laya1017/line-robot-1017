@@ -157,8 +157,8 @@ def dateTimeCaculator():
         text='目前僅開放今日的當場舉發應到案日期計算',
         actions=[
             MessageAction(
-                label='現場舉發的應到案日期(以今天起算)',
-                text=initialdate
+                label='現場舉發應到案日期',
+                text="現場舉發應到案日期(今天)"
                 )
         ]
     )
@@ -263,7 +263,11 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text == "#當場舉發的應到案日期計算？" :
         line_bot_api.reply_message(event.reply_token,dateTimeCaculator())
-    elif event.message.text == initialdate:
+    elif event.message.text == "現場舉發應到案日期(今天)":
+        today = datetime.datetime.now()
+        initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
+        expiryDate = today + datetime.timedelta(days = 30)
+        finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
         text_message = "今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate
         line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text in ["打炮","機掰","幹你娘","丁福氣","幹"] :
