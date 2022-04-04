@@ -1,5 +1,6 @@
 from flask import Flask, request, abort ,render_template
 import requests
+import time
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -113,10 +114,12 @@ def callback():
         abort(400)
 
     return 'OK'
-
 @app.route("/")
 def index():
     return render_template("index.html")
+while True :
+    print(requests.get("https://line-robot-1017.herokuapp.com/"))
+    time.sleep(10)
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
