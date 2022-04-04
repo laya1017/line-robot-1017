@@ -194,14 +194,3 @@ def NosListFiltWords(NosList,words):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
-
-msg = "迴轉 雙黃線"
-
-if "迴轉" in msg or "雙黃" in msg or "雙黃線" in msg : 
-    msg = msg.replace("迴轉","")
-    msg = msg.replace("雙黃線","雙黃")
-    msg = msg.replace("雙黃","分向限制線、禁止超車線")
-    msg = msg.replace("雙黃線","分向限制線、禁止超車線")
-result = NosFiltWords("33,1,7",msg) + NosFiltWords("49",msg) + NosFiltWords("54,,1",msg).strip("\n")
-print(result)
-print(msg)
