@@ -200,17 +200,17 @@ import search
 #     return "".join(result).strip("\n")
 # Use number find laws
 # Use keywords find laws
-def Content_finder(words):
-    temp = df
-    keys = words.split(" ")
-    for key in keys :
-        condition = temp["Contents"].str.contains(key)
-        temp = temp[condition]
-    result = []
-    for i in range(0,len(temp)):
-        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
-             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
-    return "".join(result).strip("\n")
+# def Content_finder(words):
+#     temp = df
+#     keys = words.split(" ")
+#     for key in keys :
+#         condition = temp["Contents"].str.contains(key)
+#         temp = temp[condition]
+#     result = []
+#     for i in range(0,len(temp)):
+#         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+#              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+#     return "".join(result).strip("\n")
 # Use keywords find laws
 
 
