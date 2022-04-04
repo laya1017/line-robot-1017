@@ -194,8 +194,3 @@ def NosListFiltWords(NosList,words):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
-# msg = "酒駕"
-# if "酒駕" in msg :
-#     msg = msg.replace("酒駕"," ")
-#     result = NosFiltWords("35",msg)
-# print(result)
