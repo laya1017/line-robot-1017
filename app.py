@@ -278,35 +278,41 @@ def handle_message(event):
         elif "紅" in event.message.text:
             if "右" in event.message.text:
                 if "慢" in event.message.text:
-                    result = getByNos("74,1,1")
+                    result = getByNos("74,1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
                 elif "汽車" in event.message.text or "機車" in event.message.text:
-                    result = getByNos("53,2") + getByNos("53-1,2")
+                    result = getByNos("53,2").strip("\n")
+                    text_message = TextSendMessage(text=result)
+                elif "大眾" in event.message.text:
+                    result = getByNos("53-1,2").strip("\n")
                     text_message = TextSendMessage(text=result)
                 else :
-                    result = getByNos("53,2") + getByNos("53-1,2") + getByNos("74,1,1")
+                    result = getByNos("53,2") + getByNos("53-1,2") + getByNos("74,1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
             elif "闖" in event.message.text:
                 if "慢" in event.message.text:
-                    result = getByNos("74,1,1")
+                    result = getByNos("74,1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
                 elif "汽車" in event.message.text or "機車" in event.message.text:
-                    result = getByNos("53,1") + getByNos("53-1,1")
+                    result = getByNos("53,1").strip("\n")
+                    text_message = TextSendMessage(text=result)
+                elif "大眾" in event.message.text:
+                    result = getByNos("53-1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
                 else :                    
-                    result = getByNos("53,1") + getByNos("53-1,1") + getByNos("74,1,1")
+                    result = getByNos("53,1") + getByNos("53-1,1") + getByNos("74,1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
             elif "慢" in event.message.text:
-                result = getByNos("74,1,1")
+                result = getByNos("74,1,1").strip("\n")
                 text_message = TextSendMessage(text=result)
             elif "汽車" in event.message.text or "機車" in event.message.text:
-                result = getByNos("53") + getByNos("53-1") 
+                result = getByNos("53").strip("\n")
                 text_message = TextSendMessage(text=result)
             else :
-                result = getByNos("53") + getByNos("53-1") + getByNos("74,1,1")
+                result = getByNos("53") + getByNos("53-1") + getByNos("74,1,1").strip("\n")
                 text_message = TextSendMessage(text=result)
         elif "方向燈" in event.message.text or "大燈" in event.message.text or "霧燈" in event.message.text :
-            result = getByNos("42")
+            result = getByNos("42").strip("\n")
             text_message = TextSendMessage(text=result)
         else:
             result = Content_finder((event.message.text).replace("@",""))
