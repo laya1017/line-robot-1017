@@ -219,7 +219,7 @@ def handle_message(event):
             elif "酒駕" in msg or "酒" in msg:
                 msg = msg.replace("酒駕","酒")
                 msg = msg.replace("酒","")
-                result = search.NosFiltWords("35,1",msg) + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg) + "\n" + search.NosFiltWords("35,8",msg) + "\n" + search.NosFiltWords("74,2",msg)
+                result = search.NosFiltWords("35,1",msg) + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg) + "\n" + search.NosFiltWords("35,8",msg) + "\n" + search.NosFiltWords("73,2",msg)
             elif "毒駕" in msg or "毒" in msg:
                 msg = msg.replace("毒駕","毒")
                 msg = msg.replace("毒","")
