@@ -113,9 +113,10 @@ def callback():
         abort(400)
 
     return 'OK'
-@app.route('/Home', methods=['GET'])
+
+@app.route("/")
 def index():
-    return 'Hi!!'
+    return render_template("index.html")
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
