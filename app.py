@@ -168,7 +168,7 @@ def handle_message(event):
                     result = search.getByNos("53-1,2").strip("\n")
                     text_message = TextSendMessage(text=result)
                 else :
-                    result = search.getByNos("53,2") + search.getByNos("53-1,2") + search.getByNos("74,1,1").strip("\n")
+                    result = search.getByNos("53,2") + "\n" + search.getByNos("53-1,2") + "\n" + search.getByNos("74,1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
             elif "闖" in msg:
                 if "慢" in msg:
@@ -181,7 +181,7 @@ def handle_message(event):
                     result = search.getByNos("53-1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
                 else :                    
-                    result = search.getByNos("53,1") + search.getByNos("53-1,1") + search.getByNos("74,1,1").strip("\n")
+                    result = search.getByNos("53,1") + "\n" + search.getByNos("53-1,1") + "\n" + search.getByNos("74,1,1").strip("\n")
                     text_message = TextSendMessage(text=result)
             elif "慢" in msg:
                 result = search.getByNos("74,1,1").strip("\n")
@@ -198,7 +198,7 @@ def handle_message(event):
         elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg or "超速" in msg :
             if "超速" in msg :
                 msg = msg.replace("超速","最高時速")
-                result = search.NosFiltWords("40",msg) + search.NosFiltWords("43,1",msg)
+                result = search.NosFiltWords("40",msg) + "\n" + search.NosFiltWords("43,1",msg)
             else :
                 msg = msg.replace("危險駕駛","")
                 msg = msg.replace("危駕","")
@@ -215,16 +215,16 @@ def handle_message(event):
                 msg = msg.replace("毒駕","毒")
                 msg = msg.replace("毒","")
                 msg = msg.replace("拒測","")
-                result = search.NosFiltWords("35,4",msg) + search.NosFiltWords("35,5",msg) + search.NosFiltWords("73,3",msg)
+                result = search.NosFiltWords("35,4",msg) + "\n" + search.NosFiltWords("35,5",msg) + "\n" + search.NosFiltWords("73,3",msg)
             elif "酒駕" in msg or "酒" in msg:
                 msg = msg.replace("酒駕","酒")
                 msg = msg.replace("酒","")
-                result = search.NosFiltWords("35,1",msg) + search.NosFiltWords("35,3",msg) + search.NosFiltWords("35,7",msg) + search.NosFiltWords("35,8",msg) + search.NosFiltWords("74,2",msg)
+                result = search.NosFiltWords("35,1",msg) + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg) + "\n" + search.NosFiltWords("35,8",msg) + "\n" + search.NosFiltWords("74,2",msg)
             elif "毒駕" in msg or "毒" in msg:
                 msg = msg.replace("毒駕","毒")
                 msg = msg.replace("毒","")
-                result = search.NosFiltWords("35,1",msg + " 藥") + search.NosFiltWords("35,3",msg) + search.NosFiltWords("35,7",msg)
-            text_message = TextSendMessage(text=result)
+                result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
+            text_message = TextSendMessage(text=result.strip("\n"))
         else:
             result = search.Content_finder(msg)
             text_message = TextSendMessage(text=result)
