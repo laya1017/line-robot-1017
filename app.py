@@ -258,12 +258,12 @@ def handle_message(event):
             text_message = TextSendMessage(text=result)
         elif "逆向" in event.message.text :
             if "停" in event.message.text:
-                result = Content_finder("不依順行之方向，或不緊靠道路右側") + Content_finder("不依順行方向，或不緊靠道路右側")
+                result = Content_finder("不依順行之方向，或不緊靠道路右側") + "\n" + Content_finder("不依順行方向，或不緊靠道路右側")
                 text_message = TextSendMessage(text=result)
             elif "臨停" in event.message.text :
                 result = Content_finder("不依順行之方向，或不緊靠道路右側")
                 text_message = TextSendMessage(text=result)
-            elif "停車" in event.message.text :
+            elif "停車" in event.message.text or "違停" in event.message.text:
                 result = Content_finder("不依順行方向，或不緊靠道路右側")
                 text_message = TextSendMessage(text=result)
             elif "行駛" in event.message.text:
