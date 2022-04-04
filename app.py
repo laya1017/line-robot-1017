@@ -247,10 +247,10 @@ def handle_message(event):
     elif "@" in event.message.text : # Use Content_finder function to find laws
         if "迴轉" in event.message.text: 
             event.message.text = (event.message.text).replace("迴轉"," 迴車")
-        if "雙黃線" in event.message.text:
-            (event.message.text).replace("雙黃線","分向限制線")
-        if "兩段式" in event.message.text:
-            (event.message.text).replace("兩段式","不依標誌、標線、號誌指示")
+        elif "雙黃線" in event.message.text:
+            event.message.text = (event.message.text).replace("雙黃線"," 分向限制線")
+        elif "兩段式" in event.message.text:
+            event.message.text = (event.message.text).replace("兩段式"," 轉彎 不依標誌 標線 號誌指示")
         # if "酒駕" in event.message.text:
         #     (event.message.text).replace("酒駕","酒精")
         # if "拒測" in event.message.text:
