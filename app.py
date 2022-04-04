@@ -351,7 +351,7 @@ def handle_message(event):
             else:
                 result = search.getByNos("48,1,2") + search.getByNos("73,1,3").strip("\n")
                 text_message = TextSendMessage(text=result)
-        elif "逆向" in msg or "停車" or "臨停" or "違停" or "行駛":
+        elif "逆向" in msg or "停車" in msg or "臨停" in msg or "違停" in msg or "行駛" in msg:
             msg = msg.replace("臨停","臨時停車")
             msg = msg.replace("違停","停車")
             if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
