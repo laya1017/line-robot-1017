@@ -407,7 +407,7 @@ def handle_message(event):
             result = getByNos("42").strip("\n")
             text_message = TextSendMessage(text=result)
         elif "危險駕駛" in event.message.text or "危駕" or "危險駕車" in event.message.text :
-            result = getByNos("43").strip("\n")
+            result = getByNos("43").strip("\n") + "A"
             text_message = TextSendMessage(text=result)
         elif "酒駕" in event.message.text :
             words = (event.message.text).replace("酒駕","")
