@@ -15,11 +15,7 @@ df.set_index("Nos",inplace = True)
 sort = list(df.index)
 # use DateTime
 import datetime
-today = datetime.datetime.now()
-
-initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
-expiryDate = today + datetime.timedelta(days = 30)
-finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
+import search
 # Use number find laws
 def getText(_list):
     df = pd.read_csv("data.csv")
@@ -196,7 +192,6 @@ def dateTimeCaculator():
     )
     )
     return st
-
 #all buttom templates
 app = Flask(__name__)
 
@@ -245,7 +240,7 @@ def handle_message(event):
         text_message = TextSendMessage(text="以關鍵字搜尋：\n按左下角類似鍵盤的按鈕，然後在對話發送欄區打@記號，然後在@後方打上關鍵字，例如：@闖紅燈。\n也可使用多條件查詢，例如：@執照 未領(中間用空白區隔)。")
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "@" in event.message.text : # Use Content_finder function to find laws
-        if "迴轉" in event.message.text: 
+        if "迴轉" ievent.message.text: 
             event.message.text = (event.message.text).replace("迴轉"," 迴車")
             result = Content_finder((event.message.text).replace("@",""))
             text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
@@ -314,8 +309,12 @@ def handle_message(event):
         elif "方向燈" in event.message.text or "大燈" in event.message.text or "霧燈" in event.message.text :
             result = getByNos("42").strip("\n")
             text_message = TextSendMessage(text=result)
-        elif "危險駕駛" in event.message.text or "危駕" in event.message.text :
+        elif "危險駕駛" in event.message.text or "危駕" or "危險駕車" in event.message.text :
             result = getByNos("43").strip("\n")
+            text_message = TextSendMessage(text=result)
+        elif "酒駕" in event.message.text :
+            words = (event.message.text).replace("酒駕","")
+            result = search.NosFiltWords("35",words)
             text_message = TextSendMessage(text=result)
         else:
             result = Content_finder((event.message.text).replace("@",""))
