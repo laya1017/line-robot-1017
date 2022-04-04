@@ -249,23 +249,48 @@ def handle_message(event):
             event.message.text = (event.message.text).replace("迴轉"," 迴車")
             result = Content_finder((event.message.text).replace("@",""))
             text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
-        elif "雙黃線" in event.message.text:
+        elif "雙黃線" in event.message.text :
             event.message.text = (event.message.text).replace("雙黃線"," 分向限制線")
             result = Content_finder((event.message.text).replace("@",""))
             text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
-        elif "兩段式" in event.message.text:
-            event.message.text = (event.message.text).replace("兩段式"," 轉彎 不依標誌 標線 號誌指示")
-            result = Content_finder((event.message.text).replace("@",""))
-            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
+        elif "兩段式" in event.message.text or "兩段" in event.message.text:
+            result = getByNos("48,1,2") + getByNos("74,1,1")
+            text_message = TextSendMessage(text=result)
+        elif "逆向" in event.message.text :
+            if "停" in event.message.text:
+                result = Content_finder("不依順行之方向，或不緊靠道路右側") + Content_finder("不依順行方向，或不緊靠道路右側")
+                text_message = TextSendMessage(text=result)
+            elif "臨停" in event.message.text :
+                result = Content_finder("不依順行之方向，或不緊靠道路右側")
+                text_message = TextSendMessage(text=result)
+            elif "停車" in event.message.text :
+                result = Content_finder("不依順行方向，或不緊靠道路右側")
+                text_message = TextSendMessage(text=result)
+            elif "行駛" in event.message.text:
+                result = getByNos("45,1,1") + getByNos("45,1,3")
+                text_message = TextSendMessage(text=result)
+        elif "違停" in event.message.text :
+            result = getByNos("55") + getByNos("56")
+            text_message = TextSendMessage(text=result)
+        elif "臨停" in event.message.text :
+            result = getByNos("56")
+            text_message = TextSendMessage(text=result)
+        elif "紅" in event.message.text:
+            if "右" in event.message.text:
+                result = getByNos("53,2") + getByNos("53-1,2") + getByNos("74,1,1")
+                text_message = TextSendMessage(text=result)
+            elif "闖" in event.message.text:
+                result = getByNos("53,1") + getByNos("53-1,1") + getByNos("74,1,1")
+                text_message = TextSendMessage(text=result)
+            else :
+                result = getByNos("53") + getByNos("53-1") + getByNos("74,1,1")
+                text_message = TextSendMessage(text=result)
+        elif "方向燈" in event.message.text or "大燈" in event.message.text or "霧燈" in event.message.text :
+            result = getByNos("42")
+            text_message = TextSendMessage(text=result)
         else:
             result = Content_finder((event.message.text).replace("@",""))
-            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
-        # if "酒駕" in event.message.text:
-        #     (event.message.text).replace("酒駕","酒精")
-        # if "拒測" in event.message.text:
-        #     (event.message.text).replace("拒測","酒精")
-        # result = Content_finder((event.message.text).replace("@",""))
-        # text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
+            text_message = TextSendMessage(text=result)
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "$" in event.message.text : # Use number function to find laws
         words = (event.message.text).replace("$","")
