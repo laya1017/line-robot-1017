@@ -109,8 +109,7 @@ def getListByNos(Nos):
             result = list(set(A))
     result.sort(key = sort.index)
     return result
-def Content_finder(words):
-    temp = df
+def Content_finder(words,temp = df):
     keys = words.split(" ")
     for key in keys :
         condition = temp["Contents"].str.contains(key)
@@ -194,3 +193,29 @@ def NosListFiltWords(NosList,words):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
+# commonWordToCorrectWord = {
+#             "雙黃線":"禁止超車", 
+#             "雙黃":"禁止超車",
+#             "雙白線":"禁止變換車道",
+#             "方向燈":"燈光",
+#             "大燈":"燈光",
+#             "後霧燈":"燈光",
+#             "迴車":"迴轉",
+#             "臨停":"臨時停車",
+#             "違停":"停車",
+#             "逆向":"順行",
+#             "毒駕":"藥",
+#             "毒":"藥",
+#             "累犯":"十年",
+#             "累":"十年"
+# }
+# towLevelTurn = df["Contents"].str.contains("轉彎")
+# commonWordToDf = {
+#             "兩段式":df[towLevelTurn],
+#             "兩段":" ",
+#             "停車":" ",
+#             "危險駕駛":" ",
+#             "酒駕":" ",
+#             "酒":" ",
+# }
+# print(df[towLevelTurn])

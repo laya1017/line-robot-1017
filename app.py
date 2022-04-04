@@ -139,6 +139,11 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "@" in msg : # Use Content_finder function to find laws
         msg = msg.replace("@","")
+        msg = msg.replace("駕照","駕駛執照")
+        # bigCarCondition = df["Contents"].str.contains("大貨車") | df["Contents"].str.contains("大客車") | df["Contents"].str.contains("聯結車")
+        # dfBigCar = df[bigCarCondition]
+        # licenseCondition = df["Contents"].str.contains("駕駛執照") | df["Contents"].str.contains("學習")
+        # DWICondition = filtDfByNos("35")
         if "迴轉" in msg or "雙黃" in msg or "雙黃線" in msg : 
             msg = msg.replace("迴轉","")
             msg = msg.replace("雙黃線","雙黃")

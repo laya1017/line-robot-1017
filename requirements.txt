@@ -3,3 +3,4 @@ gunicorn
 flask
 pandas
 APScheduler == 3.9.1
+requests
