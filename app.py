@@ -337,14 +337,15 @@ def handle_message(event):
         text_message = TextSendMessage(text="以關鍵字搜尋：\n按左下角類似鍵盤的按鈕，然後在對話發送欄區打@記號，然後在@後方打上關鍵字，例如：@闖紅燈。\n也可使用多條件查詢，例如：@執照 未領(中間用空白區隔)。")
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "@" in event.message.text : # Use Content_finder function to find laws
+        event.message.text = (event.message.text).replace("@","")
         if "迴轉" in event.message.text: 
             event.message.text = (event.message.text).replace("迴轉"," 迴車")
-            result = Content_finder((event.message.text).replace("@",""))
-            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
+            result = Content_finder(event.message.text)
+            text_message = TextSendMessage(text=result)
         elif "雙黃線" in event.message.text :
             event.message.text = (event.message.text).replace("雙黃線"," 分向限制線")
-            result = Content_finder((event.message.text).replace("@",""))
-            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
+            result = Content_finder(event.message.text)
+            text_message = TextSendMessage(text=result)
         elif "兩段式" in event.message.text or "兩段" in event.message.text:
             result = getByNos("48,1,2") + getByNos("74,1,1")
             text_message = TextSendMessage(text=result)
@@ -407,14 +408,14 @@ def handle_message(event):
             result = getByNos("42").strip("\n")
             text_message = TextSendMessage(text=result)
         elif "危險駕駛" in event.message.text or "危駕" in event.message.text or "危險駕車" in event.message.text :
-            result = getByNos("43").strip("\n") + "A"
+            result = getByNos("43").strip("\n")
             text_message = TextSendMessage(text=result)
         elif "酒駕" in event.message.text :
             words = (event.message.text).replace("酒駕","")
             result = NosFiltWords("35",words)
             text_message = TextSendMessage(text=result)
         else:
-            result = Content_finder((event.message.text).replace("@",""))
+            result = Content_finder(event.message.text)
             text_message = TextSendMessage(text=result)
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "$" in event.message.text : # Use number function to find laws
