@@ -402,8 +402,8 @@ def handle_message(event):
             result = search.getByNos("43").strip("\n")
             text_message = TextSendMessage(text=result)
         elif "酒駕" in msg :
-            words = msg.replace("酒駕","")
-            result = search.NosFiltWords("35",words)
+            msg = msg.replace("酒駕","")
+            result = search.NosFiltWords("35",msg)
             text_message = TextSendMessage(text=result)
         else:
             result = search.Content_finder(msg)
