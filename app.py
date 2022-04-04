@@ -312,10 +312,10 @@ def handle_message(event):
         elif "危險駕駛" in event.message.text or "危駕" or "危險駕車" in event.message.text :
             result = getByNos("43").strip("\n")
             text_message = TextSendMessage(text=result)
-        # elif "酒駕" in event.message.text :
-        #     words = (event.message.text).replace("酒駕","")
-        #     result = search.NosFiltWords("35",words)
-        #     text_message = TextSendMessage(text=result)
+        elif "酒駕" in event.message.text :
+            words = (event.message.text).replace("酒駕","")
+            result = search.NosFiltWords("35",words)
+            text_message = TextSendMessage(text=result)
         else:
             result = Content_finder((event.message.text).replace("@",""))
             text_message = TextSendMessage(text=result)
