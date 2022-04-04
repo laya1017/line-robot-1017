@@ -13,7 +13,13 @@ import pandas as pd
 df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
+# use DateTime
+import datetime
+today = datetime.datetime.now()
 
+initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
+expiryDate = today + datetime.timedelta(days = 30)
+finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
 # Use number find laws
 def getText(_list):
     df = pd.read_csv("data.csv")
@@ -144,6 +150,21 @@ def searchTutorial():
     )
     )
     return st
+def dateTimeCaculator():
+    st = TemplateSendMessage(alt_text='應到案日期計算',
+    template=ButtonsTemplate(
+        title='應到案日期計算',
+        text='目前僅開放今日的當場舉發應到案日期計算',
+        actions=[
+            MessageAction(
+                label='現場舉發的應到案日期(以今天起算)',
+                text=initialdate
+                )
+        ]
+    )
+    )
+    return st
+
 #all buttom templates
 app = Flask(__name__)
 
@@ -241,9 +262,11 @@ def handle_message(event):
         text_message = TextSendMessage(text="依交通部108.07.16.交路字第1080021339號函，不得郵繳的有：\n第十二條\n第十三條\n第十五條第一項第二款、第五款\n第十六條第一項第五款\n第十七條\n第十八條\n第十八條之一\n第二十條\n第二十一條\n第二十一條之一\n第二十三條\n第二十四條\n第二十六條\n第二十七條第二項\n第二十九條第四項\n第二十九條之二第三項、第五項\n第三十條第三項\n第三十一條第四項\n第三十四條後段\n第三十五條第一項至第五項、第七項\n第三十六條第二項、第三項\n第三十七條\n第四十三條\n第四十五條第二項、第三項\n第五十四條\n第六十條第一項\n第六十一條\n第六十二條第一項、第四項及第五項")
         line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text == "#當場舉發的應到案日期計算？" :
-        text_message = TextSendMessage(text="累死了...還沒做好....")
+        line_bot_api.reply_message(event.reply_token,dateTimeCaculator())
+    elif event.message.text == initialdate:
+        text_message = "今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate
         line_bot_api.reply_message(event.reply_token,text_message)
-    elif event.message.text in ["打炮","機掰","幹你娘","丁福氣"] :
+    elif event.message.text in ["打炮","機掰","幹你娘","丁福氣","幹"] :
         text_message = TextSendMessage(text="不要輸入那些屋ㄟ某欸啦....")
         line_bot_api.reply_message(event.reply_token,text_message)
     else :
