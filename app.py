@@ -248,7 +248,7 @@ def handle_message(event):
         if "迴轉" in event.message.text: 
             event.message.text = (event.message.text).replace("迴轉"," 迴車")
         if "雙黃線" in event.message.text:
-            (event.message.text).replace("雙黃線","分向限制線、禁止超車線")
+            (event.message.text).replace("雙黃線","分向限制線")
         if "兩段式" in event.message.text:
             (event.message.text).replace("兩段式","不依標誌、標線、號誌指示")
         # if "酒駕" in event.message.text:
