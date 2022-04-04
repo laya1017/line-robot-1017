@@ -28,7 +28,7 @@ def getText(_list):
     result_text = []
     for i in range(0,len(result_df)):
         result_text.append(result_df.index[i] + "：\n" + result_df["Contents"][i] + "\n處罰：" + result_df["Punishment"][i] + "\n註記：\n" + result_df["Remark"][i].strip("\n") + "\n")
-    return "".join(result_text).strip("\n")
+    return "".join(result_text)
 def listByArticle(A = ""):
     df = pd.read_csv("data.csv")
     df.set_index("Nos",inplace = True)
@@ -72,6 +72,38 @@ def listBySub(S = ""):
         if i not in unique:
             unique.append(i)
     return unique
+def getByNos(words):
+    keys = words.split(",")
+    a = keys[0]
+    try:
+        p = keys[1]
+    except IndexError:
+        p = ""
+    try:
+        s = keys[2]
+    except IndexError:
+        s = "" 
+    A = listByArticle(a)
+    P = listByPara(p)
+    S = listBySub(s)
+    result = list(set(A) & set(P) & set(S))
+    if result == [] :
+        if set(A) & set(P) != set(): # 先判斷有沒有項
+            result = set(A) & set(P)
+            if result & set(S) != set():
+                result = list(result & set(S))
+            else:
+                result = list(set(A) & set(P))
+        elif set(A) & set(P) == set():
+            result = set(A)
+            if result & set(S) != set():
+                result = list(result & set(S))
+            else:
+                result = list(set(A))
+        else:
+            result = list(set(A))
+    result.sort(key = sort.index)
+    return getText(result)
 # Use number find laws
 
 # Use keywords find laws
@@ -213,42 +245,23 @@ def handle_message(event):
         text_message = TextSendMessage(text="以關鍵字搜尋：\n按左下角類似鍵盤的按鈕，然後在對話發送欄區打@記號，然後在@後方打上關鍵字，例如：@闖紅燈。\n也可使用多條件查詢，例如：@執照 未領(中間用空白區隔)。")
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "@" in event.message.text : # Use Content_finder function to find laws
+        if "迴轉" in event.message.text: 
+            event.message.text = (event.message.text).replace("迴轉"," 迴車")
+        if "雙黃線" in event.message.text:
+            (event.message.text).replace("雙黃線","分向限制線、禁止超車線")
+        if "兩段式" in event.message.text:
+            (event.message.text).replace("兩段式","不依標誌、標線、號誌指示")
+        # if "酒駕" in event.message.text:
+        #     (event.message.text).replace("酒駕","酒精")
+        # if "拒測" in event.message.text:
+        #     (event.message.text).replace("拒測","酒精")
         result = Content_finder((event.message.text).replace("@",""))
         text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "$" in event.message.text : # Use number function to find laws
         words = (event.message.text).replace("$","")
-        keys = words.split(",")
-        a = keys[0]
-        try:
-            p = keys[1]
-        except IndexError:
-            p = ""
-        try:
-            s = keys[2]
-        except IndexError:
-            s = "" 
-        A = listByArticle(a)
-        P = listByPara(p)
-        S = listBySub(s)
-        result = list(set(A) & set(P) & set(S))
-        if result == [] :
-            if set(A) & set(P) != set(): 
-                result = set(A) & set(P)
-                if result & set(S) != set():
-                    result = list(result & set(S))
-                else:
-                    result = list(set(A) & set(P))
-            elif set(A) & set(P) == set():
-                result = set(A)
-                if result & set(S) != set():
-                    result = list(result & set(S))
-                else:
-                    result = list(set(A))
-            else:
-                result = list(set(A))
-        result.sort(key = sort.index)
-        text_message = TextSendMessage(text=getText(result))
+        getByNos(words)
+        text_message = TextSendMessage(text=getByNos(words))
         line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text == "[[酒(毒)駕專區]]" :
         text_message = TextSendMessage(text="Sorry 還沒開放喔!")
