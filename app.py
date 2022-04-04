@@ -268,7 +268,7 @@ def handle_message(event):
         initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
         expiryDate = today + datetime.timedelta(days = 30)
         finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
-        text_message = "今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate
+        text_message = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate)
         line_bot_api.reply_message(event.reply_token,text_message)
     elif event.message.text in ["打炮","機掰","幹你娘","丁福氣","幹"] :
         text_message = TextSendMessage(text="不要輸入那些屋ㄟ某欸啦....")
