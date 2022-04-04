@@ -4,7 +4,7 @@ sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=15)
 def timed_job():
-    r = requests.get("https://www.google.com/")
+    r = requests.get("https://line-robot-1017.herokuapp.com/")
     for key in r.headers :
         print(key + ":" + r.headers[key])
 sched.start()
