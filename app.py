@@ -15,19 +15,14 @@ df.set_index("Nos",inplace = True)
 sort = list(df.index)
 # use DateTime
 import datetime
-import search
 # Use number find laws
 def getText(_list):
-    df = pd.read_csv("data.csv")
-    df.set_index("Nos",inplace = True)
     result_df = df.loc[_list]
     result_text = []
     for i in range(0,len(result_df)):
         result_text.append(result_df.index[i] + "：\n" + result_df["Contents"][i] + "\n處罰：" + result_df["Punishment"][i] + "\n註記：\n" + result_df["Remark"][i].strip("\n") + "\n")
     return "".join(result_text)
 def listByArticle(A = ""):
-    df = pd.read_csv("data.csv")
-    df.set_index("Nos",inplace = True)
     index_list = []
     unique = []
     for i in df.index :
@@ -38,8 +33,6 @@ def listByArticle(A = ""):
             unique.append(i)
     return unique
 def listByPara(P = ""):
-    df = pd.read_csv("data.csv")
-    df.set_index("Nos",inplace = True)
     index_list = []
     unique = []
     for i in df.index :
@@ -53,8 +46,6 @@ def listByPara(P = ""):
             unique.append(i)
     return unique
 def listBySub(S = ""):
-    df = pd.read_csv("data.csv")
-    df.set_index("Nos",inplace = True)
     index_list = []
     unique = []
     for i in df.index :
@@ -68,8 +59,8 @@ def listBySub(S = ""):
         if i not in unique:
             unique.append(i)
     return unique
-def getByNos(words):
-    keys = words.split(",")
+def getByNos(Nos):
+    keys = Nos.split(",")
     a = keys[0]
     try:
         p = keys[1]
@@ -100,6 +91,112 @@ def getByNos(words):
             result = list(set(A))
     result.sort(key = sort.index)
     return getText(result)
+def getListByNos(Nos):
+    keys = Nos.split(",")
+    a = keys[0]
+    try:
+        p = keys[1]
+    except IndexError:
+        p = ""
+    try:
+        s = keys[2]
+    except IndexError:
+        s = "" 
+    A = listByArticle(a)
+    P = listByPara(p)
+    S = listBySub(s)
+    result = list(set(A) & set(P) & set(S))
+    if result == [] :
+        if set(A) & set(P) != set(): # 先判斷有沒有項
+            result = set(A) & set(P)
+            if result & set(S) != set():
+                result = list(result & set(S))
+            else:
+                result = list(set(A) & set(P))
+        elif set(A) & set(P) == set():
+            result = set(A)
+            if result & set(S) != set():
+                result = list(result & set(S))
+            else:
+                result = list(set(A))
+        else:
+            result = list(set(A))
+    result.sort(key = sort.index)
+    return result
+def Content_finder(words):
+    temp = df
+    keys = words.split(" ")
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    result = []
+    for i in range(0,len(temp)):
+        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+    return "".join(result).strip("\n")
+def filtDfByWords(words):
+    temp = df
+    keys = words.split(" ")
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    return temp
+def filtDfByNos(Nos):
+    keys = Nos.split(",")
+    a = keys[0]
+    try:
+        p = keys[1]
+    except IndexError:
+        p = ""
+    try:
+        s = keys[2]
+    except IndexError:
+        s = "" 
+    A = listByArticle(a)
+    P = listByPara(p)
+    S = listBySub(s)
+    result = list(set(A) & set(P) & set(S))
+    if result == [] :
+        if set(A) & set(P) != set(): # 先判斷有沒有項
+            result = set(A) & set(P)
+            if result & set(S) != set():
+                result = list(result & set(S))
+            else:
+                result = list(set(A) & set(P))
+        elif set(A) & set(P) == set():
+            result = set(A)
+            if result & set(S) != set():
+                result = list(result & set(S))
+            else:
+                result = list(set(A))
+        else:
+            result = list(set(A))
+    result.sort(key = sort.index)
+    return df.loc[result]
+def filtDfByNosLsit(NosList):
+    return df.loc[NosList]
+def wordsFiltwords(firstWords,words):
+    temp = filtDfByWords(firstWords)
+    keys = words.split(" ")
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    result = []
+    for i in range(0,len(temp)):
+        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+    return "".join(result).strip("\n")
+def NosFiltWords(Nos,words):
+    temp = filtDfByNos(Nos)
+    keys = words.split(" ")
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    result = []
+    for i in range(0,len(temp)):
+        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+    return "".join(result).strip("\n")
 # Use number find laws
 
 # Use keywords find laws
@@ -314,7 +411,7 @@ def handle_message(event):
             text_message = TextSendMessage(text=result)
         elif "酒駕" in event.message.text :
             words = (event.message.text).replace("酒駕","")
-            result = search.NosFiltWords("35",words)
+            result = NosFiltWords("35",words)
             text_message = TextSendMessage(text=result)
         else:
             result = Content_finder((event.message.text).replace("@",""))

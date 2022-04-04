@@ -183,3 +183,4 @@ def NosFiltWords(Nos,words):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
+print(NosFiltWords("35",""))
