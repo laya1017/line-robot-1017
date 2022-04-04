@@ -357,8 +357,8 @@ def handle_message(event):
             if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                 msg += "順行"
             msg = msg.replace("逆向","")
-            result = search.NosFiltWords("45,1,1",msg) + search.NosFiltWords("45,1,3",msg) +search.NosFiltWords("55",msg) + search.NosFiltWords("56",msg) + search.NosFiltWords("74,1,2",msg).strip("\n")
-            text_message = TextSendMessage(text=result)
+            result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.NosFiltWords("74,1,2",msg)
+            text_message = TextSendMessage(text=result.strip("\n"))
         elif "紅" in msg:
             if "右" in msg:
                 if "慢" in msg:
