@@ -212,9 +212,10 @@ def handle_message(event):
             msg.replace("累","十年")
             if "拒測" in msg :
                 msg.replace("拒測","")
-                result = search.NosFiltWords("35,4",msg) + search.NosFiltWords("35,5",msg) + search.NosFiltWords("73,3",msg)
-            elif "累犯" or "累" in msg:
-                result = search.NosFiltWords("35,5",msg)
+                if "累犯" or "累" in msg :
+                    result = search.NosFiltWords("35,5",msg)
+                else :
+                    result = search.NosFiltWords("35,4",msg) + search.NosFiltWords("35,5",msg) + search.NosFiltWords("73,3",msg)
             else :
                 result = search.NosFiltWords("35",msg)
             text_message = TextSendMessage(text=result)
