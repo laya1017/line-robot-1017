@@ -205,7 +205,7 @@ def handle_message(event):
                 msg = msg.replace("危險駕車","")
                 result = search.NosFiltWords("43",msg)
             text_message = TextSendMessage(text=result.strip("\n"))
-        elif "酒駕" in msg or "酒" in msg or "毒駕" or "毒" in msg or in msg or "拒測" in msg or "累犯" in msg or "累" in msg :
+        elif "酒駕" in msg or "酒" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg or "累犯" in msg or "累" in msg :
             msg = msg.replace("累犯","累")
             msg = msg.replace("累","十年")
             if "拒測" in msg :
