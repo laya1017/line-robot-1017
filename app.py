@@ -277,10 +277,30 @@ def handle_message(event):
             text_message = TextSendMessage(text=result)
         elif "紅" in event.message.text:
             if "右" in event.message.text:
-                result = getByNos("53,2") + getByNos("53-1,2") + getByNos("74,1,1")
-                text_message = TextSendMessage(text=result)
+                if "慢" in event.message.text:
+                    result = getByNos("74,1,1")
+                    text_message = TextSendMessage(text=result)
+                elif "汽車" in event.message.text or "機車" in event.message.text:
+                    result = getByNos("53,2") + getByNos("53-1,2")
+                    text_message = TextSendMessage(text=result)
+                else :
+                    result = getByNos("53,2") + getByNos("53-1,2") + getByNos("74,1,1")
+                    text_message = TextSendMessage(text=result)
             elif "闖" in event.message.text:
-                result = getByNos("53,1") + getByNos("53-1,1") + getByNos("74,1,1")
+                if "慢" in event.message.text:
+                    result = getByNos("74,1,1")
+                    text_message = TextSendMessage(text=result)
+                elif "汽車" in event.message.text or "機車" in event.message.text:
+                    result = getByNos("53,1") + getByNos("53-1,1")
+                    text_message = TextSendMessage(text=result)
+                else :                    
+                    result = getByNos("53,1") + getByNos("53-1,1") + getByNos("74,1,1")
+                    text_message = TextSendMessage(text=result)
+            elif "慢" in event.message.text:
+                result = getByNos("74,1,1")
+                text_message = TextSendMessage(text=result)
+            elif "汽車" in event.message.text or "機車" in event.message.text:
+                result = getByNos("53") + getByNos("53-1") 
                 text_message = TextSendMessage(text=result)
             else :
                 result = getByNos("53") + getByNos("53-1") + getByNos("74,1,1")
