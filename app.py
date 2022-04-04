@@ -195,9 +195,16 @@ def handle_message(event):
         elif "方向燈" in msg or "大燈" in msg or "霧燈" in msg :
             result = search.getByNos("42").strip("\n")
             text_message = TextSendMessage(text=result)
-        elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg :
-            result = search.getByNos("43").strip("\n")
-            text_message = TextSendMessage(text=result)
+        elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" or "超速" in msg :
+            if "超速" in msg :
+                msg = msg.replace("超速","最高時速")
+                result = search.NosFiltWords("40",msg) + search.NosFiltWords("43,1",msg)
+            else :
+                msg = msg.replace("危險駕駛","")
+                msg = msg.replace("危駕","")
+                msg = msg.replace("危險駕車","")
+                result = search.NosFiltWords("43",msg)
+            text_message = TextSendMessage(text=result.strip("\n"))
         elif "酒駕" in msg :
             msg = msg.replace("酒駕","")
             result = search.NosFiltWords("35",msg)
