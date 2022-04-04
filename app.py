@@ -113,7 +113,7 @@ def callback():
         abort(400)
 
     return 'OK'
-@app.route('/Home')
+@app.route('/Home', methods=['GET'])
 def index():
     return 'Hi!!'
 @handler.add(MessageEvent, message=TextMessage)
