@@ -342,7 +342,7 @@ def handle_message(event):
             msg = msg.replace("迴轉","")
             msg = msg.replace("雙黃線","雙黃")
             msg = msg.replace("雙黃","分向限制線、禁止超車線")
-            result = search.NosFiltWords("33,1,7",msg) + search.NosFiltWords("49",msg) + search.NosFiltWords("54",msg).strip("\n")
+            result = search.NosFiltWords("33,1,7",msg) + search.NosFiltWords("49",msg) + search.NosFiltWords("54,,3",msg).strip("\n")
             text_message = TextSendMessage(text=result)
         elif "兩段式" in msg or "兩段" in msg:
             result = search.getByNos("48,1,2") + search.getByNos("73,1,3").strip("\n")
