@@ -357,12 +357,6 @@ def handle_message(event):
             msg = msg.replace("違停","停車")
             result = search.NosFiltWords("45,1,1",msg) + search.NosFiltWords("45,1,3",msg) +search.NosFiltWords("55",msg) + search.NosFiltWords("56",msg) + search.NosFiltWords("74,1,2",msg).strip("\n")
             text_message = TextSendMessage(text=result)
-        elif "違停" in msg :
-            result = search.getByNos("55") + search.getByNos("56")
-            text_message = TextSendMessage(text=result)
-        elif "臨停" in msg :
-            result = search.getByNos("56")
-            text_message = TextSendMessage(text=result)
         elif "紅" in msg:
             if "右" in msg:
                 if "慢" in msg:
