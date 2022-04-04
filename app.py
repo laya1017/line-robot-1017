@@ -216,8 +216,8 @@ def handle_message(event):
                     result = search.NosFiltWords("35,5",msg)
                 else :
                     result = search.NosFiltWords("35,4",msg) + search.NosFiltWords("35,5",msg) + search.NosFiltWords("73,3",msg)
-            else :
-                result = search.NosFiltWords("35",msg)
+            else:
+                result = search.NosFiltWords("35,1",msg) + search.NosFiltWords("35,3",msg) + search.NosFiltWords("35,7",msg)
             text_message = TextSendMessage(text=result)
         else:
             result = search.Content_finder(msg)
