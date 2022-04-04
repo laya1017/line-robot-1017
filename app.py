@@ -247,16 +247,25 @@ def handle_message(event):
     elif "@" in event.message.text : # Use Content_finder function to find laws
         if "迴轉" in event.message.text: 
             event.message.text = (event.message.text).replace("迴轉"," 迴車")
+            result = Content_finder((event.message.text).replace("@",""))
+            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         elif "雙黃線" in event.message.text:
             event.message.text = (event.message.text).replace("雙黃線"," 分向限制線")
+            result = Content_finder((event.message.text).replace("@",""))
+            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         elif "兩段式" in event.message.text:
             event.message.text = (event.message.text).replace("兩段式"," 轉彎 不依標誌 標線 號誌指示")
+            result = Content_finder((event.message.text).replace("@",""))
+            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
+        else:
+            result = Content_finder((event.message.text).replace("@",""))
+            text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         # if "酒駕" in event.message.text:
         #     (event.message.text).replace("酒駕","酒精")
         # if "拒測" in event.message.text:
         #     (event.message.text).replace("拒測","酒精")
-        result = Content_finder((event.message.text).replace("@",""))
-        text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
+        # result = Content_finder((event.message.text).replace("@",""))
+        # text_message = TextSendMessage(text=Content_finder((event.message.text).replace("@","")))
         line_bot_api.reply_message(event.reply_token,text_message)
     elif "$" in event.message.text : # Use number function to find laws
         words = (event.message.text).replace("$","")
