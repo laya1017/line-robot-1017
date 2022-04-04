@@ -344,22 +344,19 @@ def handle_message(event):
             msg = msg.replace("雙黃","分向限制線、禁止超車線")
             result = search.NosFiltWords("33,1,7",msg) + search.NosFiltWords("49",msg) + search.NosFiltWords("54,,3",msg).strip("\n")
             text_message = TextSendMessage(text=result)
-        elif "兩段式" in msg or "兩段" in msg:
-            result = search.getByNos("48,1,2") + search.getByNos("73,1,3").strip("\n")
+        elif "兩段式" in msg or "兩段" in msg :
+            if "慢車" in msg :
+                result  =search.getByNos("73,1,3").strip("\n")
+                text_message = TextSendMessage(text=result)
+            else:
+                result = search.getByNos("48,1,2") + search.getByNos("73,1,3").strip("\n")
+                text_message = TextSendMessage(text=result)
+        elif "逆向" in msg or "停車" or "臨停" or "違停" or "行駛":
+            msg = msg.replace("逆向","")
+            msg = msg.replace("臨停","臨時停車")
+            msg = msg.replace("違停","停車")
+            result = search.NosFiltWords("45,1,1",msg) + search.NosFiltWords("45,1,3",msg) +search.NosFiltWords("55",msg) + search.NosFiltWords("56",msg) + search.NosFiltWords("74,1,2",msg).strip("\n")
             text_message = TextSendMessage(text=result)
-        elif "逆向" in msg :
-            if "停" in msg:
-                result = search.Content_finder("不依順行之方向，或不緊靠道路右側") + "\n" + search.Content_finder("不依順行方向，或不緊靠道路右側")
-                text_message = TextSendMessage(text=result)
-            elif "臨停" in msg :
-                result = search.Content_finder("不依順行之方向，或不緊靠道路右側")
-                text_message = TextSendMessage(text=result)
-            elif "停車" in msg or "違停" in msg:
-                result = search.Content_finder("不依順行方向，或不緊靠道路右側")
-                text_message = TextSendMessage(text=result)
-            elif "行駛" in msg:
-                result = search.getByNos("45,1,1") + search.getByNos("45,1,3")
-                text_message = TextSendMessage(text=result)
         elif "違停" in msg :
             result = search.getByNos("55") + search.getByNos("56")
             text_message = TextSendMessage(text=result)
