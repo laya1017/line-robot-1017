@@ -183,4 +183,15 @@ def NosFiltWords(Nos,words):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
-print(NosFiltWords("35",""))
+def NosListFiltWords(NosList,words):
+    temp = filtDfByNosLsit(NosList)
+    keys = words.split(" ")
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    result = []
+    for i in range(0,len(temp)):
+        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+    return "".join(result).strip("\n")
+print(NosListFiltWords(["第14條"],""))
