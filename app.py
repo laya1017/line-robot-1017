@@ -113,6 +113,9 @@ def callback():
         abort(400)
 
     return 'OK'
+@app.route('/Home')
+def index():
+    return 'Hi!!'
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
