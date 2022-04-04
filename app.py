@@ -314,6 +314,9 @@ def handle_message(event):
         elif "方向燈" in event.message.text or "大燈" in event.message.text or "霧燈" in event.message.text :
             result = getByNos("42").strip("\n")
             text_message = TextSendMessage(text=result)
+        elif "危險駕駛" in event.message.text or "危駕" in event.message.text :
+            result = getByNos("43").strip("\n")
+            text_message = TextSendMessage(text=result)
         else:
             result = Content_finder((event.message.text).replace("@",""))
             text_message = TextSendMessage(text=result)
