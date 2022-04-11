@@ -343,8 +343,8 @@ def handle_message(event):
                 reply = TextSendMessage(text=result)
             elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg or "超速" in msg :
                 if "超速" in msg :
-                    msg = msg.replace("超速","最高時速")
-                    result = search.NosFiltWords("40",msg) + "\n" + search.NosFiltWords("43,1",msg) + "\n" + search.NosFiltWords("72-1",msg)
+                    msg = msg.replace("超速","")
+                    result = search.NosFiltWords("40",msg + "時速") + "\n" + search.NosFiltWords("43,1",msg) + "\n" + search.NosFiltWords("72-1",msg)
                 else :
                     msg = msg.replace("危險駕駛","")
                     msg = msg.replace("危駕","")
