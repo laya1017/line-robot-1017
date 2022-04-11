@@ -283,10 +283,8 @@ def handle_message(event):
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
-                    reply = TextSendMessage(text=result)
                 else:
                     result = search.getByNos("48,1,2") + "\n" +search.getByNos("73,1,3")
-                    reply = TextSendMessage(text=result)
             elif "逆向" in msg or "停車" in msg or "臨停" in msg or "違停" in msg:
                 msg = msg.replace("臨停","臨時停車")
                 msg = msg.replace("違停","停車")
@@ -299,46 +297,33 @@ def handle_message(event):
                 else:
                     msg = msg.replace("逆向","")
                     result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg) + "\n" + search.getByNos("73,1,3")+"\n" + search.NosFiltWords("74,1,2",msg)+"\n" + search.getByNos("74,1,4")
-                reply = TextSendMessage(text=result)
             elif "紅" in msg:
                 if "右" in msg:
                     if "慢" in msg:
                         result = search.getByNos("74,1,1")
-                        reply = TextSendMessage(text=result)
                     elif "汽車" in msg or "機車" in msg:
                         result = search.getByNos("53,2")
-                        reply = TextSendMessage(text=result)
                     elif "大眾" in msg:
                         result = search.getByNos("53-1,2")
-                        reply = TextSendMessage(text=result)
                     else :
                         result = search.getByNos("53,2") + "\n" + search.getByNos("53-1,2") + "\n" + search.getByNos("74,1,1")
-                        reply = TextSendMessage(text=result)
                 elif "闖" in msg:
                     if "慢" in msg:
                         result = search.getByNos("74,1,1")
-                        reply = TextSendMessage(text=result)
                     elif "汽車" in msg or "機車" in msg:
                         result = search.getByNos("53,1")
-                        reply = TextSendMessage(text=result)
                     elif "大眾" in msg:
                         result = search.getByNos("53-1,1")
-                        reply = TextSendMessage(text=result)
                     else :
                         result = search.getByNos("53,1") + "\n" + search.getByNos("53-1,1") + "\n" + search.getByNos("74,1,1")
-                        reply = TextSendMessage(text=result)
                 elif "慢" in msg:
                     result = search.getByNos("74,1,1")
-                    reply = TextSendMessage(text=result)
                 elif "汽車" in msg or "機車" in msg:
                     result = search.getByNos("53")
-                    reply = TextSendMessage(text=result)
                 else :
                     result = search.getByNos("53") + search.getByNos("53-1")+ "\n" + search.getByNos("74,1,1")
-                    reply = TextSendMessage(text=result)
             elif "方向燈" in msg or "大燈" in msg or "霧燈" in msg :
                 result = search.getByNos("42")
-                reply = TextSendMessage(text=result)
             elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg or "超速" in msg :
                 if "超速" in msg :
                     msg = msg.replace("超速","")
@@ -370,14 +355,6 @@ def handle_message(event):
                     msg = msg.replace("毒駕","毒")
                     msg = msg.replace("毒","")
                     result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
-                reply = TextSendMessage(text=result)
-            elif "酒精" in msg and "鎖" in msg:
-                print(msg)
-                msg = msg.replace("酒精","")
-                msg = msg.replace("鎖","")
-                print(msg)
-                result = search.NosFiltWords("35-1",msg +" 點火自動")
-                reply = TextSendMessage(text=result)
             elif "無照" in msg :
                 msg = msg.replace("無照"," 未領有駕駛執照駕")
                 if "動力" in msg :
@@ -400,7 +377,6 @@ def handle_message(event):
             delete_data(uid)
             try :
                 result = result.lstrip().strip()
-                reply = TextSendMessage(text=result)
             except :
                 pass
             reply = TextSendMessage(text=result)
