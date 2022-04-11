@@ -279,6 +279,7 @@ def handle_message(event):
             reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
+            print(msg)
             msg = msg.replace("駕照","駕駛執照")
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
