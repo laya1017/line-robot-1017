@@ -366,14 +366,14 @@ def handle_message(event):
                     result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
                 reply = TextSendMessage(text=result)
             else:
-                reply = TextSendMessage(text=result)
-                if len(reply.replace("\n","").replace(" ","")) == 0 :
+                result = search.Content_finder(msg)
+                if len(result.replace("\n","").replace(" ","")) == 0 :
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
-                elif len(reply.replace("\n","").replace(" ","")) > 5000:
+                elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
                     result = search.Content_finder(msg)
-                # reply = TextSendMessage(text=result)
+                reply = TextSendMessage(text=result)
             delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 
