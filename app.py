@@ -376,7 +376,8 @@ def handle_message(event):
                 reply = TextSendMessage(text=result)
             delete_data(uid)
             try :
-                reply = reply.lstrip()
+                result = result.lstrip()
+                reply = TextSendMessage(text=result)
             except :
                 pass
     line_bot_api.reply_message(event.reply_token,reply)
