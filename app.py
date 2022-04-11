@@ -371,7 +371,8 @@ def handle_message(event):
                     msg = msg.replace("毒","")
                     result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
                 reply = TextSendMessage(text=result)
-            elif "酒精" in msg and "鎖" in msg:
+            elif "酒精鎖" in msg:
+                print(msg)
                 msg = msg.replace("酒精","")
                 msg = msg.replace("鎖","")
                 print(msg)
@@ -386,7 +387,7 @@ def handle_message(event):
                     result = search.Content_finder(msg) + "/n" + search.getByNos("32,1")+ "/n" + search.getByNos("92,7,3")
             elif "越級" in msg:
                 msg = msg.replace("越級"," 領有")
-                result = search.dContent_finder(msg,"未領有 未符 未依規定")
+                result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
             else:
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :

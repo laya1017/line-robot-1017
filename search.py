@@ -208,8 +208,13 @@ def NosListFiltWords(NosList,words):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
-# msg = ""
-# print(NosFiltWords("35-1",msg))
+# msg = "酒精鎖"
+# if "酒精" in msg and "鎖" in msg:
+#     msg = msg.replace("酒精","")
+#     msg = msg.replace("鎖","")
+#     print(msg)
+#     result = NosFiltWords("35-1",msg+" 點火自動")
+#     print(result)
 # commonWordToCorrectWord = {
 #             "雙黃線":"禁止超車", 
 #             "雙黃":"禁止超車",
