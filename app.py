@@ -168,8 +168,6 @@ def index():
     return render_template("index.html")
 line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
-headers = {"Authorization":"Bearer m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=","Content-Type":"application/json"}
-
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -374,8 +372,8 @@ def handle_message(event):
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
-                    result = search.Content_finder(msg)
-            print(result)
+                    pass
+            print(result,"最後了")
             delete_data(uid)
             try :
                 result = result.lstrip().strip()
