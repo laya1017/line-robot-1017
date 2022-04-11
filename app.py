@@ -277,7 +277,7 @@ def handle_message(event):
             reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
-            print(msg)
+            print(msg,"讀取到")
             msg = msg.replace("駕照","駕駛執照")
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
@@ -373,13 +373,14 @@ def handle_message(event):
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
                     pass
-            print(result,"最後了")
+            print(list(result),"倒數第二")
             delete_data(uid)
             try :
                 result = result.lstrip().strip()
             except :
                 pass
             reply = TextSendMessage(text=result)
+            print(result,"倒數第一")
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
