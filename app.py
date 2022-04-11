@@ -184,7 +184,7 @@ def callback():
         print("Invalid signature. Please check your channel access token/channel secret.")
         abort(400)
     return 'OK'
-@app.route("/")
+@app.route("/keepwake")
 def index():
     return render_template("index.html")
 @handler.add(MessageEvent, message=TextMessage)
@@ -279,6 +279,7 @@ def handle_message(event):
             reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
+            msg = msg.replace("駕照","駕駛執照")
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
@@ -370,6 +371,12 @@ def handle_message(event):
                     msg = msg.replace("毒","")
                     result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
                 reply = TextSendMessage(text=result)
+            elif "無照" in msg :
+                msg = msg.replace("無照"," 未領有駕駛執照駕")
+                result = search.Content_finder(msg)
+            elif "越級" in msg:
+                msg = msg.replace("越級"," 領有")
+                result = search.dContent_finder(msg,"未領有 未符 不依規定")
             else:
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
@@ -378,13 +385,13 @@ def handle_message(event):
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
                     result = search.Content_finder(msg)
-                reply = TextSendMessage(text=result)
             delete_data(uid)
             try :
                 result = result.lstrip().strip()
                 reply = TextSendMessage(text=result)
             except :
                 pass
+            reply = TextSendMessage(text=result)
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":

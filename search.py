@@ -119,6 +119,21 @@ def Content_finder(words,temp = df):
         result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
              "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
     return "".join(result).strip("\n")
+def dContent_finder(words,dwords,temp = df):
+    keys = words.split(" ")
+    dkeys = dwords.split(" ")
+
+    for key in keys :
+        condition = temp["Contents"].str.contains(key)
+        temp = temp[condition]
+    for dkey in dkeys :
+        dcondition = temp["Contents"].str.contains(dkey)
+        temp = temp[dcondition == False]
+    result = []
+    for i in range(0,len(temp)):
+        result.append(temp.index[i] + "：\n" + temp['Contents'][i] +
+             "\n處罰：" + temp["Punishment"][i].strip("\n") + "\n註記：\n" + temp["Remark"][i] + "\n")
+    return "".join(result).strip("\n")
 def filtDfByWords(words):
     temp = df
     keys = words.split(" ")
