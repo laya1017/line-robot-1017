@@ -366,6 +366,7 @@ def handle_message(event):
                 msg = msg.replace("越級"," 領有")
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
             else:
+                print(result,"最後的else")
                 result = search.Content_finder(msg)
                 print(result,"最後的else")
                 print(len(result.replace("\n","").replace(" ","")) == 0)
