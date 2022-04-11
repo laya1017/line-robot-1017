@@ -199,13 +199,9 @@ def handle_message(event):
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
-            # reply = TextSendMessage(text="關鍵字搜尋模式。\n請輸入關鍵字：")
-            print("有執行到這裡171")
         elif msg == "[條號搜尋模式]" :
             keep_state(uid,"nos_mode")
             reply = enter_nos_mode(event)
-            # reply = TextSendMessage(text="條號搜尋模式。\n先輸入第＿條：")
-            print("有執行到這裡")
         elif msg == "[[酒(毒)駕專區]]" :
             reply = TextSendMessage(text="Sorry 還沒開放喔!")
         elif msg == "[[應到案日期計算]]":
@@ -248,12 +244,10 @@ def handle_message(event):
                 change_var(uid, 'a', msg)
                 change_state(uid, "nos_mode+P")
                 reply = selects_nos_mode_P(event,uid,get_var(uid, 'a'))
-                # reply = TextSendMessage(text="第"+ get_var(uid, 'a') + "條" + "第＿項？")
             elif "項" not in "".join(search.getListByNos(msg)) and "款" in "".join(search.getListByNos(msg)):
                 change_var(uid,'a', msg)
                 change_state(uid, "nos_mode+S")
                 reply = selects_nos_mode_S(event,uid,get_var(uid, 'a'))
-                # reply = TextSendMessage(text="第"+ get_var(uid, 'a') + "第＿款？")
             elif "項" not in "".join(search.getListByNos(msg)) and "款" not in "".join(search.getListByNos(msg)) and search.getListByNos(msg) != []:
                 change_var(uid, 'a', msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')))
@@ -269,7 +263,6 @@ def handle_message(event):
                 change_var(uid,'p',msg)
                 change_state(uid, "nos_mode+P+S")
                 reply = selects_nos_mode_P_S(event,uid,get_var(uid, 'a'),get_var(uid, 'p'))
-                # reply = TextSendMessage(text="第"+ get_var(uid, 'a') + "條" + "第" + get_var(uid, 'p') + "項" + "第＿款？")
         elif datalist[0][2] == "nos_mode+P+S":
             if msg == "第"+get_var(uid, 'a')+"條第"+get_var(uid, 'p')+"項的所有法條" :
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')+','+get_var(uid,'p')))
@@ -297,9 +290,8 @@ def handle_message(event):
                 msg = msg.replace("臨停","臨時停車")
                 msg = msg.replace("違停","停車")
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
-                    msg += "順行"
+                    msg += " 順行"
                 msg = msg.replace("逆向","")
-                msg = msg.replace("行駛"," 來車道 遵行之方向行駛")
                 result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.NosFiltWords("74,1,2",msg)
                 reply = TextSendMessage(text=result)
             elif "紅" in msg:
@@ -326,7 +318,7 @@ def handle_message(event):
                     elif "大眾" in msg:
                         result = search.getByNos("53-1,1")
                         reply = TextSendMessage(text=result)
-                    else :                    
+                    else :
                         result = search.getByNos("53,1") + "\n" + search.getByNos("53-1,1") + "\n" + search.getByNos("74,1,1")
                         reply = TextSendMessage(text=result)
                 elif "慢" in msg:
@@ -336,7 +328,7 @@ def handle_message(event):
                     result = search.getByNos("53")
                     reply = TextSendMessage(text=result)
                 else :
-                    result = search.getByNos("53") + search.getByNos("53-1") + search.getByNos("74,1,1")
+                    result = search.getByNos("53") + search.getByNos("53-1")+ "\n" + search.getByNos("74,1,1")
                     reply = TextSendMessage(text=result)
             elif "方向燈" in msg or "大燈" in msg or "霧燈" in msg :
                 result = search.getByNos("42")
@@ -345,11 +337,13 @@ def handle_message(event):
                 if "超速" in msg :
                     msg = msg.replace("超速","")
                     result = search.NosFiltWords("40",msg + "時速") + "\n" + search.NosFiltWords("43,1",msg) + "\n" + search.NosFiltWords("72-1",msg)
+                elif "慢車" in msg :
+                    result = search.getByNos("72-1")
                 else :
                     msg = msg.replace("危險駕駛","")
                     msg = msg.replace("危駕","")
                     msg = msg.replace("危險駕車","")
-                    result = search.NosFiltWords("43",msg)
+                    result = search.getByNos("43") + "\n" +search.getByNos("73,1,4")
                 reply = TextSendMessage(text=result)
             elif "酒駕" in msg or "酒" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg or "累犯" in msg or "累" in msg :
                 msg = msg.replace("累犯","累")
@@ -382,11 +376,6 @@ def handle_message(event):
                 # reply = TextSendMessage(text=result)
             delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
-# def nos_mode(event,nos,uid):
-#     nos = event.message.text
-#     delete_data(uid)
-#      return TextSendMessage(text=search.getByNos(nos))
-#             reply = TextSendMessage(text="現在是條號搜尋")
     
 
 if __name__ == "__main__":
