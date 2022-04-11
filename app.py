@@ -375,8 +375,7 @@ def handle_message(event):
                     result = search.Content_finder(msg)
                 # reply = TextSendMessage(text=result)
             delete_data(uid)
-    line_bot_api.reply_message(event.reply_token,reply)
-    
+    line_bot_api.reply_message(event.reply_token,reply.lstrip().replace(" ","").strip())
 
 if __name__ == "__main__":
     app.run()
