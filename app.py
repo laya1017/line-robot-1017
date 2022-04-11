@@ -277,9 +277,7 @@ def handle_message(event):
             reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
-            print(msg,"讀取到")
             msg = msg.replace("駕照","駕駛執照")
-            print(msg,"變換過")
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
@@ -341,8 +339,7 @@ def handle_message(event):
                 msg = msg.replace("累","十年")
                 if "拒測" in msg :
                     msg = msg.replace("拒測","")
-                    msg = msg.replace("酒駕","酒")
-                    msg = msg.replace("酒","")
+                    msg = msg.replace("酒駕","")
                     msg = msg.replace("毒駕","毒")
                     msg = msg.replace("毒","")
                     msg = msg.replace("拒測","")
@@ -354,6 +351,10 @@ def handle_message(event):
                     msg = msg.replace("毒駕","毒")
                     msg = msg.replace("毒","")
                     result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
+            elif "酒精" in msg and "鎖" in msg :
+                msg = msg.replace("酒精","")
+                msg = msg.replace("鎖","")
+                result = search.NosFiltWords("35-1",msg + " 車輛點火自動鎖定裝置")
             elif "無照" in msg :
                 msg = msg.replace("無照"," 未領有駕駛執照駕")
                 if "動力" in msg :
@@ -377,7 +378,6 @@ def handle_message(event):
                     result = search.Content_finder(msg)
             delete_data(uid)
             reply = TextSendMessage(text=result)
-            print(search.Content_finder("酒雞"))
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
