@@ -379,7 +379,7 @@ def handle_message(event):
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
-                    pass
+                    result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
             print(list(result),"倒數第二")
             delete_data(uid)
             reply = TextSendMessage(text=result)
