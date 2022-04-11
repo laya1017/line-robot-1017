@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, abort
+from flask import Flask, request, abort, render_template
 from linebot import (
     LineBotApi, WebhookHandler
 )
