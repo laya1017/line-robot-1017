@@ -292,12 +292,12 @@ def handle_message(event):
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg = msg.replace("逆向","")
                     msg += " 順行"
-                    result = search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.NosFiltWords("73",msg)
+                    result = search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.getByNos("73,1,3")+"\n" + search.getByNos("74,1,4")
                 elif "行駛" in msg and "逆向" in msg :
                     result = search.getByNos("45,1,1") + "\n" + search.getByNos("45,1,3") + "\n" +search.NosFiltWords("74,1,2",msg)
                 else:
                     msg = msg.replace("逆向","")
-                    result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.NosFiltWords("74,1,2",msg)
+                    result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg) + "\n" + search.getByNos("73,1,3")+"\n" + search.NosFiltWords("74,1,2",msg)+"\n" + search.getByNos("74,1,4")
                 reply = TextSendMessage(text=result)
             elif "紅" in msg:
                 if "右" in msg:
