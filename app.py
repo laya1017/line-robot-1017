@@ -279,6 +279,7 @@ def handle_message(event):
         elif datalist[0][2] == "txt_mode":
             print(msg,"讀取到")
             msg = msg.replace("駕照","駕駛執照")
+            print(msg,"變換過")
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
@@ -377,7 +378,6 @@ def handle_message(event):
                     result = search.Content_finder(msg)
             delete_data(uid)
             reply = TextSendMessage(text=result)
-            print(reply)
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
