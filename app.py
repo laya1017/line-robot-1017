@@ -376,7 +376,7 @@ def handle_message(event):
                 reply = TextSendMessage(text=result)
             delete_data(uid)
             try :
-                result = result.lstrip()
+                result = result.lstrip().strip()
                 reply = TextSendMessage(text=result)
             except :
                 pass
