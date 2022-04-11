@@ -336,7 +336,7 @@ def handle_message(event):
                     msg = msg.replace("危險駕車","")
                     result = search.getByNos("43") + "\n" +search.getByNos("73,1,4")
                 reply = TextSendMessage(text=result)
-            elif "酒駕" in msg or "酒" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg or "累犯" in msg or "累" in msg :
+            elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg or "累犯" in msg or "累" in msg :
                 msg = msg.replace("累犯","累")
                 msg = msg.replace("累","十年")
                 if "拒測" in msg :
@@ -347,9 +347,8 @@ def handle_message(event):
                     msg = msg.replace("毒","")
                     msg = msg.replace("拒測","")
                     result = search.NosFiltWords("35,4",msg) + "\n" + search.NosFiltWords("35,5",msg) + "\n" + search.NosFiltWords("73,3",msg)
-                elif "酒駕" in msg or "酒" in msg:
-                    msg = msg.replace("酒駕","酒")
-                    msg = msg.replace("酒","")
+                elif "酒駕" in msg:
+                    msg = msg.replace("酒駕","")
                     result = search.NosFiltWords("35,1",msg) + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg) + "\n" + search.NosFiltWords("35,8",msg) + "\n" + search.NosFiltWords("73,2",msg)
                 elif "毒駕" in msg or "毒" in msg:
                     msg = msg.replace("毒駕","毒")
