@@ -375,6 +375,10 @@ def handle_message(event):
                     result = search.Content_finder(msg)
                 reply = TextSendMessage(text=result)
             delete_data(uid)
+            try :
+                reply = reply.lstrip()
+            except :
+                pass
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
