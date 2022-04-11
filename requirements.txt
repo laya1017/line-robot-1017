@@ -6,3 +6,4 @@ requests
 SQLAlchemy
 Flask-SQLAlchemy
 sqlparse
+psycopg2
