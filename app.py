@@ -278,10 +278,6 @@ def handle_message(event):
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
             print(msg,"讀取到")
-            count = 1
-            for i in search.Content_finder(msg):
-                print(count,i)
-                count += 1
             msg = msg.replace("駕照","駕駛執照")
             if "兩段式" in msg or "兩段" in msg :
                 if "慢車" in msg :
@@ -370,19 +366,18 @@ def handle_message(event):
                 msg = msg.replace("越級"," 領有")
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
             else:
-                print(result,"最後的else")
                 result = search.Content_finder(msg)
                 print(result,"最後的else")
                 print(len(list(result.replace("\n","").replace(" ",""))) == 0)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
-
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
-                    result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
+                    result = search.Content_finder(msg)
             delete_data(uid)
             reply = TextSendMessage(text=result)
+            print(reply)
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
