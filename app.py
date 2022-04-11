@@ -299,6 +299,7 @@ def handle_message(event):
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg += "順行"
                 msg = msg.replace("逆向","")
+                msg = msg.replace("行駛"," 來車道 遵行之方向行駛")
                 result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.NosFiltWords("74,1,2",msg)
                 reply = TextSendMessage(text=result)
             elif "紅" in msg:
@@ -343,7 +344,7 @@ def handle_message(event):
             elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg or "超速" in msg :
                 if "超速" in msg :
                     msg = msg.replace("超速","最高時速")
-                    result = search.NosFiltWords("40",msg) + "\n" + search.NosFiltWords("43,1",msg)
+                    result = search.NosFiltWords("40",msg) + "\n" + search.NosFiltWords("43,1",msg) + "\n" + search.NosFiltWords("72-1",msg)
                 else :
                     msg = msg.replace("危險駕駛","")
                     msg = msg.replace("危駕","")
