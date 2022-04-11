@@ -368,7 +368,9 @@ def handle_message(event):
             else:
                 result = search.Content_finder(msg)
                 print(result,"最後的else")
+                print(len(result.replace("\n","").replace(" ","")) == 0)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
+
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
