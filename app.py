@@ -372,7 +372,7 @@ def handle_message(event):
                 print(result,"最後的else")
                 result = search.Content_finder(msg)
                 print(result,"最後的else")
-                print(len(result.replace("\n","").replace(" ","")) == 0)
+                print(len(list(result.replace("\n","").replace(" ",""))) == 0)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
 
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
@@ -380,7 +380,7 @@ def handle_message(event):
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
                     pass
-            print(list(result.replace("\n","").replace(" ","")),"倒數第二")
+            print(list(result),"倒數第二")
             delete_data(uid)
             reply = TextSendMessage(text=result)
             print(list(result),"倒數第一")
