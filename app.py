@@ -375,6 +375,7 @@ def handle_message(event):
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 else:
                     result = search.Content_finder(msg)
+            print(result)
             delete_data(uid)
             try :
                 result = result.lstrip().strip()
