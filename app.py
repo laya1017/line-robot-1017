@@ -289,12 +289,12 @@ def handle_message(event):
             elif "逆向" in msg or "停車" in msg or "臨停" in msg or "違停" in msg or "行駛" in msg:
                 msg = msg.replace("臨停","臨時停車")
                 msg = msg.replace("違停","停車")
-                msg = msg.replace("逆向","")
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg += " 順行"
                 elif "行駛" in msg and "逆向" in msg :
                     result = search.getByNos("45,1,1") + "\n" + search.getByNos("45,1,3") + "\n" +search.NosFiltWords("74,1,2",msg)
                 else:
+                    msg = msg.replace("逆向","")
                     result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.NosFiltWords("74,1,2",msg)
                 reply = TextSendMessage(text=result)
             elif "紅" in msg:
