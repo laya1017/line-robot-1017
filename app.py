@@ -372,8 +372,8 @@ def handle_message(event):
                     result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
                 reply = TextSendMessage(text=result)
             elif "酒精" in msg and "鎖" in msg:
-                msg = msg.replace("酒精","")
-                msg = msg.replace("鎖","")
+                msg = msg.replace("酒精"," ")
+                msg = msg.replace("鎖"," ")
                 result = search.NosFiltWords("35-1",msg)
             elif "無照" in msg :
                 msg = msg.replace("無照"," 未領有駕駛執照駕")
