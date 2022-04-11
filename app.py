@@ -152,18 +152,20 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+ var + " FROM userstate  WHERE uid = '"+ uid +"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 
-@app.route('/')
-def addtable():
-    sql = """
-    CREATE TABLE userstate(
-    id serial NOT NULL,
-    uid character varying(50) NOT NULL,
-    state character varying(10),
-    PRIMARY KEY(id))
-    """
-    db.engine.execute(sql)
-    return "ok"
-
+# @app.route('/')
+# def addtable():
+#     sql = """
+#     CREATE TABLE userstate(
+#     id serial NOT NULL,
+#     uid character varying(50) NOT NULL,
+#     state character varying(10),
+#     PRIMARY KEY(id))
+#     """
+#     db.engine.execute(sql)
+#     return "ok"
+@app.route("/")
+def index():
+    return render_template("index.html")
 line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
 headers = {"Authorization":"Bearer m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=","Content-Type":"application/json"}
@@ -184,9 +186,7 @@ def callback():
         print("Invalid signature. Please check your channel access token/channel secret.")
         abort(400)
     return 'OK'
-@app.route("/keepwake")
-def index():
-    return render_template("index.html")
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
@@ -376,7 +376,7 @@ def handle_message(event):
                 result = search.Content_finder(msg)
             elif "越級" in msg:
                 msg = msg.replace("越級"," 領有")
-                result = search.dContent_finder(msg,"未領有 未符 不依規定")
+                result = search.dContent_finder(msg,"未領有 未符 未依規定")
             else:
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
