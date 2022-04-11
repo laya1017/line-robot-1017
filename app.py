@@ -367,11 +367,6 @@ def handle_message(event):
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
             else:
                 result = search.Content_finder(msg)
-                try :
-                    while list(result)[0] == "\n"
-                        result = result.lstrip().strip()
-                except :
-                    continue
                 print(result,"最後的else")
                 if len(result.replace("\n","").replace(" ","")) == 0 :
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
@@ -381,7 +376,6 @@ def handle_message(event):
                     pass
             print(list(result.replace("\n","").replace(" ","")),"倒數第二")
             delete_data(uid)
-
             reply = TextSendMessage(text=result)
             print(result,"倒數第一")
     line_bot_api.reply_message(event.reply_token,reply)
