@@ -374,6 +374,7 @@ def handle_message(event):
             elif "酒精" in msg and "鎖" in msg:
                 msg = msg.replace("酒精","")
                 msg = msg.replace("鎖","")
+                print(msg)
                 result = search.NosFiltWords("35-1",msg+" 點火自動")
             elif "無照" in msg :
                 msg = msg.replace("無照"," 未領有駕駛執照駕")
