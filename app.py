@@ -365,6 +365,9 @@ def handle_message(event):
             elif "越級" in msg:
                 msg = msg.replace("越級"," 領有")
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
+            elif "\n" in list(result)[0]:
+                print(list(result),"去除頭部的n")
+                result = result.lstrip()
             else:
                 print(result,"最後的else")
                 result = search.Content_finder(msg)
@@ -380,7 +383,7 @@ def handle_message(event):
             print(list(result.replace("\n","").replace(" ","")),"倒數第二")
             delete_data(uid)
             reply = TextSendMessage(text=result)
-            print(result,"倒數第一")
+            print(list(result),"倒數第一")
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
