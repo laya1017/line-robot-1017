@@ -47,13 +47,13 @@ def listBySub(S = ""):
     return unique
 def getByNos(Nos):
     keys = Nos.split(",")
-    a = keys[0]
+    a = keys[0].replace(" ","")
     try:
-        p = keys[1]
+        p = keys[1].replace(" ","")
     except IndexError:
         p = ""
     try:
-        s = keys[2]
+        s = keys[2].replace(" ","")
     except IndexError:
         s = "" 
     A = listByArticle(a)
@@ -76,7 +76,7 @@ def getByNos(Nos):
         else:
             result = list(set(A))
     result.sort(key = sort.index)
-    return getText(result)
+    return getText(result).strip("\n")
 def getListByNos(Nos):
     keys = Nos.split(",")
     a = keys[0]
@@ -218,4 +218,3 @@ def NosListFiltWords(NosList,words):
 #             "酒駕":" ",
 #             "酒":" ",
 # }
-# print(df[towLevelTurn])

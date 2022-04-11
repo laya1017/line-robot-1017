@@ -2,5 +2,7 @@ line-bot-sdk
 gunicorn
 flask
 pandas
-APScheduler == 3.9.1
 requests
+SQLAlchemy
+Flask-SQLAlchemy
+sqlparse
