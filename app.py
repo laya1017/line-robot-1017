@@ -325,14 +325,14 @@ def handle_message(event):
                     msg = msg.replace("危險駕車","")
                     result = search.getByNos("43") + "\n" +search.getByNos("73,1,4")
                 reply = TextSendMessage(text=result)
-            elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg or "累犯" in msg or "累" in msg :
+            elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
                 msg = msg.replace("累","十年")
                 if "拒測" in msg :
                     msg = msg.replace("拒測","")
                     msg = msg.replace("酒駕","")
                     msg = msg.replace("毒駕","毒")
-                    msg = msg.replace("毒","")
+                    msg = msg.replace("毒","藥")
                     msg = msg.replace("拒測","")
                     result = search.NosFiltWords("35,4",msg) + "\n" + search.NosFiltWords("35,5",msg) + "\n" + search.NosFiltWords("73,3",msg)
                 elif "酒駕" in msg:
@@ -359,14 +359,12 @@ def handle_message(event):
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
             else:
                 result = search.Content_finder(msg)
-                print(result,"最後的else")
-                print(len(list(result.replace("\n","").replace(" ",""))) == 0)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
                     result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
-                    result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
+                    result = "查詢的內容太多了，請重新輸入關鍵字。"
                 else:
-                    result = search.Content_finder(msg)
+                    pass
             delete_data(uid)
             reply = TextSendMessage(text=result)
     line_bot_api.reply_message(event.reply_token,reply)
