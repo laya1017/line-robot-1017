@@ -256,6 +256,8 @@ def handle_message(event):
                 reply = TextSendMessage(text="已離開條號搜尋模式。")
             elif "txt_mode" in datalist[0][2]:
                 reply = TextSendMessage(text="已離開關鍵字搜尋模式。")
+            else :
+                reply = TextSendMessage(text="已離開~")
             delete_data(uid)
         elif datalist[0][2] == "QnA":
             if msg == "處罰機關如何判斷？":
@@ -428,8 +430,6 @@ def handle_message(event):
                     original_content_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg',
                     preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg')
                 delete_data(uid)
-            elif "Exit" in msg:
-                reply = TextSendMessage(text="已離開~")
             else:
                 reply = TextSendMessage(text="已離開~")
                 delete_data(uid)
