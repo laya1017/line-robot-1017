@@ -34,16 +34,16 @@ def enter_txt_mode(event):
         quick_reply=QuickReply(
             items=[
             QuickReplyButton(action=MessageAction(label="駕照", text="駕照")),
-            QuickReplyButton(action=MessageAction(label="駕照 吊扣(可改為吊銷)", text="駕照 吊扣")),
-            QuickReplyButton(action=MessageAction(label="牌照 吊扣(可改為吊銷)", text="牌照 吊扣")),
-            QuickReplyButton(action=MessageAction(label="酒駕(可加空白鍵輸入累犯或慢車)", text="酒駕")),
-            QuickReplyButton(action=MessageAction(label="拒測(可加空白鍵輸入累犯或慢車)", text="拒測")),
-            QuickReplyButton(action=MessageAction(label="逆向 行駛(可以改為停車or臨停)", text="逆向 行駛")),
+            QuickReplyButton(action=MessageAction(label="駕照 吊扣(可改吊銷)", text="駕照 吊扣")),
+            QuickReplyButton(action=MessageAction(label="牌照 吊扣(可改吊銷)", text="牌照 吊扣")),
+            QuickReplyButton(action=MessageAction(label="酒駕(可加空白鍵輸入累犯)", text="酒駕")),
+            QuickReplyButton(action=MessageAction(label="拒測(可加空白鍵輸入累犯)", text="拒測")),
+            QuickReplyButton(action=MessageAction(label="逆向 行駛(可以改為停車)", text="逆向 行駛")),
             QuickReplyButton(action=MessageAction(label="兩段式", text="兩段式")),
-            QuickReplyButton(action=MessageAction(label="紅燈(可加空白鍵輸入右轉或慢車)", text="紅燈")),
+            QuickReplyButton(action=MessageAction(label="紅燈(可加空白鍵右轉 慢車)", text="紅燈")),
             QuickReplyButton(action=MessageAction(label="酒精鎖", text="酒精鎖")),
             QuickReplyButton(action=MessageAction(label="危險駕車", text="危險駕車")),
-            QuickReplyButton(action=MessageAction(label="肇事 逃逸(或未依規定處置) 受傷", text="肇事 逃逸 受傷")),
+            QuickReplyButton(action=MessageAction(label="肇事 逃逸 受傷", text="肇事 逃逸 受傷")),
             QuickReplyButton(action=MessageAction(label="肇事 未依規定處置 無人受傷(三個關鍵詞)", text="肇事 未依規定處置 無人受傷")),
             QuickReplyButton(action=MessageAction(label="不服稽查 逃逸", text="不服稽查 逃逸"))]),
         template=ButtonsTemplate(
