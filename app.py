@@ -200,21 +200,15 @@ line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS
 handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-
-    # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
-    # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         print("Invalid signature. Please check your channel access token/channel secret.")
         abort(400)
     return 'OK'
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
@@ -426,7 +420,9 @@ def handle_message(event):
                 reply = TextSendMessage(text="還在研發中，請見諒。")
                 delete_data(uid)
             elif "The Newist Announcement" in msg:
-                reply = TextSendMessage(text="還在研發中，請見諒。")
+                reply = ImageSendMessage(
+                    original_content_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg',
+                    preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg')
                 delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 
