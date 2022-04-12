@@ -45,7 +45,7 @@ def enter_txt_mode(event):
             QuickReplyButton(action=MessageAction(label="危險駕車", text="危險駕車")),
             QuickReplyButton(action=MessageAction(label="肇事 逃逸(或未依規定處置) 受傷", text="肇事 逃逸 受傷")),
             QuickReplyButton(action=MessageAction(label="肇事 未依規定處置 無人受傷(三個關鍵詞)", text="肇事 未依規定處置 無人受傷")),
-            QuickReplyButton(action=MessageAction(label="不服稽查 逃逸", text="不服稽查 逃逸"))])
+            QuickReplyButton(action=MessageAction(label="不服稽查 逃逸", text="不服稽查 逃逸"))]),
         template=ButtonsTemplate(
             title="關鍵字搜尋模式。\n請輸入關鍵字：",
             text='1.若要繼續查詢則直接輸入\n2.空白區隔關鍵字可使用多條件查詢\n3.下方按鈕為範例',
