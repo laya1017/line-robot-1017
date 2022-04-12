@@ -247,6 +247,7 @@ def handle_message(event):
                 delete_data(uid)
             elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+ msg)):
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ',' msg))
+                delete_data(uid)
             else:
                 change_var(uid,'p',msg)
                 change_state(uid, "nos_mode+P+S")
