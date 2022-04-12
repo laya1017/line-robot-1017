@@ -351,9 +351,9 @@ def handle_message(event):
                 if "動力" in msg :
                     result = search.getByNos("32,1")
                 elif "大型" in msg:
-                    result = search.Content_finder(msg) + "/n" + search.NosFiltWords("92,7,3",msg)
+                    result = search.Content_finder(msg) + "\n" + search.NosFiltWords("92,7,3",msg)
                 else:
-                    result = search.Content_finder(msg) + "/n" + search.getByNos("32,1")+ "/n" + search.getByNos("92,7,3")
+                    result = search.Content_finder(msg) + "\n" + search.getByNos("32,1")+ "\n" + search.getByNos("92,7,3")
             elif "越級" in msg:
                 msg = msg.replace("越級"," 領有")
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
