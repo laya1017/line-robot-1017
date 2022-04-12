@@ -151,18 +151,6 @@ def change_var(uid, var, msg):
 def get_var(uid, var):
     sql_cmd = "SELECT "+ var + " FROM userstate  WHERE uid = '"+ uid +"'"
     return list(db.engine.execute(sql_cmd))[0][0]
-
-# @app.route('/')
-# def addtable():
-#     sql = """
-#     CREATE TABLE userstate(
-#     id serial NOT NULL,
-#     uid character varying(50) NOT NULL,
-#     state character varying(10),
-#     PRIMARY KEY(id))
-#     """
-#     db.engine.execute(sql)
-#     return "ok"
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -268,6 +256,9 @@ def handle_message(event):
             elif msg == "Previous-nos_mode_P":
                 change_state(uid, "nos_mode+P")
                 reply = selects_nos_mode_P(event,uid,get_var(uid, 'a'))
+            elif "款" not in "".join(search.getListByNos(get_var(uid, 'a'), get_var(uid, 'p'))):
+                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'p')))
+                delete_data(uid)
             else:
                 change_var(uid,'s',msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ',' +get_var(uid,'p')+ ','+get_var(uid,'s')))
@@ -278,14 +269,14 @@ def handle_message(event):
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
             msg = msg.replace("駕照","駕駛執照")
-            if "兩段式" in msg or "兩段" in msg :
+            msg = msg.replace("臨停","臨時停車")
+            msg = msg.replace("違停","停車")
+            if "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
                 else:
                     result = search.getByNos("48,1,2") + "\n" +search.getByNos("73,1,3")
-            elif "逆向" in msg or "停車" in msg or "臨停" in msg or "違停" in msg:
-                msg = msg.replace("臨停","臨時停車")
-                msg = msg.replace("違停","停車")
+            elif "逆向" in msg :
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg = msg.replace("逆向","")
                     msg += " 順行"
@@ -294,7 +285,7 @@ def handle_message(event):
                     result = search.getByNos("45,1,1") + "\n" + search.getByNos("45,1,3") + "\n" +search.NosFiltWords("74,1,2",msg)
                 else:
                     msg = msg.replace("逆向","")
-                    result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg) + "\n" + search.getByNos("73,1,3")+"\n" + search.NosFiltWords("74,1,2",msg)+"\n" + search.getByNos("74,1,4")
+                    result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55,,4",msg)+"\n" + search.NosFiltWords("56,1,6",msg) + "\n" + search.NosFiltWords("73,1,3",msg)+"\n" + search.NosFiltWords("74,1,2",msg)+"\n" + search.NosFiltWords("73,1,3",msg).strip()
             elif "紅" in msg:
                 if "右" in msg:
                     if "慢" in msg:
