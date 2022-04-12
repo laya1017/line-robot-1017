@@ -15,6 +15,8 @@ import pandas as pd
 df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
+app = Flask(__name__)
+##Columns
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
         template=ButtonsTemplate(
@@ -149,7 +151,30 @@ def selects_nos_mode_P_S(event,uid,Nos,NosP):
             ]
         ))
     return reply
-app = Flask(__name__)
+##Columns
+
+##dwiNdwdZone
+def dwiNdwdenterButtons(event):
+    reply = TemplateSendMessage(alt_text="酒(毒)駕專區",
+        template=ButtonsTemplate(
+            title="酒(毒)駕專區",
+            text='請點選下面按鈕',
+            actions=[
+                MessageAction(
+                    label="取締酒(毒)駕規定",
+                    text="DWI and DUD"
+                    ),
+                MessageAction(
+                    label='員警告發須知(最新修訂)',
+                    text='The Newist Announcement'
+                    )
+            ]
+        ))
+    return reply
+
+##dwiNdwdZone
+
+##SQL CMD
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://hbisksmwaizgve:c13df8043f36aa6c9a985dca8d1d373c60d76453286bcc62f7055958fe799f4d@ec2-34-231-63-30.compute-1.amazonaws.com:5432/dc0ift2b69djpl"
 db = SQLAlchemy(app)
 def delete_data(uid):
@@ -167,6 +192,7 @@ def change_var(uid, var, msg):
 def get_var(uid, var):
     sql_cmd = "SELECT "+ var + " FROM userstate  WHERE uid = '"+ uid +"'"
     return list(db.engine.execute(sql_cmd))[0][0]
+##SQL CMD
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -205,7 +231,8 @@ def handle_message(event):
             keep_state(uid,"nos_mode")
             reply = enter_nos_mode(event)
         elif msg == "[[酒(毒)駕專區]]" :
-            reply = TextSendMessage(text="Sorry 還沒開放喔!")
+            keep_state(uid,"dwiNdwdenterButtons")
+            reply = dwiNdwdenterButtons(event)
         elif msg == "[[應到案日期計算]]":
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
@@ -394,6 +421,13 @@ def handle_message(event):
             except:
                 pass
             reply = TextSendMessage(text=result)
+        elif datalist[0][2] == "dwiNdwdenterButtons":
+            if "DWI and DUD" in msg:
+                reply = TextSendMessage(text="還在研發中，請見諒。")
+                delete_data(uid)
+            elif "The Newist Announcement" in msg:
+                reply = TextSendMessage(text="還在研發中，請見諒。")
+                delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
