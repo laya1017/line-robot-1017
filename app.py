@@ -29,7 +29,23 @@ def enter_nos_mode(event):
         ))
     return reply
 def enter_txt_mode(event):
-    reply = TemplateSendMessage(alt_text="關鍵字搜尋模式。\n請輸入關鍵字：",
+    reply = TemplateSendMessage(
+        alt_text="關鍵字搜尋模式。\n請輸入關鍵字：",
+        quick_reply=QuickReply(
+            items=[
+            QuickReplyButton(action=MessageAction(label="駕照", text="駕照")),
+            QuickReplyButton(action=MessageAction(label="駕照 吊扣(可改為吊銷)", text="駕照 吊扣")),
+            QuickReplyButton(action=MessageAction(label="牌照 吊扣(可改為吊銷)", text="牌照 吊扣")),
+            QuickReplyButton(action=MessageAction(label="酒駕(可加空白鍵輸入累犯或慢車)", text="酒駕")),
+            QuickReplyButton(action=MessageAction(label="拒測(可加空白鍵輸入累犯或慢車)", text="拒測")),
+            QuickReplyButton(action=MessageAction(label="逆向 行駛(可以改為停車or臨停)", text="逆向 行駛")),
+            QuickReplyButton(action=MessageAction(label="兩段式", text="兩段式")),
+            QuickReplyButton(action=MessageAction(label="紅燈(可加空白鍵輸入右轉或慢車)", text="紅燈")),
+            QuickReplyButton(action=MessageAction(label="酒精鎖", text="酒精鎖")),
+            QuickReplyButton(action=MessageAction(label="危險駕車", text="危險駕車")),
+            QuickReplyButton(action=MessageAction(label="肇事 逃逸(或未依規定處置) 受傷", text="肇事 逃逸 受傷")),
+            QuickReplyButton(action=MessageAction(label="肇事 未依規定處置 無人受傷(三個關鍵詞)", text="肇事 未依規定處置 無人受傷")),
+            QuickReplyButton(action=MessageAction(label="不服稽查 逃逸", text="不服稽查 逃逸"))])
         template=ButtonsTemplate(
             title="關鍵字搜尋模式。\n請輸入關鍵字：",
             text='1.若要繼續查詢則直接輸入\n2.空白區隔關鍵字可使用多條件查詢',
@@ -269,6 +285,8 @@ def handle_message(event):
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
             msg = msg.replace("駕照","駕駛執照")
+            msg = msg.replace("車牌","牌照")
+            msg = msg.replace("號牌","牌照")
             msg = msg.replace("臨停","臨時停車")
             msg = msg.replace("違停","停車")
             if "兩段" in msg :
@@ -286,6 +304,8 @@ def handle_message(event):
                 else:
                     msg = msg.replace("逆向","")
                     result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55,,4",msg)+"\n" + search.NosFiltWords("56,1,6",msg) + "\n" + search.NosFiltWords("73,1,3",msg)+"\n" + search.NosFiltWords("74,1,2",msg)+"\n" + search.NosFiltWords("73,1,3",msg).strip()
+            elif "牌照" in msg:
+                result = search.NosFiltWords("12",msg) + "\n" + search.NosFiltWords("13",msg) + "\n" + search.NosFiltWords("14",msg) + "\n" + search.NosFiltWords("15",msg)
             elif "紅" in msg:
                 if "右" in msg:
                     if "慢" in msg:
@@ -327,7 +347,7 @@ def handle_message(event):
                 reply = TextSendMessage(text=result)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
-                msg = msg.replace("累","十年")
+                msg = msg.replace("累","年內")
                 if "拒測" in msg :
                     msg = msg.replace("拒測","")
                     msg = msg.replace("酒駕","")
@@ -357,6 +377,9 @@ def handle_message(event):
             elif "越級" in msg:
                 msg = msg.replace("越級"," 領有")
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
+            elif "不服稽查" in msg:
+                msg = msg.replace("不服稽查","")
+                result = search.NosFiltWords("60,1",msg) + "\n" + search.NosFiltWords("60,2,1",msg)
             else:
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
