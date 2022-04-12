@@ -366,6 +366,10 @@ def handle_message(event):
                 else:
                     pass
             delete_data(uid)
+            try:
+                result = result.lstrip().strip()
+            except:
+                pass
             reply = TextSendMessage(text=result)
     line_bot_api.reply_message(event.reply_token,reply)
 
