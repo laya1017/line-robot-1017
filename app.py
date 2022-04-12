@@ -430,10 +430,9 @@ def handle_message(event):
                 delete_data(uid)
             elif "Exit" in msg:
                 reply = TextSendMessage(text="已離開~")
+            else:
+                reply = TextSendMessage(text="已離開~")
                 delete_data(uid)
-            # else:
-            #     reply = TextSendMessage(text="已離開~")
-            #     delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
