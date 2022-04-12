@@ -245,6 +245,8 @@ def handle_message(event):
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')))
                 delete_data(uid)
+            elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+ msg)):
+                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ',' msg))
             else:
                 change_var(uid,'p',msg)
                 change_state(uid, "nos_mode+P+S")
@@ -256,9 +258,6 @@ def handle_message(event):
             elif msg == "Previous-nos_mode_P":
                 change_state(uid, "nos_mode+P")
                 reply = selects_nos_mode_P(event,uid,get_var(uid, 'a'))
-            elif "款" not in "".join(search.getListByNos(get_var(uid, 'a'), get_var(uid, 'p'))):
-                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'p')))
-                delete_data(uid)
             else:
                 change_var(uid,'s',msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ',' +get_var(uid,'p')+ ','+get_var(uid,'s')))
