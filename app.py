@@ -167,6 +167,10 @@ def dwiNdwdenterButtons(event):
                 MessageAction(
                     label='員警告發須知(最新修訂)',
                     text='The Newist Announcement'
+                    ),
+                MessageAction(
+                    label='離開',
+                    text='Exit'
                     )
             ]
         ))
@@ -423,6 +427,12 @@ def handle_message(event):
                 reply = ImageSendMessage(
                     original_content_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg',
                     preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg')
+                delete_data(uid)
+            elif "Exit" in msg:
+                reply = TextSendMessage(text="已離開~")
+                delete_data(uid)
+            else:
+                reply = TextSendMessage(text="已離開~")
                 delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 
