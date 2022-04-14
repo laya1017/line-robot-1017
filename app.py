@@ -761,13 +761,13 @@ def handle_message(event):
             print("有執行到這裡")
     elif len(datalist) != 0 :
         if msg == "[關鍵字搜尋模式]":
-            keep_state(uid,"txt_mode")
+            change_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
         elif msg == "[條號搜尋模式]":
-            keep_state(uid,"nos_mode")
+            change_state(uid,"nos_mode")
             reply = enter_txt_mode(event)
         elif msg == "[[酒(毒)駕專區]]":
-            keep_state(uid,"dwiNdwdenterButtons")
+            change_state(uid,"dwiNdwdenterButtons")
             reply = enter_txt_mode(event)    
         elif msg == " [[應到案日期計算]]":
             today = datetime.datetime.now()
@@ -778,7 +778,7 @@ def handle_message(event):
             delete_data(uid)
             reply = enter_txt_mode(event)
         elif msg == "[[其他交通問題]]":
-            keep_state(uid,"QnA")
+            change_state(uid,"QnA")
             reply = enter_txt_mode(event)    
         elif "reset" in msg :
             delete_data(uid)
