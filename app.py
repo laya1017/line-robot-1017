@@ -768,7 +768,7 @@ def handle_message(event):
             reply = nos_mode(event)
         elif msg == "[[酒(毒)駕專區]]":
             change_state(uid,"dwiNdwdenterButtons")
-            reply = dwiNdwdenterButtons(event)    
+            reply = dwiNdwdenterButtons(event,msg)
         elif msg == " [[應到案日期計算]]":
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
@@ -778,7 +778,7 @@ def handle_message(event):
             delete_data(uid)
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
-            reply = Other_QnA(event)    
+            reply = Other_QnA(event)
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
