@@ -765,10 +765,10 @@ def handle_message(event):
             reply = enter_txt_mode(event)
         elif msg == "[條號搜尋模式]":
             change_state(uid,"nos_mode")
-            reply = enter_txt_mode(event)
+            reply = nos_mode(event)
         elif msg == "[[酒(毒)駕專區]]":
             change_state(uid,"dwiNdwdenterButtons")
-            reply = enter_txt_mode(event)    
+            reply = dwiNdwdenterButtons(event)    
         elif msg == " [[應到案日期計算]]":
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
@@ -776,10 +776,9 @@ def handle_message(event):
             finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
             reply = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
             delete_data(uid)
-            reply = enter_txt_mode(event)
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
-            reply = enter_txt_mode(event)    
+            reply = Other_QnA(event)    
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
