@@ -152,7 +152,28 @@ def selects_nos_mode_P_S(event,uid,Nos,NosP):
         ))
     return reply
 ##Columns
-
+def speedToRichMnu(msg):
+    if msg == "[關鍵字搜尋模式]":
+        keep_state(uid,"txt_mode")
+        reply = enter_txt_mode(event)
+    elif msg == "[條號搜尋模式]":
+        keep_state(uid,"nos_mode")
+        reply = enter_txt_mode(event)
+    elif msg == "[[酒(毒)駕專區]]":
+        keep_state(uid,"dwiNdwdenterButtons")
+        reply = enter_txt_mode(event)    
+    elif msg == " [[應到案日期計算]]":
+        today = datetime.datetime.now()
+        initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
+        expiryDate = today + datetime.timedelta(days = 30)
+        finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
+        reply = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
+        delete_data(uid)
+        reply = enter_txt_mode(event)
+    elif msg == "[[其他交通問題]]":
+        keep_state(uid,"QnA")
+        reply = enter_txt_mode(event)
+    return reply
 ##dwiNdwd zone
 def dwiNdwdbuttonFilt(msg):
     quick_reply=QuickReply(
@@ -198,7 +219,7 @@ def dwiNdwd(event):
     reply = TemplateSendMessage(alt_text="酒(毒)駕專區",
         template=ButtonsTemplate(
             title="酒駕與毒駕",
-            text='最下排為快速鈕',
+            text='懶得找可以按下方快速鈕',
             actions=[
                 MessageAction(
                     label="取締「酒」駕規定",
@@ -739,7 +760,27 @@ def handle_message(event):
             reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
             print("有執行到這裡")
     elif len(datalist) != 0 :
-        if "reset" in msg :
+        if msg == "[關鍵字搜尋模式]":
+            keep_state(uid,"txt_mode")
+            reply = enter_txt_mode(event)
+        elif msg == "[條號搜尋模式]":
+            keep_state(uid,"nos_mode")
+            reply = enter_txt_mode(event)
+        elif msg == "[[酒(毒)駕專區]]":
+            keep_state(uid,"dwiNdwdenterButtons")
+            reply = enter_txt_mode(event)    
+        elif msg == " [[應到案日期計算]]":
+            today = datetime.datetime.now()
+            initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
+            expiryDate = today + datetime.timedelta(days = 30)
+            finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
+            reply = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
+            delete_data(uid)
+            reply = enter_txt_mode(event)
+        elif msg == "[[其他交通問題]]":
+            keep_state(uid,"QnA")
+            reply = enter_txt_mode(event)    
+        elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
             print("有執行到這裡")
@@ -756,10 +797,28 @@ def handle_message(event):
             delete_data(uid)
         elif datalist[0][2] == "QnA":
             if msg == "處罰機關如何判斷？":
-                reply = TextSendMessage(text="依據違反道路交通管理事件統一裁罰基準及處理細則第25條規定：\n舉發汽車違反道路交通管理事件，以汽車所有人為處罰對象者，移送其車籍地處罰機關處理；以駕駛人或乘客為處罰對象者，移送其駕籍地處罰機關處理；駕駛人或乘客未領有駕駛執照者，移送其戶籍地處罰機關處理。但有下列情形之一者，移送行為地處罰機關處理：\n一、汽車肇事致人傷亡。\n二、抗拒稽查致傷害。\n三、汽車駕駛人或乘客未領有駕駛執照且無法查明其戶籍所在地。\n四、汽車買賣業或汽車修理業違反本條例第五十七條規定。\n五、汽車駕駛人違反本條例第三十五條規定。\n計程車駕駛人有本條例第三十六條或第三十七條之情形，應受吊扣執業登記證或廢止執業登記處分者，移送其辦理執業登記之警察機關處理。\n以大眾捷運系統營運機構為被通知人舉發違反道路交通管理事件者，移送其營運機構監督機關所在地處罰機關處理。")
-            elif msg == "哪些違規不得郵繳？":
-                reply = TextSendMessage(text="依交通部108.07.16.交路字第1080021339號函，不得郵繳的有：\n第12條\n第13條\n第15條第1項第2款、第5款\n第16條第1項第5款\n第17條\n第17條\n第18-1條\n第20條\n第21條\n第21-1條之\n第23條\n第24條\n第26條\n第27條第2項\n第29條第4項\n第29-2條第3項、第5項\n第30條第3項\n第31條第4項\n第34條後段\n第35條第1項至第5項、第7項\n第36條第2項、第3項\n第37條\n第43條\n第45條第2項、第3項\n第54條\n第60條第1項\n第61條\n第62條第1項、第4項及第5項"
+                reply = TextSendMessage(
+                    text="依據違反道路交通管理事件統一裁罰基準及處理細則第25條規定：\n舉發汽車違反道路交通管理事件，以汽車所有人為處罰對象者，移送其車籍地處罰機關處理；以駕駛人或乘客為處罰對象者，移送其駕籍地處罰機關處理；駕駛人或乘客未領有駕駛執照者，移送其戶籍地處罰機關處理。但有下列情形之一者，移送行為地處罰機關處理：\n一、汽車肇事致人傷亡。\n二、抗拒稽查致傷害。\n三、汽車駕駛人或乘客未領有駕駛執照且無法查明其戶籍所在地。\n四、汽車買賣業或汽車修理業違反本條例第五十七條規定。\n五、汽車駕駛人違反本條例第三十五條規定。\n計程車駕駛人有本條例第三十六條或第三十七條之情形，應受吊扣執業登記證或廢止執業登記處分者，移送其辦理執業登記之警察機關處理。\n以大眾捷運系統營運機構為被通知人舉發違反道路交通管理事件者，移送其營運機構監督機關所在地處罰機關處理。",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to QnA")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        )
                     )
+            elif msg == "哪些違規不得郵繳？":
+                reply = TextSendMessage(
+                    text="依交通部108.07.16.交路字第1080021339號函，不得郵繳的有：\n第12條\n第13條\n第15條第1項第2款、第5款\n第16條第1項第5款\n第17條\n第17條\n第18-1條\n第20條\n第21條\n第21-1條之\n第23條\n第24條\n第26條\n第27條第2項\n第29條第4項\n第29-2條第3項、第5項\n第30條第3項\n第31條第4項\n第34條後段\n第35條第1項至第5項、第7項\n第36條第2項、第3項\n第37條\n第43條\n第45條第2項、第3項\n第54條\n第60條第1項\n第61條\n第62條第1項、第4項及第5項",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to QnA")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        )
+                    )
+            elif msg == "Back to QnA":
+                reply = Other_QnA(event)
+                change_state(uid, "QnA")
             else:
                 reply = TextSendMessage(text="已跳出，請自選單重新開始。")
             delete_data(uid)
