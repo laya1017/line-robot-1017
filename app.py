@@ -1034,9 +1034,6 @@ def handle_message(event):
                     )
             elif msg == "回到酒(毒)駕區":
                 reply = dwiNdwdenterButtons(event, msg)
-            else:
-                reply = TextSendMessage(text="已離開~")
-                delete_data(uid)
         elif datalist[0][2] == "dwiNdwd": #酒駕與毒駕
             if msg == "DWI Regulation":
                 reply = dwimode(event)
@@ -1047,9 +1044,6 @@ def handle_message(event):
             elif msg == "Back to dwiNdwdenterButtons":
                 change_state(uid, "dwiNdwdenterButtons")
                 reply = dwiNdwdenterButtons(event,msg) #回到進入面板
-            else:
-                reply = TextSendMessage(text="已離開~")
-                delete_data(uid)
         elif datalist[0][2] == "dwimode" : #酒駕規定區
             if msg == "Cars and Scooters":
                 reply = dwimode_CNS(event)
@@ -1060,9 +1054,7 @@ def handle_message(event):
             elif msg == "Back to dwiNdwd":                
                 reply = dwiNdwd(event)
                 change_state(uid, "dwiNdwd")
-            else:
-                reply = TextSendMessage(text="已離開~")
-                delete_data(uid)
+
         elif datalist[0][2] == "dwimode_CNS": #酒駕汽機車違規態樣
             if msg == "Exceed The Maximum Tolerate Standard":
                 reply = dwimode_CNS_Ex(event) #進入汽機車酒駕超標面板
@@ -1073,9 +1065,7 @@ def handle_message(event):
             elif msg == "Back to dwimode":
                 reply = dwimode(event) #回到酒駕規定區
                 change_state(uid, "dwimode")
-            else:
-                reply = TextSendMessage(text="已離開~")
-                delete_data(uid)
+
         elif datalist[0][2] == "dwimode_CNS_Ex": #酒駕超標舉發
             if msg == "First Violation":
                 reply = TextSendMessage(
