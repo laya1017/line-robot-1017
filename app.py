@@ -752,13 +752,7 @@ def handle_message(event):
             expiryDate = today + datetime.timedelta(days = 30)
             finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
             reply = TextSendMessage(
-                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)",
-                quick_reply=QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
-                        ]
-                        )
-                )
+                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
         elif msg == "[[其他交通問題]]":
             keep_state(uid,"QnA")
             reply = Other_QnA(event)
@@ -781,13 +775,7 @@ def handle_message(event):
             expiryDate = today + datetime.timedelta(days = 30)
             finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
             reply = TextSendMessage(
-                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)",
-                quick_reply=QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
-                        ]
-                        )
-                )
+                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
