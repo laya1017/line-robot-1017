@@ -921,7 +921,7 @@ def handle_message(event):
                     msg = msg.replace("危險駕駛","")
                     msg = msg.replace("危駕","")
                     msg = msg.replace("危險駕車","")
-                    result = search.getByNo s("43") + "\n" +search.getByNos("73,1,4")
+                    result = search.getByNos("43") + "\n" +search.getByNos("73,1,4")
                 reply = TextSendMessage(text=result)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
