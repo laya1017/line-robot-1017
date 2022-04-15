@@ -770,12 +770,12 @@ def handle_message(event):
             change_state(uid,"dwiNdwdenterButtons")
             reply = dwiNdwdenterButtons(event,msg)
         elif msg == " [[應到案日期計算]]":
+            delete_data(uid)
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
             expiryDate = today + datetime.timedelta(days = 30)
             finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
             reply = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
-            delete_data(uid)
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
