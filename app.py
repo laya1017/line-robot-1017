@@ -799,7 +799,6 @@ def handle_message(event):
                     )
             elif msg == "Back to QnA":
                 reply = Other_QnA(event)
-            delete_data(uid)
         elif datalist[0][2] == "nos_mode":
             if "項" in "".join(search.getListByNos(msg)):
                 change_var(uid, 'a', msg)
