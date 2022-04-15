@@ -806,7 +806,7 @@ def handle_message(event):
                     )
             elif msg == "哪些違規不得郵繳？":
                 reply = TextSendMessage(
-                    text="依交通部108.07.16.交路字第1080021339號函，不得郵繳的有：\n第12條\n第13條\n第15條第1項第2款、第5款\n第16條第1項第5款\n第17條\n第17條\n第18-1條\n第20條\n第21條\n第21-1條之\n第23條\n第24條\n第26條\n第27條第2項\n第29條第4項\n第29-2條第3項、第5項\n第30條第3項\n第31條第4項\n第34條後段\n第35條第1項至第5項、第7項\n第36條第2項、第3項\n第37條\n第43條\n第45條第2項、第3項\n第54條\n第60條第1項\n第61條\n第62條第1項、第4項及第5項",
+                    text="依交通部108.07.16.交路字第1080021339號函，不得郵繳的有：\n第12條\n第13條\n第15條第1項第2款、第5款\n第16條第1項第5款\n第17條\n第17條\n第18條\n第18-1條\n第20條\n第21條\n第21-1條之\n第23條\n第24條\n第26條\n第27條第2項\n第29條第4項\n第29-2條第3項、第5項\n第30條第3項\n第31條第4項\n第34條後段\n第35條第1項至第5項、第7項\n第36條第2項、第3項\n第37條\n第43條\n第45條第2項、第3項\n第54條\n第60條第1項\n第61條\n第62條第1項、第4項及第5項",
                     quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to QnA")),
@@ -921,7 +921,7 @@ def handle_message(event):
                     msg = msg.replace("危險駕駛","")
                     msg = msg.replace("危駕","")
                     msg = msg.replace("危險駕車","")
-                    result = search.getByNos("43") + "\n" +search.getByNos("73,1,4")
+                    result = search.getByNo s("43") + "\n" +search.getByNos("73,1,4")
                 reply = TextSendMessage(text=result)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
