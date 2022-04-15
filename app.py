@@ -733,6 +733,7 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     uid = event.source.user_id
+    print(uid)
     sql_cmd = "SELECT * from userstate where uid ='"+ uid + "'"
     uid_data = db.engine.execute(sql_cmd)
     datalist = list(uid_data)
@@ -781,7 +782,7 @@ def handle_message(event):
             reply = Other_QnA(event)
         elif "reset" in msg :
             delete_data(uid)
-            reply = TextSendMessage(text="重新啟動")
+            reply = TextSendMessage(text="重新啟動") 
             print("有執行到這裡")
         elif msg == 'Previous-nos_mode':
             change_state(uid, "nos_mode")
