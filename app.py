@@ -769,8 +769,8 @@ def handle_message(event):
             reply = enter_nos_mode(event)
         elif msg == "[[酒(毒)駕專區]]":
             change_state(uid,"dwiNdwdenterButtons")
-            reply = dwiNdwdenterButtons(event,mgs)
-        elif msg == " [[應到案日期計算]]":
+            reply = dwiNdwdenterButtons(event,msg)
+        elif msg == "[[應到案日期計算]]":
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
             expiryDate = today + datetime.timedelta(days = 30)
