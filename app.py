@@ -748,7 +748,6 @@ def handle_message(event):
             keep_state(uid,"dwiNdwdenterButtons")
             reply = dwiNdwdenterButtons(event,msg)
         elif msg == "[[應到案日期計算]]":
-            keep_state(uid,"datetime")
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
             expiryDate = today + datetime.timedelta(days = 30)
@@ -778,7 +777,7 @@ def handle_message(event):
             change_state(uid,"dwiNdwdenterButtons")
             reply = dwiNdwdenterButtons(event,msg)
         elif msg == " [[應到案日期計算]]":
-            change_state(uid, "datetime")
+            delete_data(uid)
             today = datetime.datetime.now()
             initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
             expiryDate = today + datetime.timedelta(days = 30)
