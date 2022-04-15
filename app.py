@@ -739,13 +739,13 @@ def handle_message(event):
     if len(datalist) == 0:
         # reply = TextSendMessage(text="第一次使用吼!，我已經幫你加入了！")
         if  msg == "[關鍵字搜尋模式]":
-            keep_state(uid,"txt_mode")
+            change_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
         elif msg == "[條號搜尋模式]" :
-            keep_state(uid,"nos_mode")
+            change_state(uid,"nos_mode")
             reply = enter_nos_mode(event)
         elif msg == "[[酒(毒)駕專區]]" :
-            keep_state(uid,"dwiNdwdenterButtons")
+            change_state(uid,"dwiNdwdenterButtons")
             reply = dwiNdwdenterButtons(event,msg)
         elif msg == "[[應到案日期計算]]":
             today = datetime.datetime.now()
@@ -755,13 +755,31 @@ def handle_message(event):
             reply = TextSendMessage(
                 text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
         elif msg == "[[其他交通問題]]":
-            keep_state(uid,"QnA")
+            change_state(uid,"QnA")
             reply = Other_QnA(event)
         else :
             reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
             print("有執行到這裡")
     elif len(datalist) != 0 :
-        if "reset" in msg :
+        if msg == "[關鍵字搜尋模式]":
+            change_state(uid,"txt_mode")
+            reply = enter_txt_mode(event)
+        elif msg == "[條號搜尋模式]":
+            change_state(uid,"nos_mode")
+            reply = enter_nos_mode(event)
+        elif msg == "[[酒(毒)駕專區]]":
+            change_state(uid,"dwiNdwdenterButtons")
+            reply = dwiNdwdenterButtons(event,mgs)
+        elif msg == " [[應到案日期計算]]":
+            today = datetime.datetime.now()
+            initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
+            expiryDate = today + datetime.timedelta(days = 30)
+            finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
+            reply = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
+        elif msg == "[[其他交通問題]]":
+            change_state(uid,"QnA")
+            reply = Other_QnA(event)
+        elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
             print("有執行到這裡")
@@ -775,7 +793,6 @@ def handle_message(event):
                 reply = TextSendMessage(text="已離開關鍵字搜尋模式。")
             else :
                 reply = TextSendMessage(text="已離開~")
-            delete_data(uid)
         elif datalist[0][2] == "QnA":
             if msg == "處罰機關如何判斷？":
                 reply = TextSendMessage(
@@ -811,17 +828,13 @@ def handle_message(event):
             elif "項" not in "".join(search.getListByNos(msg)) and "款" not in "".join(search.getListByNos(msg)) and search.getListByNos(msg) != []:
                 change_var(uid, 'a', msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')))
-                delete_data(uid)
             elif search.getListByNos(msg) == [] :
                 reply = TextSendMessage(text="本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。")
-                delete_data(uid) 
         elif datalist[0][2] == "nos_mode+P":
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')))
-                delete_data(uid)
             elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+ msg)):
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ','+ msg))
-                delete_data(uid)
             else:
                 change_var(uid,'p',msg)
                 change_state(uid, "nos_mode+P+S")
@@ -829,18 +842,15 @@ def handle_message(event):
         elif datalist[0][2] == "nos_mode+P+S":
             if msg == "第"+get_var(uid, 'a')+"條第"+get_var(uid, 'p')+"項的所有法條" :
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')+','+get_var(uid,'p')))
-                delete_data(uid)
             elif msg == "Previous-nos_mode_P":
                 change_state(uid, "nos_mode+P")
                 reply = selects_nos_mode_P(event,uid,get_var(uid, 'a'))
             else:
                 change_var(uid,'s',msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ',' +get_var(uid,'p')+ ','+get_var(uid,'s')))
-                delete_data(uid)
         elif datalist[0][2] == "nos_mode+S":
             change_var(uid,'s',msg)
             reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
-            delete_data(uid)
         elif datalist[0][2] == "txt_mode":
             msg = msg.replace("駕照","駕駛執照")
             msg = msg.replace("車牌","牌照")
@@ -946,7 +956,6 @@ def handle_message(event):
                     result = "查詢的內容太多了，請重新輸入關鍵字。"
                 else:
                     pass
-            delete_data(uid)
             try:
                 result = result.lstrip().strip()
             except:
@@ -960,7 +969,6 @@ def handle_message(event):
                 reply = ImageSendMessage(
                     original_content_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg',
                     preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg')
-                delete_data(uid) #進入版面
             elif msg == "汽機車酒駕法條":
                 reply = TextSendMessage(
                     text=search.getByNos("35,1,1"),
@@ -1236,9 +1244,6 @@ V  .汽車駕駛人拒絕配合實施本條例第三十五條第一項第一款�
             elif msg == "Back to dwimode":
                 reply = dwimode(event) #回到酒駕規定區
                 change_state(uid, "dwimode")
-            else:
-                reply = TextSendMessage(text="已離開~")
-                delete_data(uid)
         elif datalist[0][2] == "dwimode_SMV_Ex": #慢車超標舉發
             if msg == "Violation":
                 reply = TextSendMessage(
