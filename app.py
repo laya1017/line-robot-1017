@@ -831,7 +831,6 @@ def handle_message(event):
                 change_state(uid, "QnA")
             else:
                 reply = TextSendMessage(text="已跳出，請自選單重新開始。")
-            delete_data(uid)
         elif datalist[0][2] == "nos_mode":
             if "項" in "".join(search.getListByNos(msg)):
                 change_var(uid, 'a', msg)
