@@ -767,33 +767,7 @@ def handle_message(event):
             reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
             print("有執行到這裡")
     elif len(datalist) != 0 :
-        if msg == "[關鍵字搜尋模式]":
-            change_state(uid,"txt_mode")
-            reply = enter_txt_mode(event)
-        elif msg == "[條號搜尋模式]":
-            change_state(uid,"nos_mode")
-            reply = nos_mode(event)
-        elif msg == "[[酒(毒)駕專區]]":
-            change_state(uid,"dwiNdwdenterButtons")
-            reply = dwiNdwdenterButtons(event,msg)
-        elif msg == " [[應到案日期計算]]":
-            delete_data(uid)
-            today = datetime.datetime.now()
-            initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
-            expiryDate = today + datetime.timedelta(days = 30)
-            finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
-            reply = TextSendMessage(
-                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)",
-                quick_reply=QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
-                        ]
-                        )
-                )
-        elif msg == "[[其他交通問題]]":
-            change_state(uid,"QnA")
-            reply = Other_QnA(event)
-        elif "reset" in msg :
+        if "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
             print("有執行到這裡")
