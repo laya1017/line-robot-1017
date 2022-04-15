@@ -893,7 +893,7 @@ def handle_message(event):
                     elif "大眾" in msg:
                         result = search.getByNos("53-1,2")
                     else :
-                        result = search.getByNos("53,2") + "\n" + search.getByNos("53-1,2") + "\n" + search.getByNos("74,1,1")
+                        result = search.getByNos("53,2") + "\n"+ search.getByNos("53-1,2") + "\n" + search.getByNos("74,1,1")
                 elif "闖" in msg:
                     if "慢" in msg:
                         result = search.getByNos("74,1,1")
