@@ -952,7 +952,7 @@ def PlaceCheckMode(event):
         ))
     return reply
 ##SQL CMD
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://laya:s89631139@127.0.0.1:5432/line_bot_db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://hbisksmwaizgve:c13df8043f36aa6c9a985dca8d1d373c60d76453286bcc62f7055958fe799f4d@ec2-34-231-63-30.compute-1.amazonaws.com:5432/dc0ift2b69djpl"
 db = SQLAlchemy(app)
 def delete_data(uid):
     sql_cmd = "DELETE FROM userstate WHERE  uid ='"+uid+"'"
