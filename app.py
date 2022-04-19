@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,FlexSendMessage
 )
 import datetime
 import search
@@ -89,9 +89,9 @@ def Other_QnA(event):
         )
     return QA
 def selects_nos_mode_P(event,uid,Nos):
-    reply = TemplateSendMessage(alt_text="第"+ Nos + "條第＿項？",
+    reply = TemplateSendMessage(alt_text="第"+Nos+"條第＿項？",
         template=ButtonsTemplate(
-            title="第"+ Nos + "條第＿項？",
+            title="第"+Nos+"條第＿項？",
             text='若要繼續查詢則直接輸入',
             actions=[
                 MessageAction(
@@ -110,9 +110,9 @@ def selects_nos_mode_P(event,uid,Nos):
         ))
     return reply
 def selects_nos_mode_S(event,uid,Nos):
-    reply = TemplateSendMessage(alt_text="第"+ Nos + "條第＿款？",
+    reply = TemplateSendMessage(alt_text="第"+Nos+"條第＿款？",
         template=ButtonsTemplate(
-            title="第"+ Nos + "條第＿款？",
+            title="第"+Nos+"條第＿款？",
             text='若要繼續查詢則直接輸入',
             actions=[
                 MessageAction(
@@ -131,14 +131,14 @@ def selects_nos_mode_S(event,uid,Nos):
         ))
     return reply
 def selects_nos_mode_P_S(event,uid,Nos,NosP):
-    reply = TemplateSendMessage(alt_text="第"+ Nos + "條第"+NosP + "項第＿款？",
+    reply = TemplateSendMessage(alt_text="第"+Nos+"條第"+NosP+"項第＿款？",
         template=ButtonsTemplate(
-            title="第"+ Nos + "條第"+NosP + "項第＿款？",
+            title="第"+Nos+"條第"+NosP+"項第＿款？",
             text='若要繼續查詢則直接輸入',
             actions=[
                 MessageAction(
-                    label="第"+ Nos + "條第"+NosP+"項的所有法條",
-                    text="第"+ Nos + "條第"+NosP+"項的所有法條"
+                    label="第"+Nos+"條第"+NosP+"項的所有法條",
+                    text="第"+Nos+"條第"+NosP+"項的所有法條"
                     ),
                 MessageAction(
                     label='上一步',
@@ -147,6 +147,237 @@ def selects_nos_mode_P_S(event,uid,Nos,NosP):
                 MessageAction(
                     label='離開',
                     text='Exit'
+                    )
+            ]
+        ))
+    return reply
+def Sort_Mode(event):
+    reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
+        template=ButtonsTemplate(
+            title="違規分類模式",
+            text='選擇如下：',
+            actions=[
+                MessageAction(
+                    label="汽機車",
+                    text="CarsNscooter"
+                    ),
+                MessageAction(
+                    label="慢車",
+                    text="SMV"
+                    ),
+                MessageAction(
+                    label="行人",
+                    text="Pedestrian"
+                    ),
+                MessageAction(
+                    label="道路障礙",
+                    text="RoadObstacles"
+                    )
+            ]
+        ))
+    return reply
+flex = {
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "汽機車應到案處所檢核",
+            "size": "xl",
+            "wrap": True
+          }
+        ],
+        "margin": "xxl"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "一.肇事致⼈傷亡\n二.抗拒稽查致傷害\n三.駕駛⼈或乘客無照且無法查明其⼾籍所在地\n四.汽⾞買賣業或汽⾞修理業違反本條例第57條規定。\n五.違反35條規定",
+                "wrap": True
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "符合以上五項之一",
+              "text": "符合以上五項之一"
+            },
+            "color": "#00DB00",
+            "style": "primary",
+            "height": "sm"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "以上皆非(下一步)",
+              "text": "以上皆非(下一步)"
+            },
+            "style": "secondary",
+            "color": "#EA0000",
+            "height": "sm",
+            "margin": "none"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "離開",
+              "text": "Exit"
+            },
+            "height": "sm"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "汽機車應到案處所檢核\n(執業登記證)",
+            "size": "xl",
+            "wrap": True
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "計程⾞駕駛⼈違反36、37條應受吊扣或廢⽌執業登記證",
+                    "wrap": True,
+                    "size": "lg",
+                    "margin": "sm",
+                    "align": "start"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "符合以上二項之一",
+              "text": "符合以上二項之一"
+            },
+            "color": "#00DB00",
+            "style": "primary",
+            "height": "sm"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "以上皆非(回上一步)",
+              "text": "以上皆非(回上一步)"
+            },
+            "style": "secondary",
+            "color": "#EA0000",
+            "height": "sm"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "離開",
+              "text": "Exit"
+            },
+            "height": "sm"
+          }
+        ]
+      }
+    }
+  ]
+}
+def target(event):
+    reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(處罰對象)",
+        template=ButtonsTemplate(
+            title="汽機車應到案處所檢核(處罰對象)",
+            text='選擇如下：',
+            actions=[
+                MessageAction(
+                    label="所有人",
+                    text="Owner"
+                    ),
+                MessageAction(
+                    label="駕駛人、乘客",
+                    text="driverNpassenger"
+                    ),
+                MessageAction(
+                    label="上一步",
+                    text="Back to CheckCarsNscooter"
+                    ),
+                MessageAction(
+                    label="離開",
+                    text="Exit"
+                    )
+            ]
+        ))
+    return reply
+def driverNpassengercheck(event):
+    reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(駕駛人、乘客)",
+        template=ButtonsTemplate(
+            title="駕駛人或乘客有無持有駕駛執照？",
+            text='選擇如下：',
+            actions=[
+                MessageAction(
+                    label="有駕駛執照",
+                    text="Have Driver License"
+                    ),
+                MessageAction(
+                    label="無駕駛執照",
+                    text="No Driver License"
+                    ),
+                MessageAction(
+                    label="上一步",
+                    text="Back to target"
+                    ),
+                MessageAction(
+                    label="離開",
+                    text="Exit"
                     )
             ]
         ))
@@ -164,10 +395,10 @@ def speedToRichMnu(msg):
         reply = enter_txt_mode(event)    
     elif msg == " [[應到案日期計算]]":
         today = datetime.datetime.now()
-        initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
-        expiryDate = today + datetime.timedelta(days = 30)
-        finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
-        reply = TextSendMessage(text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
+        initialdate = str(today.year - 1911)+'-'+str(today.month)+'-'+str(today.day)
+        expiryDate = today+datetime.timedelta(days = 30)
+        finalDate = str(expiryDate.year - 1911)+'-'+str(expiryDate.month)+'-'+str(expiryDate.day)
+        reply = TextSendMessage(text="今天日期為：\n"+initialdate+"\n應到案日期為：\n"+finalDate+"\n(當場舉發)")
         delete_data(uid)
         reply = enter_txt_mode(event)
     elif msg == "[[其他交通問題]]":
@@ -694,23 +925,49 @@ def dwimode_SMV_Re(event):
         )
     return reply
 ##dwiNdwd zone
+##PlaceCheckMode
+def PlaceCheckMode(event):
+    reply = TemplateSendMessage(alt_text="應到案處所檢核系統",
+        template=ButtonsTemplate(
+            title="應到案處所檢核系統",
+            text='選擇車種(慢車、行人、道路障礙)',
+            actions=[
+                MessageAction(
+                    label="汽機車",
+                    text="CarsNscooter"
+                    ),
+                MessageAction(
+                    label="大眾捷運系統車輛",
+                    text='MassRapidTransitSystemVehicles'
+                    ),
+                MessageAction(
+                    label="慢車、行人、道路障礙",
+                    text="SMV,PED,OBS"
+                    ),
+                MessageAction(
+                    label="離開",
+                    text='Exit'
+                    )
+            ]
+        ))
+    return reply
 ##SQL CMD
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://hbisksmwaizgve:c13df8043f36aa6c9a985dca8d1d373c60d76453286bcc62f7055958fe799f4d@ec2-34-231-63-30.compute-1.amazonaws.com:5432/dc0ift2b69djpl"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://laya:s89631139@127.0.0.1:5432/line_bot_db"
 db = SQLAlchemy(app)
 def delete_data(uid):
-    sql_cmd = "DELETE FROM userstate WHERE  uid ='"+ uid + "'"
+    sql_cmd = "DELETE FROM userstate WHERE  uid ='"+uid+"'"
     db.engine.execute(sql_cmd)
 def keep_state(uid, mode):
-    sql_cmd = "INSERT INTO userstate (uid, state) values('" + uid + "','" + mode + "');"
+    sql_cmd = "INSERT INTO userstate (uid, state) values('"+uid+"','"+mode+"');"
     db.engine.execute(sql_cmd)
 def change_state(uid, mode):
-    sql_cmd = "UPDATE userstate SET state = '"+ mode +"' WHERE uid = '"+ uid +"'"
+    sql_cmd = "UPDATE userstate SET state = '"+mode+"' WHERE uid = '"+uid+"'"
     db.engine.execute(sql_cmd)
 def change_var(uid, var, msg):
-    sql_cmd = "UPDATE userstate SET "+ var + " = '"+ msg +"' WHERE uid = '"+ uid +"'"
+    sql_cmd = "UPDATE userstate SET "+var+" = '"+msg+"' WHERE uid = '"+uid+"'"
     db.engine.execute(sql_cmd)   
 def get_var(uid, var):
-    sql_cmd = "SELECT "+ var + " FROM userstate  WHERE uid = '"+ uid +"'"
+    sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 ##SQL CMD
 @app.route("/")
@@ -722,7 +979,7 @@ handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
 def callback():
     signature = request.headers['X-Line-Signature']
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    app.logger.info("Request body: "+body)
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -733,13 +990,16 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     uid = event.source.user_id
-    sql_cmd = "SELECT * from userstate where uid ='"+ uid + "'"
+    sql_cmd = "SELECT * from userstate where uid ='"+uid+"'"
     uid_data = db.engine.execute(sql_cmd)
     datalist = list(uid_data)
     if len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
+        elif msg == "[分類查找模式]":
+            keep_state(uid,"Sort_Mode")
+            reply = Sort_Mode(event)
         elif msg == "[條號搜尋模式]" :
             keep_state(uid,"nos_mode")
             reply = enter_nos_mode(event)
@@ -748,11 +1008,11 @@ def handle_message(event):
             reply = dwiNdwdenterButtons(event,msg)
         elif msg == "[[應到案日期計算]]":
             today = datetime.datetime.now()
-            initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
-            expiryDate = today + datetime.timedelta(days = 30)
-            finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
+            initialdate = str(today.year - 1911)+'-'+str(today.month)+'-'+str(today.day)
+            expiryDate = today+datetime.timedelta(days = 30)
+            finalDate = str(expiryDate.year - 1911)+'-'+str(expiryDate.month)+'-'+str(expiryDate.day)
             reply = TextSendMessage(
-                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
+                text="今天日期為：\n"+initialdate+"\n應到案日期為：\n"+finalDate+"\n(當場舉發)")
         elif msg == "[[其他交通問題]]":
             keep_state(uid,"QnA")
             reply = Other_QnA(event)
@@ -763,6 +1023,9 @@ def handle_message(event):
         if  msg == "[關鍵字搜尋模式]":
             change_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
+        elif msg == "[分類查找模式]":
+            change_state(uid,"Sort_Mode")
+            reply = Sort_Mode(event)
         elif msg == "[條號搜尋模式]" :
             change_state(uid,"nos_mode")
             reply = enter_nos_mode(event)
@@ -771,11 +1034,11 @@ def handle_message(event):
             reply = dwiNdwdenterButtons(event,msg)
         elif msg == "[[應到案日期計算]]":
             today = datetime.datetime.now()
-            initialdate = str(today.year - 1911) + '-' + str(today.month) + '-' + str(today.day)
-            expiryDate = today + datetime.timedelta(days = 30)
-            finalDate = str(expiryDate.year - 1911) + '-' + str(expiryDate.month) + '-' + str(expiryDate.day)
+            initialdate = str(today.year - 1911)+'-'+str(today.month)+'-'+str(today.day)
+            expiryDate = today+datetime.timedelta(days = 30)
+            finalDate = str(expiryDate.year - 1911)+'-'+str(expiryDate.month)+'-'+str(expiryDate.day)
             reply = TextSendMessage(
-                text="今天日期為：\n"+initialdate + "\n應到案日期為：\n" + finalDate + "\n(當場舉發)")
+                text="今天日期為：\n"+initialdate+"\n應到案日期為：\n"+finalDate+"\n(當場舉發)")
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
@@ -795,15 +1058,8 @@ def handle_message(event):
             delete_data(uid)
         elif datalist[0][2] == "QnA":
             if msg == "處罰機關如何判斷？":
-                reply = TextSendMessage(
-                    text="依據違反道路交通管理事件統一裁罰基準及處理細則第25條規定：\n舉發汽車違反道路交通管理事件，以汽車所有人為處罰對象者，移送其車籍地處罰機關處理；以駕駛人或乘客為處罰對象者，移送其駕籍地處罰機關處理；駕駛人或乘客未領有駕駛執照者，移送其戶籍地處罰機關處理。但有下列情形之一者，移送行為地處罰機關處理：\n一、汽車肇事致人傷亡。\n二、抗拒稽查致傷害。\n三、汽車駕駛人或乘客未領有駕駛執照且無法查明其戶籍所在地。\n四、汽車買賣業或汽車修理業違反本條例第五十七條規定。\n五、汽車駕駛人違反本條例第三十五條規定。\n計程車駕駛人有本條例第三十六條或第三十七條之情形，應受吊扣執業登記證或廢止執業登記處分者，移送其辦理執業登記之警察機關處理。\n以大眾捷運系統營運機構為被通知人舉發違反道路交通管理事件者，移送其營運機構監督機關所在地處罰機關處理。",
-                    quick_reply=QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to QnA")),
-                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
-                        ]
-                        )
-                    )
+                reply = PlaceCheckMode(event)
+                change_state(uid,"PlaceCheckMode")
             elif msg == "哪些違規不得郵繳？":
                 reply = TextSendMessage(
                     text="依交通部108.07.16.交路字第1080021339號函，不得郵繳的有：\n第12條\n第13條\n第15條第1項第2款、第5款\n第16條第1項第5款\n第17條\n第17條\n第18條\n第18-1條\n第20條\n第21條\n第21-1條之\n第23條\n第24條\n第26條\n第27條第2項\n第29條第4項\n第29-2條第3項、第5項\n第30條第3項\n第31條第4項\n第34條後段\n第35條第1項至第5項、第7項\n第36條第2項、第3項\n第37條\n第43條\n第45條第2項、第3項\n第54條\n第60條第1項\n第61條\n第62條第1項、第4項及第5項",
@@ -819,6 +1075,101 @@ def handle_message(event):
                 change_state(uid, "QnA")
             else:
                 reply = TextSendMessage(text="已跳出，請自選單重新開始。")
+        elif datalist[0][2] == "PlaceCheckMode":
+            if msg == "CarsNscooter":
+                reply = FlexSendMessage(alt_text='汽機車應到案處所檢核',contents=flex)
+                change_state(uid, "CheckCarsNscooter")
+            elif msg == "MassRapidTransitSystemVehicles":
+                reply = TextSendMessage(
+                    text="大眾捷運系統車輛的應到案處所:\n營運機構監督機關所在地處罰機關",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to PlaceCheckMode")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        )
+                    )
+            elif msg == "SMV,PED,OBS":
+                reply = TextSendMessage(
+                    text="慢車、行人、道路障礙的應到案處所:\n\"⾏為地警察機關\"",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to PlaceCheckMode")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        )
+                    )
+            elif msg == "Back to PlaceCheckMode":
+                reply = PlaceCheckMode(event)
+        elif datalist[0][2] == "CheckCarsNscooter":
+            if msg == "符合以上五項之一":
+                reply = TextSendMessage(
+                    text="應到案處所為：\n\"行為地公路主管機關\"",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to CheckCarsNscooter")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        ))
+            elif msg == "以上皆非(下一步)":
+                reply = target(event)
+                change_state(uid,"target")
+            elif msg == "符合以上二項之一":
+                reply = TextSendMessage(
+                    text="應到案處所為：\n\"辦理執業登記之警察機關\"",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to CheckCarsNscooter")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        ))
+            elif msg == "以上皆非(回上一步)":
+                reply = PlaceCheckMode(event)
+                change_state(uid, "PlaceCheckMode")
+            elif msg == "Back to CheckCarsNscooter":
+                reply = FlexSendMessage(alt_text='汽機車應到案處所檢核',contents=flex)
+        elif datalist[0][2] == "target":
+            if msg == "Owner":
+                reply = TextSendMessage(
+                    text="應到案處所為：\n\"車籍地公路主管機關\"",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to target")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        ))
+            elif msg == "driverNpassenger":
+                reply = driverNpassengercheck(event)
+                change_state(uid, "dNpCheck")
+            elif msg == "Back to target":
+                reply = target(event)
+            elif msg == "Back to CheckCarsNscooter":
+                reply = FlexSendMessage(alt_text='汽機車應到案處所檢核',contents=flex)
+                change_state(uid, "CheckCarsNscooter")
+        elif datalist[0][2] == "dNpCheck":
+            if msg == "Have Driver License":
+                reply = TextSendMessage(
+                    text="應到案處所為：\n\"駕籍地公路主管機關\"",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        ))
+            elif msg == "No Driver License":
+                reply = TextSendMessage(
+                    text="應到案處所為：\n\"戶籍地公路主管機關\"",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        ))
+            elif msg == "Back":
+                reply = driverNpassengercheck(event)
+            elif msg == "Back to target":
+                reply = target(event)
+                change_state(uid, "target")
         elif datalist[0][2] == "nos_mode":
             if "項" in "".join(search.getListByNos(msg)):
                 change_var(uid, 'a', msg)
@@ -839,8 +1190,8 @@ def handle_message(event):
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')))
                 delete_data(uid)
-            elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+ msg)):
-                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ','+ msg))
+            elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+msg)):
+                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+','+msg))
                 delete_data(uid)
             else:
                 change_var(uid,'p',msg)
@@ -855,7 +1206,7 @@ def handle_message(event):
                 reply = selects_nos_mode_P(event,uid,get_var(uid, 'a'))
             else:
                 change_var(uid,'s',msg)
-                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+ ',' +get_var(uid,'p')+ ','+get_var(uid,'s')))
+                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+','+get_var(uid,'p')+','+get_var(uid,'s')))
                 delete_data(uid)
         elif datalist[0][2] == "nos_mode+S":
             change_var(uid,'s',msg)
@@ -871,57 +1222,62 @@ def handle_message(event):
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
                 else:
-                    result = search.getByNos("48,1,2") + "\n" +search.getByNos("73,1,3")
+                    result = search.getByNos("48,1,2")+"\n"+search.getByNos("73,1,3")
             elif "逆向" in msg :
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg = msg.replace("逆向","")
-                    msg += " 順行"
-                    result = search.NosFiltWords("55",msg)+"\n" + search.NosFiltWords("56",msg)+"\n" + search.getByNos("73,1,3")+"\n" + search.getByNos("74,1,4")
+                    msg+= " 順行"
+                    result = search.NosFiltWords("55",msg)+"\n"+search.NosFiltWords("56",msg)+"\n"+search.getByNos("73,1,3")+"\n"+search.getByNos("74,1,4")
                 elif "行駛" in msg and "逆向" in msg :
-                    result = search.getByNos("45,1,1") + "\n" + search.getByNos("45,1,3") + "\n" +search.NosFiltWords("74,1,2",msg)
+                    result = search.getByNos("45,1,1")+"\n"+search.getByNos("45,1,3")+"\n"+search.NosFiltWords("74,1,2",msg)
                 else:
                     msg = msg.replace("逆向","")
-                    result = search.NosFiltWords("45,1,1",msg)+"\n" + search.NosFiltWords("45,1,3",msg)+"\n" +search.NosFiltWords("55,,4",msg)+"\n" + search.NosFiltWords("56,1,6",msg) + "\n" + search.NosFiltWords("73,1,3",msg)+"\n" + search.NosFiltWords("74,1,2",msg)+"\n" + search.NosFiltWords("73,1,3",msg).strip()
+                    result = search.NosFiltWords("45,1,1",msg)+"\n"+search.NosFiltWords("45,1,3",msg)+"\n"+search.NosFiltWords("55,,4",msg)+"\n"+search.NosFiltWords("56,1,6",msg)+"\n"+search.NosFiltWords("73,1,3",msg)+"\n"+search.NosFiltWords("74,1,2",msg)+"\n"+search.NosFiltWords("73,1,3",msg).strip()
             elif "牌照" in msg:
-                result = search.NosFiltWords("12",msg) + "\n" + search.NosFiltWords("13",msg) + "\n" + search.NosFiltWords("14",msg) + "\n" + search.NosFiltWords("15",msg)
+                result = search.NosFiltWords("12",msg)+"\n"+search.NosFiltWords("13",msg)+"\n"+search.NosFiltWords("14",msg)+"\n"+search.NosFiltWords("15",msg)
             elif "紅" in msg:
-                if "右" in msg:
-                    if "慢" in msg:
-                        result = search.getByNos("74,1,1")
-                    elif "汽車" in msg or "機車" in msg:
-                        result = search.getByNos("53,2")
-                    elif "大眾" in msg:
-                        result = search.getByNos("53-1,2")
-                    else :
-                        result = search.getByNos("53,2") + "\n"+ search.getByNos("53-1,2") + "\n" + search.getByNos("74,1,1")
-                elif "闖" in msg:
-                    if "慢" in msg:
-                        result = search.getByNos("74,1,1")
-                    elif "汽車" in msg or "機車" in msg:
-                        result = search.getByNos("53,1")
-                    elif "大眾" in msg:
-                        result = search.getByNos("53-1,1")
-                    else :
-                        result = search.getByNos("53,1") + "\n" + search.getByNos("53-1,1") + "\n" + search.getByNos("74,1,1")
-                elif "慢" in msg:
-                    result = search.getByNos("74,1,1")
-                elif "汽車" in msg or "機車" in msg:
-                    result = search.getByNos("53")
-                else :
-                    result = search.getByNos("53") + search.getByNos("53-1")+ "\n" + search.getByNos("74,1,1")
-            elif "方向燈" in msg or "大燈" in msg or "霧燈" in msg :
+                    result = search.NosFiltWords("53",msg)+search.NosFiltWords("53-1",msg)+"\n"+search.NosFiltWords("74,1,1",msg)+search.NosFiltWords("78,1,1",msg)
+            elif ("方向燈" in msg) or ("大燈" in msg) or ("霧燈" in msg) or ("頭燈" in msg and "開" in msg) or ("頭燈" in msg and "開" in msg) :
                 result = search.getByNos("42")
+                reply = TextSendMessage(
+                    text=result,
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="道安規則109條",text="道安規則109條"))
+                        ]
+                        )
+                    )
+            elif "道安規則109條" in msg:
+                reply = TextSendMessage(
+                    text="""道安規則§109：
+I. 汽車行駛時，應依下列規定使用燈光：
+ 一、夜間應開亮頭燈。
+ 二、行經隧道、調撥車道應開亮頭燈。
+ 三、遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。
+ 四、非遇雨、霧時，不得使用霧燈。
+ 五、行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。
+ 六、夜間會車時，或同向前方一百公尺內有車輛行駛，除第一百零一條第三款之情形外，應使用近光燈。
+II.汽車駕駛人，應依下列規定使用方向燈：
+ 一、起駛前應顯示方向燈。
+ 二、左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。
+ 三、超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。""",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="離開",text="Exit"))
+                        ]
+                        )
+                    )
             elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg or "超速" in msg :
                 if "超速" in msg :
                     msg = msg.replace("超速","")
-                    result = search.NosFiltWords("40",msg + "時速") + "\n" + search.NosFiltWords("43,1",msg) + "\n" + search.NosFiltWords("72-1",msg)
+                    result = search.NosFiltWords("40",msg+"時速")+"\n"+search.NosFiltWords("43,1",msg)+"\n"+search.NosFiltWords("72-1",msg)
                 elif "慢車" in msg :
                     result = search.getByNos("72-1")
                 else :
                     msg = msg.replace("危險駕駛","")
                     msg = msg.replace("危駕","")
                     msg = msg.replace("危險駕車","")
-                    result = search.getByNos("43") + "\n" +search.getByNos("73,1,4")
+                    result = search.getByNos("43")+"\n"+search.getByNos("73,1,4")
                 reply = TextSendMessage(text=result)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
@@ -932,32 +1288,32 @@ def handle_message(event):
                     msg = msg.replace("毒駕","毒")
                     msg = msg.replace("毒","藥")
                     msg = msg.replace("拒測","")
-                    result = search.NosFiltWords("35,4",msg) + "\n" + search.NosFiltWords("35,5",msg) + "\n" + search.NosFiltWords("73,3",msg)
+                    result = search.NosFiltWords("35,4",msg)+"\n"+search.NosFiltWords("35,5",msg)+"\n"+search.NosFiltWords("73,3",msg)
                 elif "酒駕" in msg:
                     msg = msg.replace("酒駕","")
-                    result = search.NosFiltWords("35,1",msg) + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg) + "\n" + search.NosFiltWords("35,8",msg) + "\n" + search.NosFiltWords("73,2",msg)
+                    result = search.NosFiltWords("35,1",msg)+"\n"+search.NosFiltWords("35,3",msg)+"\n"+search.NosFiltWords("35,7",msg)+"\n"+search.NosFiltWords("35,8",msg)+"\n"+search.NosFiltWords("73,2",msg)
                 elif "毒駕" in msg or "毒" in msg:
                     msg = msg.replace("毒駕","毒")
                     msg = msg.replace("毒","")
-                    result = search.NosFiltWords("35,1",msg + " 藥") + "\n" + search.NosFiltWords("35,3",msg) + "\n" + search.NosFiltWords("35,7",msg)
+                    result = search.NosFiltWords("35,1",msg+" 藥")+"\n"+search.NosFiltWords("35,3",msg)+"\n"+search.NosFiltWords("35,7",msg)
             elif "酒精" in msg and "鎖" in msg :
                 msg = msg.replace("酒精","")
                 msg = msg.replace("鎖","")
-                result = search.NosFiltWords("35-1",msg + " 車輛點火自動鎖定裝置")
+                result = search.NosFiltWords("35-1",msg+" 車輛點火自動鎖定裝置")
             elif "無照" in msg :
                 msg = msg.replace("無照"," 未領有駕駛執照駕")
                 if "動力" in msg :
                     result = search.getByNos("32,1")
                 elif "大型" in msg:
-                    result = search.Content_finder(msg) + "\n" + search.NosFiltWords("92,7,3",msg)
+                    result = search.Content_finder(msg)+"\n"+search.NosFiltWords("92,7,3",msg)
                 else:
-                    result = search.Content_finder(msg) + "\n" + search.NosFiltWords("32,1",msg)+ "\n" + search.NosFiltWords("92,7,3",msg)
+                    result = search.Content_finder(msg)+"\n"+search.NosFiltWords("32,1",msg)+"\n"+search.NosFiltWords("92,7,3",msg)
             elif "越級" in msg:
                 msg = msg.replace("越級"," 領有")
                 result = search.dContent_finder(msg,"未領有 未符 未依規定 號牌")
             elif "不服稽查" in msg:
                 msg = msg.replace("不服稽查","")
-                result = search.NosFiltWords("60,1",msg) + "\n" + search.NosFiltWords("60,2,1",msg)
+                result = search.NosFiltWords("60,1",msg)+"\n"+search.NosFiltWords("60,2,1",msg)
             else:
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
@@ -1658,6 +2014,64 @@ V  .汽車駕駛人拒絕配合實施本條例第三十五條第一項第一款�
             else:
                 reply = TextSendMessage(text="已離開~")
                 delete_data(uid)
+        elif datalist[0][2] == "Sort_Mode":
+            if msg == "CarsNscooter":
+                reply = TextSendMessage(
+                    text="汽車違規分類如下方按鈕",
+                    quick_reply = QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="牌照與設備、檢驗", text="platesNeq")),
+                        QuickReplyButton(action=MessageAction(label="駕照", text="driver license")),
+                        QuickReplyButton(action=MessageAction(label="裝載", text="Loading")),
+                        QuickReplyButton(action=MessageAction(label="安全設施", text="SafetyEq")),
+                        QuickReplyButton(action=MessageAction(label="駕車使用物品", text="UsingUnderDriving")),
+                        QuickReplyButton(action=MessageAction(label="駕駛行為", text="Behavior")),
+                        QuickReplyButton(action=MessageAction(label="汽車犯罪與肇事", text="CrimeNAccident")),
+                        QuickReplyButton(action=MessageAction(label="高速公路違規", text="Highways"))
+                        ]
+                        )
+                    )
+            elif msg == "SMV":
+                reply = TextSendMessage(
+                    text="慢車違規分類如下方按鈕",
+                    quick_reply = QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="證照", text="platesNeq")),
+                        QuickReplyButton(action=MessageAction(label="審驗", text="driver license")),
+                        QuickReplyButton(action=MessageAction(label="設備", text="Loading")),
+                        QuickReplyButton(action=MessageAction(label="駕駛行為", text="Behavior")),
+                        QuickReplyButton(action=MessageAction(label="安全設施", text="UsingUnderDriving")),
+                        QuickReplyButton(action=MessageAction(label="裝載", text="RoadRight"))
+                        ]
+                        )
+                    )
+            elif msg == "Pedestrian":
+                reply = TextSendMessage(
+                    text="行人違規分類如下方按鈕",
+                    quick_reply = QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="違反路權違規", text="platesNeq")),
+                        QuickReplyButton(action=MessageAction(label="鐵路平交道", text="driver license")),
+                        QuickReplyButton(action=MessageAction(label="攀登行為", text="Loading")),
+                        QuickReplyButton(action=MessageAction(label="違規攬客", text="Behavior"))
+                        ]
+                        )
+                    )
+            elif msg == "RoadObstacles":
+                reply = TextSendMessage(
+                    text="道路障礙分類如下方按鈕",
+                    quick_reply = QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="道路障礙", text="platesNeq")),
+                        QuickReplyButton(action=MessageAction(label="散發廣告、傳單", text="driver license")),
+                        QuickReplyButton(action=MessageAction(label="販賣物品妨害交通", text="Loading")),
+                        QuickReplyButton(action=MessageAction(label="疏縱或牽繫動物", text="Behavior"))
+                        ]
+                        )
+                    )
+            else:
+                reply = TextSendMessage(text="功能尚未開放。")
+            # delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 
 if __name__ == "__main__":
