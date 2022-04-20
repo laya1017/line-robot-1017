@@ -16,6 +16,11 @@ df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
 app = Flask(__name__)
+
+# try:
+#     result = result.lstrip().strip()
+# except:
+#     pass
 ##Columns
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
@@ -332,6 +337,50 @@ flex = {
     }
   ]
 }
+#quicks
+parkingNstop=QuickReply(
+    items=[
+    QuickReplyButton(action=MessageAction(label="緊靠路邊臨停規定", text="sideStopping")),
+    QuickReplyButton(action=MessageAction(label="緊靠路邊停車規定", text="sideParking")),
+    QuickReplyButton(action=MessageAction(label="三分鐘為停車判斷依據？", text="threeMinutes")),
+    QuickReplyButton(action=MessageAction(label="大型重機停車格問題", text="heavyMotorPark"))
+    ]
+    )
+def QuickReplySet(reply,condition,Nos):
+    news = []
+    if Nos in reply.text:
+        if reply.quick_reply == None:
+            reply.quick_reply = condition
+            return reply
+        else:
+            reply.quick_reply.items += condition.items
+            for i in reply.quick_reply.items:
+                if i not in news:
+                    news.append(i)
+        reply.quick_reply.items = news
+        return reply
+    else:
+        return reply
+def Series_Q_Reply(reply):
+    DoubleYellow = QuickReply(items=[QuickReplyButton(action=MessageAction(label="雙黃線左轉問題",text="DoubleYellow"))])
+    OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
+    ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
+    SideStopping = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車路緣距離",text="SideStopping"))])
+    SideParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車路緣距離",text="SideParking"))])
+    LightUsing = QuickReply(items=[QuickReplyButton(action=MessageAction(label="燈光使用規定",text="LightUsing"))])
+    HMOT = QuickReply(items=[QuickReplyButton(action=MessageAction(label="大重機上高速公路條件",text="HMOT"))])
+    Machine = QuickReply(items=[QuickReplyButton(action=MessageAction(label="動力機械駕照條件",text="Machine"))])
+    reply = QuickReplySet(reply,Machine,"21條")
+    reply = QuickReplySet(reply,HMOT,"21條")
+    reply = QuickReplySet(reply,LightUsing,"42條")
+    reply = QuickReplySet(reply,DoubleYellow,"48條")
+    reply = QuickReplySet(reply,DoubleYellow,"49條")
+    reply = QuickReplySet(reply,ThreeMinutes,"55條")
+    reply = QuickReplySet(reply,SideStopping,"55條")
+    reply = QuickReplySet(reply,ThreeMinutes,"56條")
+    reply = QuickReplySet(reply,SideParking,"56條")
+    reply = QuickReplySet(reply,OtherLaw,"60條2項3款")
+    return reply
 def target(event):
     reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(處罰對象)",
         template=ButtonsTemplate(
@@ -973,8 +1022,8 @@ def get_var(uid, var):
 @app.route("/")
 def index():
     return render_template("index.html")
-line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
+line_bot_api = LineBotApi('g4dDTMmrohA0MJM34im/PZvI95pu+xcCfJxoiby2EegFZH4LCMys8NQ0PoodAshQdfBJQd3S9fWt9PvPcIde5sTYEDiS9uRqR0OhYADkqCSQOSUzK5qtUVJNbE3ZbcyhEGNffBI1+EhhjQJZsmm1+gdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('fa129d5faaa895c116abbfffc534955d')
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -993,7 +1042,24 @@ def handle_message(event):
     sql_cmd = "SELECT * from userstate where uid ='"+uid+"'"
     uid_data = db.engine.execute(sql_cmd)
     datalist = list(uid_data)
-    if len(datalist) == 0:
+    if msg == "Machine":
+        reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國九十六年一月一日起，總重量逾三點五公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國一百零一年一月一日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
+    elif msg == "HMOT":
+        reply = TextSendMessage(text="道交條例§92II：\n汽缸排氣量五百五十立方公分以上大型重型機車，得依交通部公告規定之路段及時段行駛高速公路，其駕駛人應有得駕駛汽缸排氣量五百五十立方公分以上大型重型機車駕駛執照一年以上及小型車以上之駕駛執照。")
+    elif msg == "LightUsing":
+        reply = TextSendMessage(text="道交條例§109:\nI.汽車行駛時，應依下列規定使用燈光：\n  一、夜間應開亮頭燈。\n  二、行經隧道、調撥車道應開亮頭燈。\n  三、遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。\n  四、非遇雨、霧時，不得使用霧燈。\n  五、行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。\n  六、夜間會車時，或同向前方一百公尺內有車輛行駛，除第一百零一條第三款之情形外，應使用近光燈。\nII.汽車駕駛人，應依下列規定使用方向燈：\n  一、起駛前應顯示方向燈。\n  二、左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。\n  三、超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。")
+    elif msg == "DoubleYellow":
+        reply = TextSendMessage(text="交通部94.06.15.交路字第0940035842號函：\n查道路交通管理處罰條例第48條應係對汽車駕駛人行駛至轉彎路段未依規定轉彎之處罰，對於本案臺中縣警察局所提汽車於繪有行車分向限制線段左轉彎，應係未依分向限制線標線規定行駛之違規轉彎行為，此與上述第48條之未依規定轉彎情形，應屬有間，本部同意貴署所提適用處罰條例第60條第 2項第3 款「不遵守道路交通標線之指示」之處罰。")
+    elif msg == "ThreeMinutes":
+        reply = TextSendMessage(text="依據立法院1010508修正理由：\n同時臨時停車之重點實則在於保持可立即行駛之狀態，不應以引擎是否熄火或停止時間來判斷")
+    elif msg == "SideStopping":
+        reply = TextSendMessage(text="道交條例§111 II,III：\nII.汽車臨時停車時，應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾六十公分。但大型車不得逾一公尺。\nIII. 大型重型機車及機車臨時停車時，應依車輛順行方向緊靠道路邊緣停放，其前輪或後輪外側距離緣石或路面邊緣不得逾四十公分。")
+    elif msg == "SideParking":
+        reply = TextSendMessage(text="道交條例§112 II,III：\nII.汽車停車時應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾四十公分。\nIII. 大型重型機車及機車停車時，應依車輛順行方向緊靠道路邊緣平行、垂直或斜向停放，其前輪或後輪外側距離緣石或路面邊緣不得逾三十公分。但公路主管機關、市區道路主管機關或警察機關另有特別規定時，應依其規定。")
+    elif msg == "OtherLaw":
+        reply = TextSendMessage(text="道交條例60條2項3款使用時機在於交通違規找不到符合本法之行為以及違反\"禁制\"標誌或標線之情況下適用，故考路以本條款舉發時需多加詳查規定。")
+        
+    elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
@@ -1018,7 +1084,6 @@ def handle_message(event):
             reply = Other_QnA(event)
         else :
             reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
-            print("有執行到這裡")
     elif len(datalist) != 0 :
         if  msg == "[關鍵字搜尋模式]":
             change_state(uid,"txt_mode")
@@ -1182,6 +1247,7 @@ def handle_message(event):
             elif "項" not in "".join(search.getListByNos(msg)) and "款" not in "".join(search.getListByNos(msg)) and search.getListByNos(msg) != []:
                 change_var(uid, 'a', msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')))
+                reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif search.getListByNos(msg) == [] :
                 reply = TextSendMessage(text="本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。")
@@ -1189,17 +1255,20 @@ def handle_message(event):
         elif datalist[0][2] == "nos_mode+P":
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')))
+                reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+msg)):
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+','+msg))
+                reply = Series_Q_Reply(reply)
                 delete_data(uid)
             else:
                 change_var(uid,'p',msg)
                 change_state(uid, "nos_mode+P+S")
                 reply = selects_nos_mode_P_S(event,uid,get_var(uid, 'a'),get_var(uid, 'p'))
-        elif datalist[0][2] == "nos_mode+P+S":
+        elif datalist[0][2] == "nos_mode+P+S": 
             if msg == "第"+get_var(uid, 'a')+"條第"+get_var(uid, 'p')+"項的所有法條" :
                 reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')+','+get_var(uid,'p')))
+                reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif msg == "Previous-nos_mode_P":
                 change_state(uid, "nos_mode+P")
@@ -1207,10 +1276,12 @@ def handle_message(event):
             else:
                 change_var(uid,'s',msg)
                 reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+','+get_var(uid,'p')+','+get_var(uid,'s')))
+                reply = Series_Q_Reply(reply)
                 delete_data(uid)
         elif datalist[0][2] == "nos_mode+S":
             change_var(uid,'s',msg)
             reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
+            reply = Series_Q_Reply(reply)
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
             msg = msg.replace("駕照","駕駛執照")
@@ -1218,11 +1289,16 @@ def handle_message(event):
             msg = msg.replace("號牌","牌照")
             msg = msg.replace("臨停","臨時停車")
             msg = msg.replace("違停","停車")
+            msg = msg.replace("雙黃線","分向限制線")
+            msg = msg.replace("雙白線","禁止變換車道線")
+            msg = msg.replace("迴轉","迴車")
             if "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
                 else:
                     result = search.getByNos("48,1,2")+"\n"+search.getByNos("73,1,3")
+            elif ("分向限制線" in msg and "迴車" in msg) or ("禁止變換車道線" in msg and "迴車" in msg) or "迴車" in msg:
+                    result = search.NosFiltWords("33",msg)+"\n"+search.NosFiltWords("49",msg)+"\n"+search.getByNos("74,1,4")
             elif "逆向" in msg :
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg = msg.replace("逆向","")
@@ -1239,34 +1315,7 @@ def handle_message(event):
                     result = search.NosFiltWords("53",msg)+search.NosFiltWords("53-1",msg)+"\n"+search.NosFiltWords("74,1,1",msg)+search.NosFiltWords("78,1,1",msg)
             elif ("方向燈" in msg) or ("大燈" in msg) or ("霧燈" in msg) or ("頭燈" in msg and "開" in msg) or ("頭燈" in msg and "開" in msg) :
                 result = search.getByNos("42")
-                reply = TextSendMessage(
-                    text=result,
-                    quick_reply=QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="道安規則109條",text="道安規則109條"))
-                        ]
-                        )
-                    )
-            elif "道安規則109條" in msg:
-                reply = TextSendMessage(
-                    text="""道安規則§109：
-I. 汽車行駛時，應依下列規定使用燈光：
- 一、夜間應開亮頭燈。
- 二、行經隧道、調撥車道應開亮頭燈。
- 三、遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。
- 四、非遇雨、霧時，不得使用霧燈。
- 五、行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。
- 六、夜間會車時，或同向前方一百公尺內有車輛行駛，除第一百零一條第三款之情形外，應使用近光燈。
-II.汽車駕駛人，應依下列規定使用方向燈：
- 一、起駛前應顯示方向燈。
- 二、左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。
- 三、超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。""",
-                    quick_reply=QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="離開",text="Exit"))
-                        ]
-                        )
-                    )
+                reply = TextSendMessage(text=result)
             elif "危險駕駛" in msg or "危駕" in msg or "危險駕車" in msg or "超速" in msg :
                 if "超速" in msg :
                     msg = msg.replace("超速","")
@@ -1278,7 +1327,7 @@ II.汽車駕駛人，應依下列規定使用方向燈：
                     msg = msg.replace("危駕","")
                     msg = msg.replace("危險駕車","")
                     result = search.getByNos("43")+"\n"+search.getByNos("73,1,4")
-                reply = TextSendMessage(text=result)
+                # reply = TextSendMessage(text=result)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
                 msg = msg.replace("累","年內")
@@ -1322,12 +1371,12 @@ II.汽車駕駛人，應依下列規定使用方向燈：
                     result = "查詢的內容太多了，請重新輸入關鍵字。"
                 else:
                     pass
-            delete_data(uid)
             try:
                 result = result.lstrip().strip()
             except:
                 pass
             reply = TextSendMessage(text=result)
+            reply = Series_Q_Reply(reply)
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
             if "DWI and DUD" in msg:
                 reply = dwiNdwd(event)
@@ -1968,9 +2017,7 @@ V  .汽車駕駛人拒絕配合實施本條例第三十五條第一項第一款�
                 reply = dwdmode_CNS(event)
                 change_state(uid, "dwdmode_CNS")
             elif msg == "Lead to dwdmode_CNS_Ex":
-                print("1504",reply)
                 reply = dwdmode_CNS_Ex(event)
-                print("1506",reply)
                 change_state(uid, "dwdmode_CNS_Ex")
             elif msg == "Back to dwdmode_CNS_Re":
                 reply = dwdmode_CNS_Re(event)
