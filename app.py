@@ -1022,8 +1022,8 @@ def get_var(uid, var):
 @app.route("/")
 def index():
     return render_template("index.html")
-line_bot_api = LineBotApi('g4dDTMmrohA0MJM34im/PZvI95pu+xcCfJxoiby2EegFZH4LCMys8NQ0PoodAshQdfBJQd3S9fWt9PvPcIde5sTYEDiS9uRqR0OhYADkqCSQOSUzK5qtUVJNbE3ZbcyhEGNffBI1+EhhjQJZsmm1+gdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('fa129d5faaa895c116abbfffc534955d')
+line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
