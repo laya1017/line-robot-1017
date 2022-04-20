@@ -371,10 +371,13 @@ def Series_Q_Reply(reply):
     LightUsing = QuickReply(items=[QuickReplyButton(action=MessageAction(label="燈光使用規定",text="LightUsing"))])
     HMOT = QuickReply(items=[QuickReplyButton(action=MessageAction(label="大重機上高速公路條件",text="HMOT"))])
     Machine = QuickReply(items=[QuickReplyButton(action=MessageAction(label="動力機械駕照條件",text="Machine"))])
+    wrongWayDriving = QuickReply(items=[QuickReplyButton(action=MessageAction(label="來車道？遵行方向？",text="wrongWayDriving"))])
     reply = QuickReplySet(reply,Machine,"21條")
     reply = QuickReplySet(reply,HMOT,"21條")
     reply = QuickReplySet(reply,LightUsing,"42條")
     reply = QuickReplySet(reply,DoubleWhite,"45條")
+    reply = QuickReplySet(reply,wrongWayDriving,"45條1項1款")
+    reply = QuickReplySet(reply,wrongWayDriving,"45條1項3款")
     reply = QuickReplySet(reply,DoubleYellow,"48條")
     reply = QuickReplySet(reply,DoubleYellow,"49條")
     reply = QuickReplySet(reply,ThreeMinutes,"55條")
@@ -1062,6 +1065,18 @@ def handle_message(event):
         reply = TextSendMessage(text="道交條例§112 II,III：\nII.汽車停車時應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾四十公分。\nIII. 大型重型機車及機車停車時，應依車輛順行方向緊靠道路邊緣平行、垂直或斜向停放，其前輪或後輪外側距離緣石或路面邊緣不得逾三十公分。但公路主管機關、市區道路主管機關或警察機關另有特別規定時，應依其規定。")
     elif msg == "OtherLaw":
         reply = TextSendMessage(text="道交條例60條2項3款使用時機在於交通違規找不到符合本法之行為以及違反\"禁制\"標誌或標線之情況下適用，故考路以本條款舉發時需多加詳查規定。")
+    elif msg == "wrongWayDriving":
+        reply = TextSendMessage(
+            text="一、遵行方向：\n依據道路交通標誌標線號誌設置規則第2章第3節禁制標誌內容可知，係指道路上設具有方向性質之\"遵行\"標誌（藍底白色箭頭），例如：道路遵行方向、車道遵行方向標誌、單行道標誌等，而車輛必須\"遵行\"其標誌方向行駛。\n二、來車道：\n依據道安規則§97-1項2款規定「在劃有分向限制線之路段，不得駛入來車之車道內。」可得知，在劃有雙黃線之情況駛入來車道（對向車道），符合道交條例45條1項3款之違規行為。",
+            quick_reply=QuickReply(
+                items=[QuickReplyButton(action=MessageAction(label="遵行方向標誌圖形", text="complianceSign"))
+                ]
+                )
+            )
+    elif msg == "complianceSign":
+        reply = ImageSendMessage(
+            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
+            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg')
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
@@ -1302,6 +1317,8 @@ def handle_message(event):
                     result = search.getByNos("48,1,2")+"\n"+search.getByNos("73,1,3")
             elif ("分向限制線" in msg and "迴車" in msg) or ("禁止變換車道線" in msg and "迴車" in msg) or "迴車" in msg:
                     result = search.NosFiltWords("33",msg)+"\n"+search.NosFiltWords("49",msg)+"\n"+search.getByNos("74,1,4")
+            elif "禁止變換車道線" in msg and "跨越" in msg:
+                    result = search.getByNos("45,1,12")
             elif "逆向" in msg :
                 if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
                     msg = msg.replace("逆向","")
