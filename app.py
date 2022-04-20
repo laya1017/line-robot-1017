@@ -363,6 +363,7 @@ def QuickReplySet(reply,condition,Nos):
         return reply
 def Series_Q_Reply(reply):
     DoubleYellow = QuickReply(items=[QuickReplyButton(action=MessageAction(label="雙黃線左轉問題",text="DoubleYellow"))])
+    DoubleWhite = QuickReply(items=[QuickReplyButton(action=MessageAction(label="跨越雙白線問題",text="DoubleWhite"))])
     OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     SideStopping = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車路緣距離",text="SideStopping"))])
@@ -373,6 +374,7 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,Machine,"21條")
     reply = QuickReplySet(reply,HMOT,"21條")
     reply = QuickReplySet(reply,LightUsing,"42條")
+    reply = QuickReplySet(reply,DoubleWhite,"45條")
     reply = QuickReplySet(reply,DoubleYellow,"48條")
     reply = QuickReplySet(reply,DoubleYellow,"49條")
     reply = QuickReplySet(reply,ThreeMinutes,"55條")
@@ -1050,6 +1052,8 @@ def handle_message(event):
         reply = TextSendMessage(text="道交條例§109:\nI.汽車行駛時，應依下列規定使用燈光：\n  一、夜間應開亮頭燈。\n  二、行經隧道、調撥車道應開亮頭燈。\n  三、遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。\n  四、非遇雨、霧時，不得使用霧燈。\n  五、行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。\n  六、夜間會車時，或同向前方一百公尺內有車輛行駛，除第一百零一條第三款之情形外，應使用近光燈。\nII.汽車駕駛人，應依下列規定使用方向燈：\n  一、起駛前應顯示方向燈。\n  二、左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。\n  三、超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。")
     elif msg == "DoubleYellow":
         reply = TextSendMessage(text="交通部94.06.15.交路字第0940035842號函：\n查道路交通管理處罰條例第48條應係對汽車駕駛人行駛至轉彎路段未依規定轉彎之處罰，對於本案臺中縣警察局所提汽車於繪有行車分向限制線段左轉彎，應係未依分向限制線標線規定行駛之違規轉彎行為，此與上述第48條之未依規定轉彎情形，應屬有間，本部同意貴署所提適用處罰條例第60條第 2項第3 款「不遵守道路交通標線之指示」之處罰。")
+    elif msg == "DoubleWhite":
+        reply = TextSendMessage(text="交通部99.07.26.交路字第0990044737號函：\n有關貴署函詢「跨越雙白線變換車道」違規案件之處罰疑義乙案，本部前業以75年8月18日交路（75）字第19567號函示「應依道路交通管理處罰條例第45條第1項第12款裁處」在案，復請查照。")
     elif msg == "ThreeMinutes":
         reply = TextSendMessage(text="依據立法院1010508修正理由：\n同時臨時停車之重點實則在於保持可立即行駛之狀態，不應以引擎是否熄火或停止時間來判斷")
     elif msg == "SideStopping":
@@ -1058,7 +1062,6 @@ def handle_message(event):
         reply = TextSendMessage(text="道交條例§112 II,III：\nII.汽車停車時應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾四十公分。\nIII. 大型重型機車及機車停車時，應依車輛順行方向緊靠道路邊緣平行、垂直或斜向停放，其前輪或後輪外側距離緣石或路面邊緣不得逾三十公分。但公路主管機關、市區道路主管機關或警察機關另有特別規定時，應依其規定。")
     elif msg == "OtherLaw":
         reply = TextSendMessage(text="道交條例60條2項3款使用時機在於交通違規找不到符合本法之行為以及違反\"禁制\"標誌或標線之情況下適用，故考路以本條款舉發時需多加詳查規定。")
-        
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
