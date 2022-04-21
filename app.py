@@ -1085,7 +1085,7 @@ def handle_message(event):
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
             preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
     elif msg == "OverWeightrange":
-        reply = TextSendMessage(text="處理細則§12,I,13：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾百分之十。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量百分之二十者，責令其於二小時內改正之，逾二小時不改正者，得連續舉發；其超載重量逾核定總重量百分之二十者，當場禁止其通行。")
+        reply = TextSendMessage(text="處理細則§12,I,13：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾百分之十得勸導。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量百分之二十者，責令其於二小時內改正之，逾二小時不改正者，得連續舉發；其超載重量逾核定總重量百分之二十者，當場禁止其通行。")
     elif "$" in msg:
         msg = msg.replace("$","")
         reply = TextSendMessage(text=search.getByNos(msg))
