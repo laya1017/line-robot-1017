@@ -367,6 +367,7 @@ def Series_Q_Reply(reply):
     OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
+    OverWeightrange = QuickReply(items=[QuickReplyButton(action=MessageAction(label="超重勸導範圍",text="OverWeightrange"))])
     SideStopping = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車路緣距離",text="SideStopping"))])
     SideParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車路緣距離",text="SideParking"))])
     LightUsing = QuickReply(items=[QuickReplyButton(action=MessageAction(label="燈光使用規定",text="LightUsing"))])
@@ -375,6 +376,8 @@ def Series_Q_Reply(reply):
     wrongWayDriving = QuickReply(items=[QuickReplyButton(action=MessageAction(label="來車道？遵行方向？",text="wrongWayDriving"))])
     reply = QuickReplySet(reply,Machine,"21條")
     reply = QuickReplySet(reply,HMOT,"21條")
+    reply = QuickReplySet(reply,OverWeightrange,"29-2條1項")
+    reply = QuickReplySet(reply,OverWeightrange,"29-2條2項")
     reply = QuickReplySet(reply,LightUsing,"42條")
     reply = QuickReplySet(reply,DoubleWhite,"45條")
     reply = QuickReplySet(reply,wrongWayDriving,"45條1項1款")
@@ -1079,6 +1082,8 @@ def handle_message(event):
         reply = ImageSendMessage(
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
             preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
+    elif msg == "OverWeightrange":
+        reply = ImageSendMessage(text="處理細則§12,I,13：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾百分之十。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量百分之二十者，責令其於二小時內改正之，逾二小時不改正者，得連續舉發；其超載重量逾核定總重量百分之二十者，當場禁止其通行。")
     elif "$" in msg:
         msg = msg.replace("$","")
         reply = TextSendMessage(text=search.getByNos(msg))
@@ -1354,6 +1359,10 @@ def handle_message(event):
                 msg = msg.replace("危險駕駛","")
                 msg = msg.replace("危駕","")
                 result = search.NosFiltWords("43",msg)+"\n"+search.NosFiltWords("73,1,4",msg)
+            elif "超重" in msg:
+                result = search.NosFiltWords("29-2,1",msg)+"\n"+search.NosFiltWords("29-2,2",msg)
+            elif "拒磅" in msg:
+                result = search.getByNos("29-2,4")
             elif "超速" in msg and ("危險駕車" not in msg or "危險駕駛" not in msg or "危駕" not in msg):
                 if "慢車" in msg:
                     msg = msg.replace("慢車","電動自行車")
