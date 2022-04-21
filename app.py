@@ -367,7 +367,9 @@ def Series_Q_Reply(reply):
     OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
-    ContinueIssue = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="ContinueIssue"))])
+    KeepIssueParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續舉發",text="KeepIssueParking"))])
+    KeepIssueSpeed = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續舉發",text="KeepIssueSpeed"))])
+    KeepIssue = QuickReply(items=[QuickReplyButton(action=MessageAction(label="連續舉發",text="KeepIssueSP"))])
     OverWeightrange = QuickReply(items=[QuickReplyButton(action=MessageAction(label="超重勸導範圍",text="OverWeightrange"))])
     SideStopping = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車路緣距離",text="SideStopping"))])
     SideParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車路緣距離",text="SideParking"))])
@@ -1367,10 +1369,9 @@ def handle_message(event):
             elif "拒磅" in msg:
                 result = search.getByNos("29-2,4")
             elif "超速" in msg and ("危險駕車" not in msg or "危險駕駛" not in msg or "危駕" not in msg):
-                if "慢車" in msg:
-                    msg = msg.replace("慢車","電動自行車")
+                msg = msg.replace("慢車","電動自行車")
                 msg = msg.replace("超速","")
-                result = search.NosFiltWords("40",msg)+"\n"+search.NosFiltWords("72-1",msg)
+                result = search.NosFiltWords("40",msg+"最高")+"\n"+search.NosFiltWords("72-1",msg)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
                 msg = msg.replace("累犯","累")
                 msg = msg.replace("累","年內")
