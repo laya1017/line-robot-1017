@@ -366,6 +366,7 @@ def Series_Q_Reply(reply):
     DoubleWhite = QuickReply(items=[QuickReplyButton(action=MessageAction(label="跨越雙白線問題",text="DoubleWhite"))])
     OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
+    TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
     SideStopping = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車路緣距離",text="SideStopping"))])
     SideParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車路緣距離",text="SideParking"))])
     LightUsing = QuickReply(items=[QuickReplyButton(action=MessageAction(label="燈光使用規定",text="LightUsing"))])
@@ -380,6 +381,8 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,wrongWayDriving,"45條1項3款")
     reply = QuickReplySet(reply,DoubleYellow,"48條")
     reply = QuickReplySet(reply,DoubleYellow,"49條")
+    reply = QuickReplySet(reply,TwoCarStoppingNparking,"55條4款")
+    reply = QuickReplySet(reply,TwoCarStoppingNparking,"56條2項")
     reply = QuickReplySet(reply,ThreeMinutes,"55條")
     reply = QuickReplySet(reply,SideStopping,"55條")
     reply = QuickReplySet(reply,ThreeMinutes,"56條")
@@ -1313,6 +1316,7 @@ def handle_message(event):
             msg = msg.replace("雙黃線","分向限制線")
             msg = msg.replace("雙白線","禁止變換車道線")
             msg = msg.replace("迴轉","迴車")
+            msg = msg.replace("並排","併排")
             if "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
