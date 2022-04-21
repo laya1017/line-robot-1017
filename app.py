@@ -1339,14 +1339,10 @@ def handle_message(event):
             elif ("方向燈" in msg) or ("大燈" in msg) or ("霧燈" in msg) or ("頭燈" in msg and "開" in msg) or ("頭燈" in msg and "開" in msg) :
                 result = search.getByNos("42")
                 reply = TextSendMessage(text=result)
-            elif "危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg:
-                msg = msg.replace("危險駕車","")
-                msg = msg.replace("危駕","")
-                msg = msg.replace("危險駕駛","")
-                if "超速" in msg :
-                    reault = search.getByNos("43,1,2")
-                else:
-                    result = search.NosFiltWords("43",msg)+"\n"+search.NosFiltWords("73,1,4",msg)
+            elif ("危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg) and "超速" in msg:
+                reault = search.getByNos("43,1,2")
+            elif "危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg:   
+                result = search.NosFiltWords("43",msg)+"\n"+search.NosFiltWords("73,1,4",msg)
             elif "超速" in msg and ("危險駕車" not in msg or "危險駕駛" not in msg or "危駕" not in msg):
                 msg = msg.replace("超速","")
                 result = search.NosFiltWords("40",msg)+"\n"+search.NosFiltWords("72-1",msg)
@@ -1397,7 +1393,7 @@ def handle_message(event):
                 result = result.lstrip().strip()
             except:
                 pass
-            if result == "":
+            if len(result) == 0:
                 result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
             reply = TextSendMessage(text=result)
             reply = Series_Q_Reply(reply)
