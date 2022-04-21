@@ -1348,6 +1348,8 @@ def handle_message(event):
                 msg = msg.replace("危駕","")
                 result = search.NosFiltWords("43",msg)+"\n"+search.NosFiltWords("73,1,4",msg)
             elif "超速" in msg and ("危險駕車" not in msg or "危險駕駛" not in msg or "危駕" not in msg):
+                if "慢車" in msg:
+                    msg = msg.replace("慢車","電動自行車")
                 msg = msg.replace("超速","")
                 result = search.NosFiltWords("40",msg)+"\n"+search.NosFiltWords("72-1",msg)
             elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
