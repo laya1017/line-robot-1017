@@ -1309,6 +1309,7 @@ def handle_message(event):
             msg = msg.replace("車牌","牌照")
             msg = msg.replace("號牌","牌照")
             msg = msg.replace("臨停","臨時停車")
+            msg = msg.replace("違規停車","停車")
             msg = msg.replace("違停","停車")
             msg = msg.replace("雙黃線","分向限制線")
             msg = msg.replace("雙白線","禁止變換車道線")
