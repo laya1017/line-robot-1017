@@ -1022,7 +1022,7 @@ def change_var(uid, var, msg):
 def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
-##SQL CMD
+##SQL CMD 
 @app.route("/")
 def index():
     return render_template("index.html")
