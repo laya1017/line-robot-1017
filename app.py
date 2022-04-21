@@ -1398,13 +1398,7 @@ def handle_message(event):
             except:
                 pass
             if result == "":
-                result = search.Content_finder(msg)
-                if len(result.replace("\n","").replace(" ","")) == 0 :
-                    result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
-                elif len(result.replace("\n","").replace(" ","")) > 5000:
-                    result = "查詢的內容太多了，請重新輸入關鍵字。"
-                else:
-                    pass
+                result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
             reply = TextSendMessage(text=result)
             reply = Series_Q_Reply(reply)
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
