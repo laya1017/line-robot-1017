@@ -1329,6 +1329,7 @@ def handle_message(event):
             msg = msg.replace("雙白線","禁止變換車道線")
             msg = msg.replace("迴轉","迴車")
             msg = msg.replace("並排","併排")
+            msg = msg.replace("橋梁","橋樑")
             if "兩段" in msg :
                 if "慢車" in msg :
                     result  =search.getByNos("73,1,3")
