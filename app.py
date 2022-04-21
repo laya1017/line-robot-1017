@@ -1087,6 +1087,7 @@ def handle_message(event):
     elif "$" in msg:
         msg = msg.replace("$","")
         reply = TextSendMessage(text=search.getByNos(msg))
+        reply = Series_Q_Reply(reply)
     elif msg == "complianceSign":
         reply = ImageSendMessage(
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
