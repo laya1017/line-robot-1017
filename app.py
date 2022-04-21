@@ -1075,6 +1075,10 @@ def handle_message(event):
                 ]
                 )
             )
+    elif msg == "TwoCarStoppingNparking":
+        reply = ImageSendMessage(
+            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
+            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
     elif "$" in msg:
         msg = msg.replace("$","")
         reply = TextSendMessage(text=search.getByNos(msg))
