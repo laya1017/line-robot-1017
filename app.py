@@ -1341,7 +1341,7 @@ def handle_message(event):
                 reply = TextSendMessage(text=result)
             elif ("危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg) and "超速" in msg:
                 print("1343")
-                reault = search.getByNos("43,1,2")
+                result = search.getByNos("43,1,2")
             elif "危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg:
                 msg = msg.replace("危險駕車","")
                 msg = msg.replace("危險駕駛","")
