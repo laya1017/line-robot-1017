@@ -367,8 +367,9 @@ def Series_Q_Reply(reply):
     OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
-    KeepIssueParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續舉發",text="KeepIssueParking"))])
-    KeepIssueSpeed = QuickReply(items=[QuickReplyButton(action=MessageAction(label="超速連續舉發",text="KeepIssueSpeed"))])
+    KeepIssueParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續舉發條件",text="KeepIssueParking"))])
+    KeepIssueParking2 = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續\"逕\"舉條件",text="KeepIssueParking2"))])
+    KeepIssueSpeed = QuickReply(items=[QuickReplyButton(action=MessageAction(label="超速連續\"逕\"舉條件",text="KeepIssueSpeed"))])
     OverWeightrange = QuickReply(items=[QuickReplyButton(action=MessageAction(label="超重勸導範圍",text="OverWeightrange"))])
     SideStopping = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車路緣距離",text="SideStopping"))])
     SideParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車路緣距離",text="SideParking"))])
@@ -380,6 +381,7 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,HMOT,"21條")
     reply = QuickReplySet(reply,OverWeightrange,"29-2條1項")
     reply = QuickReplySet(reply,OverWeightrange,"29-2條2項")
+    reply = QuickReplySet(reply,KeepIssueSpeed,"40條")
     reply = QuickReplySet(reply,LightUsing,"42條")
     reply = QuickReplySet(reply,DoubleWhite,"45條")
     reply = QuickReplySet(reply,wrongWayDriving,"45條1項1款")
@@ -387,6 +389,11 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,DoubleYellow,"48條")
     reply = QuickReplySet(reply,DoubleYellow,"49條")
     reply = QuickReplySet(reply,TwoCarStoppingNparking,"55條4款")
+    reply = QuickReplySet(reply,KeepIssueParking,"56條")
+    reply = QuickReplySet(reply,KeepIssueParking2,"56條1項")
+    reply = QuickReplySet(reply,KeepIssueParking2,"56條2項")
+    reply = QuickReplySet(reply,KeepIssueParking,"57條")
+    reply = QuickReplySet(reply,KeepIssueParking2,"57條")
     reply = QuickReplySet(reply,TwoCarStoppingNparking,"56條2項")
     reply = QuickReplySet(reply,ThreeMinutes,"55條")
     reply = QuickReplySet(reply,SideStopping,"55條")
@@ -1094,6 +1101,12 @@ def handle_message(event):
         reply = ImageSendMessage(
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
             preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg')
+    elif msg == "KeepIssueSpeed":
+        reply = TextSendMessage(text="道交條例§85-1,II,1：\n逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第三十三條第一項、第二項之情形，其違規地點相距六公里以上、違規時間相隔六分鐘以上或行駛經過一個路口以上。但其違規地點在隧道內者，不在此限。")
+    elif msg == "KeepIssueParking2":
+        reply = TextSendMessage(text="道交條例§85-1,II,2：\n逕行舉發汽車有第五十六條第一項、第二項或第五十七條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾二小時。")
+    elif msg == "KeepIssueParking":
+        reply = TextSendMessage(text="道交條例§85-1,I：\n汽車駕駛人、汽車所有人、汽車買賣業或汽車修理業違反第五十六條第一項或第五十七條規定，經舉發後，不遵守交通勤務警察或依法令執行交通稽查任務人員責令改正者，得連續舉發之。")
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
