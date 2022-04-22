@@ -1133,6 +1133,10 @@ def handle_message(event):
             finalDate = str(expiryDate.year - 1911)+'-'+str(expiryDate.month)+'-'+str(expiryDate.day)
             reply = TextSendMessage(
                 text="今天日期為：\n"+initialdate+"\n應到案日期為：\n"+finalDate+"\n(當場舉發)")
+        elif msg == "[[新冠病毒防疫措施]]":
+            reply = ImageSendMessage(
+                original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Covid.jpg',
+                preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/Covid.jpg')
         elif msg == "[[其他交通問題]]":
             keep_state(uid,"QnA")
             reply = Other_QnA(event)
@@ -1144,7 +1148,7 @@ def handle_message(event):
             reply = enter_txt_mode(event)
         elif msg == "[分類查找模式]":
             change_state(uid,"Sort_Mode")
-            reply = Sort_Mode(event) 
+            reply = Sort_Mode(event)  
         elif msg == "[條號搜尋模式]" :
             change_state(uid,"nos_mode")
             reply = enter_nos_mode(event)
@@ -1158,6 +1162,10 @@ def handle_message(event):
             finalDate = str(expiryDate.year - 1911)+'-'+str(expiryDate.month)+'-'+str(expiryDate.day)
             reply = TextSendMessage(
                 text="今天日期為：\n"+initialdate+"\n應到案日期為：\n"+finalDate+"\n(當場舉發)")
+        elif msg == "[[新冠病毒防疫措施]]":
+            reply = ImageSendMessage(
+                original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Covid.jpg',
+                preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/Covid.jpg')
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
