@@ -71,7 +71,7 @@ def Other_QnA(event):
             columns=[
             CarouselColumn(
                 title='處罰機關如何判斷？',
-                text='以戶籍地還是駕籍地舉發呢？',
+                text='戶籍地、駕籍地、行為地？',
                 actions=[
                     MessageAction(
                         label='按我',
@@ -86,6 +86,16 @@ def Other_QnA(event):
                     MessageAction(
                         label='按我',
                         text='哪些違規不得郵繳？'
+                        )
+                ]
+                ),
+            CarouselColumn(
+                title='未滿14歲違規人填單須知',
+                text='本人？代理人？',
+                actions=[
+                    MessageAction(
+                        label='按我',
+                        text='未滿14歲之人填單規定'
                         )
                 ]
                 )
@@ -1227,6 +1237,27 @@ def handle_message(event):
                     quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to QnA")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        )
+                    )
+            elif msg == "未滿14歲之人填單規定":
+                reply = ImageSendMessage(
+                    text="依據道路交通管理處罰條例§85-4，未滿14歲之人違反本條例之規定，處罰其\"法定代理人\"或\"監護人\"。\n而依違反道路交通管理事件統一裁罰基準及處理細則11條1項11款，應於通知單上另行查填其法定代理人或監護人之姓名、身分證統一編號及地址，並\"送達\"其\"法定代理人\"或\"監護人\"。",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="何謂法定代理人及監護人？", text="Guardians")),
+                        QuickReplyButton(action=MessageAction(label="上一步", text="Back to QnA")),
+                        QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
+                        ]
+                        )
+                    )
+            elif msg == "Guardians":
+                reply = ImageSendMessage(
+                    text="<民法規定>\n●未成年人：未滿20歲(112年1月1日改為18歲)。\n●法定代理人：父母為其未成年子女之法定代理人。\n●監護人：\n 一.父母於一定期限內，以書面委託他人行使監護之職務。\n 二.對於未成年子女之權利、義務之父或母，得以遺囑指定監護人。\n 三.父或母，得以遺囑指定監護人。\n 四.父母均不能行使、負擔對於未成年子女之權利義務或父母死亡而無遺囑指定監護人，或遺囑指定之監護人拒絕就職時，依下列順序定其監護人(未能依下列順序定其監護人時，法院得依未成年子女、四親等內之親屬、檢察官、主管機關或其他利害關係人之聲請，為未成年子女之最佳利益，就其三親等旁系血親尊親屬、主管機關、社會福利機構或其他適當之人選定為監護人，並得指定監護之方法；如無下列之監護人，於法院依第三項為其選定確定前，由當地社會福利主管機關為其監護人。)：\n  1.與未成年人同居之祖父母。\n  2.與未成年人同居之兄姊。\n  3.不與未成年人同居之祖父母。",
+                    quick_reply=QuickReply(
+                        items=[
+                        QuickReplyButton(action=MessageAction(label="上一步", text="未滿14歲之人填單規定")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
