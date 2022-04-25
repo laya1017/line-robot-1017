@@ -1110,11 +1110,11 @@ def handle_message(event):
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
             preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg')
     elif msg == "KeepIssueSpeed":
-        reply = TextSendMessage(text="道交條例§85-1,II：\n一、逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第三十三條第一項、第二項之情形，其違規地點相距六公里以上、違規時間相隔六分鐘以上或行駛經過一個路口以上。但其違規地點在隧道內者，不在此限。")
+        reply = TextSendMessage(text="道交條例§85-1,II：\n一、逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第33條第1項、第2項之情形，其違規地點相距6公里以上、違規時間相隔6分鐘以上或行駛經過一個路口以上得連續舉發。但其違規地點在隧道內者，不在此限。")
     elif msg == "KeepIssueParking2":
-        reply = TextSendMessage(text="道交條例§85-1,II：\n二、逕行舉發汽車有第五十六條第一項、第二項或第五十七條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾二小時。")
+        reply = TextSendMessage(text="道交條例§85-1,II：\n二、逕行舉發汽車有第56條第1項、第2項或第57條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾2小時得連續舉發。")
     elif msg == "KeepIssueParking":
-        reply = TextSendMessage(text="道交條例§85-1,I：\n汽車駕駛人、汽車所有人、汽車買賣業或汽車修理業違反第五十六條第一項或第五十七條規定，經舉發後，不遵守交通勤務警察或依法令執行交通稽查任務人員責令改正者，得連續舉發之。")
+        reply = TextSendMessage(text="道交條例§85-1,I：\n汽車駕駛人、汽車所有人、汽車買賣業或汽車修理業違反第56條第1項或第57條規定，經舉發後，不遵守交通勤務警察或依法令執行交通稽查任務人員責令改正者，得連續舉發之。")
     elif msg == "Warning52":
         reply = ImageSendMessage(
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png',
