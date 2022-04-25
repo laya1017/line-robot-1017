@@ -364,7 +364,7 @@ def QuickReplySet(reply,condition,Nos):
 def Series_Q_Reply(reply):
     DoubleYellow = QuickReply(items=[QuickReplyButton(action=MessageAction(label="雙黃線左轉問題",text="DoubleYellow"))])
     DoubleWhite = QuickReply(items=[QuickReplyButton(action=MessageAction(label="跨越雙白線問題",text="DoubleWhite"))])
-    OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="Chance for 6023"))])
+    OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="OtherLaw"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
     KeepIssueParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續舉發條件",text="KeepIssueParking"))])
@@ -493,7 +493,7 @@ def dwiNdwdbuttonFilt(msg):
         QuickReplyButton(action=MessageAction(label="回到酒(毒)駕區", text="回到酒(毒)駕區")),
         ]
         )
-    for i in quick_reply.items:
+    for i in quick_reply.items: 
         if msg == i.action.label:
             quick_reply.items.remove(i)
     return quick_reply
