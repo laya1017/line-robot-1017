@@ -410,7 +410,7 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,KeepIssueParking2,"57條")
     reply = QuickReplySet(reply,FaultSign,"59條")
     reply = QuickReplySet(reply,OtherLaw,"60條2項3款")
-    reply = QuickReplySet(reply,OtherLaw,"依規定處置")
+    reply = QuickReplySet(reply,CrashSign,"依規定處置")
     return reply
 def target(event):
     reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(處罰對象)",
