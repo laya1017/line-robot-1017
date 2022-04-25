@@ -382,6 +382,9 @@ def Series_Q_Reply(reply):
     wrongWayDriving = QuickReply(items=[QuickReplyButton(action=MessageAction(label="來車道？遵行方向？",text="wrongWayDriving"))])
     FaultSign = QuickReply(items=[QuickReplyButton(action=MessageAction(label="故障標誌距離",text="FaultSign"))])
     CrashSign = QuickReply(items=[QuickReplyButton(action=MessageAction(label="故障標誌距離(肇事)",text="CrashSign"))])
+    ProhibitDriver = QuickReply(items=[QuickReplyButton(action=MessageAction(label="禁止行駛之效果",text="ProhibitPassDrive"))])
+    ProhibitPass = QuickReply(items=[QuickReplyButton(action=MessageAction(label="禁止通行之效果",text="ProhibitPassDrive"))])
+    ProhibitDriveCar = QuickReply(items=[QuickReplyButton(action=MessageAction(label="禁止行駛之效果",text="ProhibitPassDrive"))])
     reply = QuickReplySet(reply,Machine,"21條")
     reply = QuickReplySet(reply,HMOT,"21條")
     reply = QuickReplySet(reply,OverWeightrange,"29-2條1項")
@@ -411,6 +414,11 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,FaultSign,"59條")
     reply = QuickReplySet(reply,OtherLaw,"60條2項3款")
     reply = QuickReplySet(reply,CrashSign,"依規定處置")
+    reply = QuickReplySet(reply,ProhibitDriveCar,"禁止其行駛")
+    reply = QuickReplySet(reply,ProhibitDriver,"禁止駕駛")
+    reply = QuickReplySet(reply,ProhibitDriver,"禁止其駕駛")
+    reply = QuickReplySet(reply,ProhibitPass,"禁止其通行")
+    reply = QuickReplySet(reply,ProhibitPass,"禁止通行")
     return reply
 def target(event):
     reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(處罰對象)",
@@ -1132,6 +1140,8 @@ def handle_message(event):
         reply = TextSendMessage(text="道安規則§112,IV：\n一、在行車時速40公里以下之路段，應豎立於車身後方5公尺至30公尺之路面上，車前適當位置得視需要設置。\n二、在行車時速逾40公里之路段，應豎立於車身後方30公尺至100公尺之路面上，車前適當位置得視需要設置。\n三、交通擁擠之路段，應懸掛於車身之後部，車前適當位置得視需要設置。")
     elif msg == "CrashSign":
         reply = TextSendMessage(text="道路交通事故處理辦法§4,I：\n一、高速公路：於事故地點後方100公尺處。\n二、快速道路或最高速限超過60公里之路段：於事故地點後方80公尺處。\n三、最高速限超過50公里至60公里之路段：於事故地點後方50公尺處。\n四、最高速限50公里以下之路段：於事故地點後方30公尺處。\n五、交通壅塞或行車時速低於10公里以下之路段：於事故地點後方5公尺處。\nII：\n前項各款情形，遇雨霧致視線不清時，適當距離應酌予增加；其有雙向或多向車流通過，應另於前方或周邊適當處所為必要之放置。")
+    elif msg == "ProhibitPassDrive":
+        reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。")
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
