@@ -385,6 +385,7 @@ def Series_Q_Reply(reply):
     ProhibitDriver = QuickReply(items=[QuickReplyButton(action=MessageAction(label="禁止行駛之效果",text="ProhibitPassDrive"))])
     ProhibitPass = QuickReply(items=[QuickReplyButton(action=MessageAction(label="禁止通行之效果",text="ProhibitPassDrive"))])
     ProhibitDriveCar = QuickReply(items=[QuickReplyButton(action=MessageAction(label="禁止行駛之效果",text="ProhibitPassDrive"))])
+    MakeCorrections = QuickReply(items=[QuickReplyButton(action=MessageAction(label="\"責令\"之填單處理",text="MakeCorrections"))])
     reply = QuickReplySet(reply,Machine,"21條")
     reply = QuickReplySet(reply,HMOT,"21條")
     reply = QuickReplySet(reply,OverWeightrange,"29-2條1項")
@@ -419,6 +420,7 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,ProhibitDriver,"禁止其駕駛")
     reply = QuickReplySet(reply,ProhibitPass,"禁止其通行")
     reply = QuickReplySet(reply,ProhibitPass,"禁止通行")
+    reply = QuickReplySet(reply,MakeCorrections,"責令")
     return reply
 def target(event):
     reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(處罰對象)",
@@ -1141,7 +1143,9 @@ def handle_message(event):
     elif msg == "CrashSign":
         reply = TextSendMessage(text="道路交通事故處理辦法§4,I：\n一、高速公路：於事故地點後方100公尺處。\n二、快速道路或最高速限超過60公里之路段：於事故地點後方80公尺處。\n三、最高速限超過50公里至60公里之路段：於事故地點後方50公尺處。\n四、最高速限50公里以下之路段：於事故地點後方30公尺處。\n五、交通壅塞或行車時速低於10公里以下之路段：於事故地點後方5公尺處。\nII：\n前項各款情形，遇雨霧致視線不清時，適當距離應酌予增加；其有雙向或多向車流通過，應另於前方或周邊適當處所為必要之放置。")
     elif msg == "ProhibitPassDrive":
-        reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。")
+        reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。\n處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
+    elif msg == "MakeCorrections" :
+        reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
