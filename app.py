@@ -480,12 +480,14 @@ def speedToRichMnu(msg):
 def dwiNdwdbuttonFilt(msg):
     quick_reply=QuickReply(
         items=[
+        QuickReplyButton(action=MessageAction(label="汽機車酒駕拒測告知", text="汽機車酒駕拒測告知")),
+        QuickReplyButton(action=MessageAction(label="提審法", text="提審法")),
+        QuickReplyButton(action=MessageAction(label="三項權利(刑訴95條)", text="三項權利(刑訴95條)")),
         QuickReplyButton(action=MessageAction(label="汽機車酒駕法條", text="汽機車酒駕法條")),
         QuickReplyButton(action=MessageAction(label="汽機車毒駕法條", text="汽機車毒駕法條")),
         QuickReplyButton(action=MessageAction(label="累犯法條", text="累犯法條")),
         QuickReplyButton(action=MessageAction(label="汽機車酒駕拒測法條", text="汽機車酒駕拒測法條")),
         QuickReplyButton(action=MessageAction(label="拒測累犯法條", text="拒測累犯法條")),
-        QuickReplyButton(action=MessageAction(label="汽機車酒駕拒測告知", text="汽機車酒駕拒測告知")),
         QuickReplyButton(action=MessageAction(label="慢車酒駕法條", text="慢車酒駕法條")),
         QuickReplyButton(action=MessageAction(label="慢車酒駕拒測法條", text="慢車酒駕拒測法條")),
         QuickReplyButton(action=MessageAction(label="回到酒(毒)駕區", text="回到酒(毒)駕區")),
@@ -1462,6 +1464,16 @@ def handle_message(event):
                     original_content_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg',
                     preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg')
                 delete_data(uid) #進入版面
+            elif msg == "提審法":
+                reply = TextSendMessage(
+                    text="提審法§1：\nI .人民被法院以外之任何機關逮捕、拘禁時，其本人或他人得向逮捕、拘禁地之地方法院聲請提審。但其他法律規定得聲請即時由法院審查者，依其規定。\nII.前項聲請及第十條之抗告，免徵費用。",
+                    quick_reply=dwiNdwdbuttonFilt(msg)
+                    )
+            elif msg == "三項權利(刑訴95條)":
+                reply = TextSendMessage(
+                    text="◯◯◯先生/小姐您涉嫌＿(罪名)＿，依法得行使下列權利：\n1.得保持緘默，無須違背自己之意思而為陳述。\n2.得選任辯護人。如為低收入戶、中低收入戶、原住民或其他依法令得請求法律扶助者，得請求之。\n3.得請求調查有利之證據。",
+                    quick_reply=dwiNdwdbuttonFilt(msg)
+                    )
             elif msg == "汽機車酒駕法條":
                 reply = TextSendMessage(
                     text=search.getByNos("35,1,1"),
@@ -1489,7 +1501,7 @@ def handle_message(event):
                     )
             elif msg == "汽機車酒駕拒測告知":
                 reply = TextSendMessage(
-                    text="⊙拒絕酒測告知事項：\n一、初次違反：\n1.罰鍰：新台幣18萬元\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。\n二、「如」再次違反：\n1.罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.公布姓名、駕照及違法事情★\n7.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",
+                    text="⊙拒絕酒測告知事項：\n一、初次違反：\n1.罰鍰：新台幣18萬元\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。\n二、「如」再次違反：\n1.罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.公布姓名、照片及違法事情★\n7.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",
                     quick_reply=dwiNdwdbuttonFilt(msg)
                     )
             elif msg == "慢車酒駕法條":
@@ -1653,7 +1665,7 @@ def handle_message(event):
                     )
             elif msg == "Notification":
                 reply = TextSendMessage(
-                    text = "⊙拒絕接受酒精濃度檢定告知事項：\n一、初次違反：\n1.罰鍰：新台幣18萬元\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。\n二、「如」再次違反：\n1.罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.公布姓名、駕照及違法事情★\n7.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",
+                    text = "⊙拒絕接受酒精濃度檢定告知事項：\n一、初次違反：\n1.罰鍰：新台幣18萬元\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。\n二、「如」再次違反：\n1.罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.公布姓名、照片及違法事情★\n7.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",
                     quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="參閱細則19-2條規定", text="Refer 19-2")),
