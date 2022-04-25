@@ -367,6 +367,8 @@ def Series_Q_Reply(reply):
     OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",text="OtherLaw"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
+    StoppingPersuasion = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車勸導要件",text="StoppingPersuasion"))])
+    ParkingPersuasion = QuickReply(items=[QuickReplyButton(action=MessageAction(label="違規停車勸導要件",text="ParkingPersuasion"))])
     KeepIssueParking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續舉發條件",text="KeepIssueParking"))])
     KeepIssueParking2 = QuickReply(items=[QuickReplyButton(action=MessageAction(label="停車連續\"逕\"舉條件",text="KeepIssueParking2"))])
     KeepIssueSpeed = QuickReply(items=[QuickReplyButton(action=MessageAction(label="超速連續\"逕\"舉條件",text="KeepIssueSpeed"))])
@@ -390,6 +392,8 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,wrongWayDriving,"45條1項3款")
     reply = QuickReplySet(reply,DoubleYellow,"48條")
     reply = QuickReplySet(reply,DoubleYellow,"49條")
+    reply = QuickReplySet(reply,StoppingPersuasion,"55條")
+    reply = QuickReplySet(reply,ParkingPersuasion,"56條")
     reply = QuickReplySet(reply,ThreeMinutes,"55條")
     reply = QuickReplySet(reply,SideStopping,"55條")
     reply = QuickReplySet(reply,TwoCarStoppingNparking,"55條4款")
@@ -1096,7 +1100,7 @@ def handle_message(event):
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
             preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
     elif msg == "OverWeightrange":
-        reply = TextSendMessage(text="處理細則§12,I,13：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾百分之十得勸導。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量百分之二十者，責令其於二小時內改正之，逾二小時不改正者，得連續舉發；其超載重量逾核定總重量百分之二十者，當場禁止其通行。")
+        reply = TextSendMessage(text="處理細則§12,I,13：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾10%得勸導。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量百分之二十者，責令其於二小時內改正之，逾二小時不改正者，得連續舉發；其超載重量逾核定總重量百分之二十者，當場禁止其通行。")
     elif "$" in msg:
         msg = msg.replace("$","")
         reply = TextSendMessage(text=search.getByNos(msg))
@@ -1115,6 +1119,10 @@ def handle_message(event):
         reply = ImageSendMessage(
             original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png',
             preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png')
+    elif msg == "StoppingPersuasion":
+        reply = TextSendMessage(text="處理細則§12,I,5：\n駕駛汽車因上、下客、貨，致有本條例第55條之情形，惟尚無妨礙其他人、車通行。")
+    elif msg == "ParkingPersuasion":
+        reply = TextSendMessage(text="處理細則§12,I,6：\n深夜時段（0至6時）停車，有本條例第56條第1項之情形。但於身心障礙專用停車位違規停車或停車顯有妨礙消防安全之虞，或妨礙其他人車通行經人檢舉者，不在此限。")
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
