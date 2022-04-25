@@ -380,10 +380,13 @@ def Series_Q_Reply(reply):
     HMOT = QuickReply(items=[QuickReplyButton(action=MessageAction(label="大重機上高速公路條件",text="HMOT"))])
     Machine = QuickReply(items=[QuickReplyButton(action=MessageAction(label="動力機械駕照條件",text="Machine"))])
     wrongWayDriving = QuickReply(items=[QuickReplyButton(action=MessageAction(label="來車道？遵行方向？",text="wrongWayDriving"))])
+    FaultSign = QuickReply(items=[QuickReplyButton(action=MessageAction(label="故障標誌距離",text="FaultSign"))])
+    CrashSign = QuickReply(items=[QuickReplyButton(action=MessageAction(label="故障標誌距離(肇事)",text="CrashSign"))])
     reply = QuickReplySet(reply,Machine,"21條")
     reply = QuickReplySet(reply,HMOT,"21條")
     reply = QuickReplySet(reply,OverWeightrange,"29-2條1項")
     reply = QuickReplySet(reply,OverWeightrange,"29-2條2項")
+    reply = QuickReplySet(reply,Machine,"32條1項")
     reply = QuickReplySet(reply,KeepIssueSpeed,"40條")
     reply = QuickReplySet(reply,Warning52,"40條")
     reply = QuickReplySet(reply,LightUsing,"42條")
@@ -405,7 +408,9 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,TwoCarStoppingNparking,"56條2項")
     reply = QuickReplySet(reply,KeepIssueParking,"57條")
     reply = QuickReplySet(reply,KeepIssueParking2,"57條")
+    reply = QuickReplySet(reply,FaultSign,"59條")
     reply = QuickReplySet(reply,OtherLaw,"60條2項3款")
+    reply = QuickReplySet(reply,OtherLaw,"依規定處置")
     return reply
 def target(event):
     reply = TemplateSendMessage(alt_text="汽機車應到案處所檢核(處罰對象)",
@@ -1123,6 +1128,10 @@ def handle_message(event):
         reply = TextSendMessage(text="處理細則§12,I：\n五、駕駛汽車因上、下客、貨，致有本條例第55條之情形，惟尚無妨礙其他人、車通行。")
     elif msg == "ParkingPersuasion":
         reply = TextSendMessage(text="處理細則§12,I：\n六、深夜時段（0至6時）停車，有本條例第56條第1項之情形。但於身心障礙專用停車位違規停車或停車顯有妨礙消防安全之虞，或妨礙其他人車通行經人檢舉者，不在此限。")
+    elif msg == "FaultSign":
+        reply = TextSendMessage(text="道安規則§112,IV：\n一、在行車時速40公里以下之路段，應豎立於車身後方5公尺至30公尺之路面上，車前適當位置得視需要設置。\n二、在行車時速逾40公里之路段，應豎立於車身後方30公尺至100公尺之路面上，車前適當位置得視需要設置。\n三、交通擁擠之路段，應懸掛於車身之後部，車前適當位置得視需要設置。")
+    elif msg == "CrashSign":
+        reply = TextSendMessage(text="道路交通事故處理辦法§4,I：\n一、高速公路：於事故地點後方100公尺處。\n二、快速道路或最高速限超過60公里之路段：於事故地點後方80公尺處。\n三、最高速限超過50公里至60公里之路段：於事故地點後方50公尺處。\n四、最高速限50公里以下之路段：於事故地點後方30公尺處。\n五、交通壅塞或行車時速低於10公里以下之路段：於事故地點後方5公尺處。\nII：\n前項各款情形，遇雨霧致視線不清時，適當距離應酌予增加；其有雙向或多向車流通過，應另於前方或周邊適當處所為必要之放置。")
     elif len(datalist) == 0:
         if  msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
