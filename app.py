@@ -1081,6 +1081,7 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 ##SQL CMD 
+name_list = ["YiChen","禹","郭碩","郭彤","邱","承委","偉賢","世煜","陳以任","Frank Tu(榮祥)","凃信仲","承翰","李一志","林俊強","楊代榮","陳韋旭","陳龍城","b1n（秉昌）","為誠"]
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -1103,8 +1104,11 @@ def handle_message(event):
     uid = event.source.user_id
     sql_cmd = "SELECT * from userstate where uid ='"+uid+"'"
     uid_data = db.engine.execute(sql_cmd)
+    user_name = line_bot_api.get_profile(uid).display_name
     datalist = list(uid_data)
-    if msg == "Machine":
+    if user_name not in name_list:
+        reply = TextSendMessage(text="抱歉，您並非認證之成員，請洽管理員登記，謝謝。")        
+    elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
         reply = TextSendMessage(text="道交條例§92II：\n汽缸排氣量550立方公分以上大型重型機車，得依交通部公告規定之路段及時段行駛高速公路，其駕駛人應有得駕駛汽缸排氣量550立方公分以上大型重型機車駕駛執照1年以上及小型車以上之駕駛執照。")
