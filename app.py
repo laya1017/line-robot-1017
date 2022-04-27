@@ -101,7 +101,7 @@ def Other_QnA(event):
                 ),
             CarouselColumn(
                 title='民眾檢舉交通違規新修規定',
-                text='111.4.31開始施行',
+                text='111.4.30開始施行',
                 actions=[
                     MessageAction(
                         label='按我',
