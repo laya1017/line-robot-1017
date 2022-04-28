@@ -1081,7 +1081,7 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 ##SQL CMD 
-name_list = ["周輝燿","YiChen","禹","郭碩","郭彤","邱","承委","偉賢","世煜","陳以任","Frank Tu(榮祥)","承翰","李一志","林俊強","楊代榮","陳韋旭","陳龍城","b1n（秉昌）","為誠"]
+name_list = ["施垂源","羅裕城","周輝燿","YiChen","禹","郭碩","郭彤","邱","承委","偉賢","世煜","陳以任","Frank Tu(榮祥)","承翰","李一志","林俊強","楊代榮","陳韋旭","陳龍城","b1n（秉昌）","為誠"]
 @app.route("/")
 def index():
     return render_template("index.html")
