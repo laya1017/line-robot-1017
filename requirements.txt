@@ -7,4 +7,4 @@ SQLAlchemy
 Flask-SQLAlchemy
 sqlparse
 psycopg2
-csv
+python-csv
