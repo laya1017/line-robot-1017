@@ -1107,7 +1107,7 @@ def handle_message(event):
     uid_data = db.engine.execute(sql_cmd)
     user_name = line_bot_api.get_profile(uid).display_name
     datalist = list(uid_data)
-    print("使用者："user_name,"UserId：",uid)
+    print("使用者：",user_name,"UserId：",uid)
     if user_name not in name_list :
         reply = TextSendMessage(text="抱歉，您並非認證之成員，請洽管理員登記，謝謝。")
     elif msg == "告訴我ID":
