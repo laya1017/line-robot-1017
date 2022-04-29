@@ -1081,7 +1081,16 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 ##SQL CMD 
-ID_list = ["Ue1f56e50e35bd8feaf87f59bf1ea5765","Uec854f728ac320d11c00ad46b60c45af","U11c9ee1413309df505cbc3f4fd89cec4","U69d99515cf8c7bf0541748dab09ff0eb","U0e92e9edda9aee0c31e3742a5abb082c","U6e2219cccee8398193446dda99f6360c","U2201c821f9581f8c360e5120afc02caf","Ubbdfdc4bede9d58802d9fc3bc6427974"]
+ID_list = [
+    "Ue1f56e50e35bd8feaf87f59bf1ea5765",
+    "Uec854f728ac320d11c00ad46b60c45af",
+    "U11c9ee1413309df505cbc3f4fd89cec4",
+    "U69d99515cf8c7bf0541748dab09ff0eb",
+    "U0e92e9edda9aee0c31e3742a5abb082c",
+    "U6e2219cccee8398193446dda99f6360c",
+    "U2201c821f9581f8c360e5120afc02caf",
+    "Ubbdfdc4bede9d58802d9fc3bc6427974",
+    "U33111dbb466029fdcb6bbeabe426b7ca"]
 @app.route("/")
 def index():
     return render_template("index.html")
