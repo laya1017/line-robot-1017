@@ -1116,12 +1116,11 @@ def handle_message(event):
             reply = TextSendMessage(text=("使用者：" + user_name + "UserId：" + uid))
         else:
             reply = TextSendMessage(text="抱歉，您並非認證之成員，請洽管理員登記，謝謝。")
-    elif uid == "Ud811bad1371544b24d8c02a355930341":
-        if msg == "Give Me Users":
-            name = []
-            for i in ID_list:
-                name.append(line_bot_api.get_profile(i).display_name)
-            reply = TextSendMessage(text="目前使用者有：/n"+"/n".join(name))
+    elif uid == "Ud811bad1371544b24d8c02a355930341" and msg == "Give Me Users":
+        All_User = []
+        for i in ID_list:
+            All_User.append(line_bot_api.get_profile(i).display_name)
+        reply = TextSendMessage(text="目前使用者有：/n"+"/n".join(name))
     elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
