@@ -1116,7 +1116,7 @@ def handle_message(event):
             reply = TextSendMessage(text=("使用者：" + user_name + "UserId：" + uid))
         else:
             reply = TextSendMessage(text="抱歉，您並非認證之成員，請洽管理員登記，謝謝。")
-    elif uid == "Ud811bad1371544b24d8c02a355930341" and msg == "Users":
+    elif uid == "Ud811bad1371544b24d8c02a355930341" and msg in "Users_":
         All_User = []
         if "Count" in msg:
             reply = TextSendMessage(text="目前使用者有"+str(len(All_User))+"人")
