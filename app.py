@@ -1086,18 +1086,6 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 ##SQL CMD 
-# ID_list = [
-#     "Ue1f56e50e35bd8feaf87f59bf1ea5765",
-#     "Uec854f728ac320d11c00ad46b60c45af",
-#     "U11c9ee1413309df505cbc3f4fd89cec4",
-#     "U69d99515cf8c7bf0541748dab09ff0eb",
-#     "U0e92e9edda9aee0c31e3742a5abb082c",
-#     "U6e2219cccee8398193446dda99f6360c",
-#     "U2201c821f9581f8c360e5120afc02caf",
-#     "Ubbdfdc4bede9d58802d9fc3bc6427974",
-#     "U33111dbb466029fdcb6bbeabe426b7ca",
-#     "U65f20148a0ccb7e4b9665fb659bb8bed",
-#     "U55a021f496d882a1b7d160895eef5363"]
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -1128,6 +1116,8 @@ def handle_message(event):
             reply = TextSendMessage(text=("使用者：" + user_name + "UserId：" + uid))
         else:
             reply = TextSendMessage(text="抱歉，您並非認證之成員，請洽管理員登記，謝謝。")
+    # elif uid == "Ud811bad1371544b24d8c02a355930341":
+    #     if msg == "Give Me Users":
     elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
