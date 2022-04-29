@@ -17,6 +17,7 @@ df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
 app = Flask(__name__)
+ID_list = []
 with open('user_id.csv',encoding = "utf-8") as csvfile:
     rows = csv.reader(csvfile)
     for i in rows:
