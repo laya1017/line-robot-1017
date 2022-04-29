@@ -1081,8 +1081,7 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 ##SQL CMD 
-name_list = ["施垂源","羅裕城","周輝燿","YiChen","禹","郭碩","郭彤","邱","承委","偉賢","世煜","陳以任","Frank Tu(榮祥)","承翰","李一志","林俊強","楊代榮","陳韋旭","陳龍城","b1n（秉昌）","為誠"]
-ID_list = []
+ID_list = ["Ue1f56e50e35bd8feaf87f59bf1ea5765","Uec854f728ac320d11c00ad46b60c45af","U11c9ee1413309df505cbc3f4fd89cec4","U69d99515cf8c7bf0541748dab09ff0eb","U0e92e9edda9aee0c31e3742a5abb082c","U6e2219cccee8398193446dda99f6360c","U2201c821f9581f8c360e5120afc02caf","Ubbdfdc4bede9d58802d9fc3bc6427974"]
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -1108,7 +1107,7 @@ def handle_message(event):
     user_name = line_bot_api.get_profile(uid).display_name
     datalist = list(uid_data)
     print("使用者：",user_name,"UserId：",uid)
-    if user_name not in name_list :
+    if uid not in ID_list :
         if  msg == "告訴我ID":
             reply = TextSendMessage(text=("使用者：" + user_name + "UserId：" + uid))
         else:
