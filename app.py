@@ -47,7 +47,7 @@ def enter_txt_mode(event):
             items=[
             QuickReplyButton(action=MessageAction(label="無照", text="無照")),
             QuickReplyButton(action=MessageAction(label="駕照 吊銷", text="駕照 吊銷")),
-            QuickReplyButton(action=MessageAction(label="駕照 吊扣", text="牌照 吊銷")),
+            QuickReplyButton(action=MessageAction(label="駕照 吊扣", text="駕照 吊扣")),
             QuickReplyButton(action=MessageAction(label="牌照 吊銷", text="牌照 吊銷")),
             QuickReplyButton(action=MessageAction(label="牌照 吊扣", text="牌照 吊扣")),
             QuickReplyButton(action=MessageAction(label="拼裝車", text="拼裝車")),
