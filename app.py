@@ -1134,9 +1134,7 @@ def handle_message(event):
             reply = TextSendMessage(text="目前使用者有"+str(len(All_User))+"人")
         else:
             reply = TextSendMessage(text="目前使用者有：\n"+"\n".join(All_User))
-    elif uid == "U6e2219cccee8398193446dda99f6360c" and "sh-users" in msg:
-        reply = TextSendMessage(text="溪湖分局共"+str(len(sh_list))+"人登錄，成員有：\n"+"\n".join(sh_list)+"\n其他單位共"+str(len(other_list))+"人登錄，成員有：\n"+"\n".join(other_list))
-    elif uid == "Ud811bad1371544b24d8c02a355930341" and "sh-users" in msg:
+    elif uid in ["U6e2219cccee8398193446dda99f6360c","Ud811bad1371544b24d8c02a355930341","U06fae3f953fe55618641730dd9be6960"] and "sh-users" in msg:
         reply = TextSendMessage(text="溪湖分局共"+str(len(sh_list))+"人登錄，成員有：\n"+"\n".join(sh_list)+"\n其他單位共"+str(len(other_list))+"人登錄，成員有：\n"+"\n".join(other_list))
     elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
