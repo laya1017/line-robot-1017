@@ -27,7 +27,10 @@ with open('user_id.csv',encoding = "utf-8") as csvfile:
     rows = csv.reader(csvfile)
     for i in rows:
         if "溪湖" in i[2]:
-            sh_ID_list.append(i[1])
+            id_list.append(i)
+sh_list = []
+for i in id_list:
+    sh_list.append(i[0]+"("+i[2]+")")
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
         template=ButtonsTemplate(
@@ -1125,14 +1128,8 @@ def handle_message(event):
             reply = TextSendMessage(text="目前使用者有"+str(len(All_User))+"人")
         else:
             reply = TextSendMessage(text="目前使用者有：\n"+"\n".join(All_User))
-    elif uid == "U6e2219cccee8398193446dda99f6360c" and "sh-users" in msg:
-        sh_User = []
-        for i in sh_ID_list:
-            sh_User.append(line_bot_api.get_profile(i).display_name)
-        if "Count" in msg:
-            reply = TextSendMessage(text="溪湖分局目前使用者有"+str(len(sh_User))+"人")
-        else:
-            reply = TextSendMessage(text="溪湖分局目前使用者有：\n"+"\n".join(sh_User))
+    elif uid == ("U6e2219cccee8398193446dda99f6360c" or uid == "Ud811bad1371544b24d8c02a355930341") and "sh-users" in msg:
+        reply = TextSendMessage(text="溪湖分局共"+str(len(sh_list))+"人登錄，成員有：\n"+"\n".join(sh_list))
     elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
