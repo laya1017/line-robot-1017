@@ -27,9 +27,9 @@ with open('user_id.csv',encoding = "utf-8") as csvfile:
     rows = csv.reader(csvfile)
     for i in rows:
         if "溪湖" in i[2]:
-            id_list.append(i)
+            sh_ID_list.append(i)
 sh_list = []
-for i in id_list:
+for i in sh_ID_list:
     sh_list.append(i[0]+"("+i[2]+")")
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
