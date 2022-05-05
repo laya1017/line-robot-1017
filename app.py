@@ -1130,9 +1130,9 @@ def handle_message(event):
         for i in sh_ID_list:
             sh_User.append(line_bot_api.get_profile(i).display_name)
         if "Count" in msg:
-            reply = TextSendMessage(text="目前使用者有"+str(len(sh_User))+"人")
+            reply = TextSendMessage(text="溪湖分局目前使用者有"+str(len(sh_User))+"人")
         else:
-            reply = TextSendMessage(text="目前使用者有：\n"+"\n".join(sh_User))
+            reply = TextSendMessage(text="溪湖分局目前使用者有：\n"+"\n".join(sh_User))
     elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
