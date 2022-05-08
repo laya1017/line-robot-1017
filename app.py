@@ -33,7 +33,6 @@ for i in users_list:
     if i[2] not in units:
         units.append(i[2])
     count_units.append(i[2])
-# print("溪湖分局共"+str(len(sh_list))+"人登錄，成員有：\n"+"\n".join(sh_list))
 cacus = []
 count_units_sh = []
 for i in count_units:
