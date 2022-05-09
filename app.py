@@ -1521,7 +1521,7 @@ def handle_message(event):
                 result = search.NosFiltWords("43",msg)+"\n"+search.NosFiltWords("73,1,4",msg)
             elif "超重" in msg or "超載" in msg:
                 msg = msg.replace("超重","")
-                msg = msg.replace("超重","")
+                msg = msg.replace("超載","")
                 result = search.NosFiltWords("29-2,1",msg)+"\n"+search.NosFiltWords("29-2,2",msg)
             elif "機車" in msg and "裝載" in msg:
                 result = search.getByNos("31,5")
