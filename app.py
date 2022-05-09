@@ -1145,6 +1145,8 @@ def handle_message(event):
             reply = TextSendMessage(text="目前使用者有：\n"+"\n".join(All_User))
     elif uid in ["U6e2219cccee8398193446dda99f6360c","Ud811bad1371544b24d8c02a355930341","U06fae3f953fe55618641730dd9be6960"] and "sh-users" in msg:
         reply = TextSendMessage(text="\n".join(cacus))
+    elif uid in ["U6e2219cccee8398193446dda99f6360c","Ud811bad1371544b24d8c02a355930341","U06fae3f953fe55618641730dd9be6960","U996283b113113a02b352ec948872531d"] and "周輝燿" in msg:
+        reply = TextSendMessage(text="周輝燿，督察科人員形容其為辣手摧花、喪心病狂、聞風喪膽之督察剋星。傳聞中督察專家、督察某前股長只要聽聞此人之名時如同見鬼般似逃竄，有的不敢回彰化，更有的從彰化逃出去！於服務之分局中無線電中最令人印象深刻的一句話就是「施ＸＸ！你還在混阿！」")
     elif msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
