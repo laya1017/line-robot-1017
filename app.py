@@ -21,6 +21,7 @@ sort = list(df.index)
 app = Flask(__name__)
 gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
 managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
+print()
 sh = gc.open("user_id").sheet1
 users_list = sh.get_all_values()
 ID_list = sh.col_values(2)
@@ -1124,6 +1125,7 @@ def handle_message(event):
   user_name = line_bot_api.get_profile(uid).display_name
   datalist = list(uid_data)
   print("使用者：",user_name,"UserId：",uid)
+  print(ID_list)
   if uid not in ID_list :
     if  msg == "告訴我ID":
         reply = TextSendMessage(text=(user_name +","+ uid))
