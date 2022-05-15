@@ -25,7 +25,7 @@ print()
 sh = gc.open("user_id").sheet1
 users_list = sh.get_all_values()
 ID_list = sh.col_values(2)
-print("第二個讀到的ID_list")
+print("第一個讀到的ID_list")
 print(ID_list)
 count_units = sh.col_values(3)
 units = []
