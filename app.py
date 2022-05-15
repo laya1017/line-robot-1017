@@ -1119,6 +1119,7 @@ def callback():
     return 'OK'
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+  global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
   msg = event.message.text
   uid = event.source.user_id
   sql_cmd = "SELECT * from userstate where uid ='"+uid+"'"
@@ -1204,7 +1205,6 @@ def handle_message(event):
           sh.append_row(userData,unit_row(userData) + 1)
         else:
           sh.insert_row(userData,unit_row(userData) + 1)
-        global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
         sh = gc.open("user_id").sheet1
         users_list = sh.get_all_values()
         ID_list = sh.col_values(2)
@@ -1238,7 +1238,6 @@ def handle_message(event):
     try:
       realname = line_bot_api.get_profile(userData[1]).display_name
       if userData[1] in ID_list:
-        global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
         sh.delete_rows(unit_row(userData))
         sh = gc.open("user_id").sheet1
         users_list = sh.get_all_values()
@@ -1267,7 +1266,6 @@ def handle_message(event):
     except:
       reply = TextSendMessage(text="此ID無效用")
   elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in managers_id) and "refresh-data" in msg:
-    global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
     sh = gc.open("user_id").sheet1
     managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
     users_list = sh.get_all_values()
