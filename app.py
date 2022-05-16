@@ -1155,6 +1155,7 @@ def handle_message(event):
   uid_data = db.engine.execute(sql_cmd)
   user_name = line_bot_api.get_profile(uid).display_name
   datalist = list(uid_data)
+  global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
   print("使用者：",user_name,"UserId：",uid)
   print("第二個讀到的ID_list")
   print(ID_list)
