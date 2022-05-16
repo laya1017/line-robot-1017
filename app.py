@@ -1233,7 +1233,7 @@ def handle_message(event):
                     sh.append_row(userData,unit_row(userData) + 1)
                 else:
                     sh.insert_row(userData,unit_row(userData) + 1)
-                requests.get("http://127.0.0.1:5000/Update")
+                requests.get("https://line-robot-1017.herokuapp.com/Update")
                 reply = TextSendMessage(text="認證成功！")
             else:
                 reply = TextSendMessage(text="此ID已經存在了！")
@@ -1246,7 +1246,7 @@ def handle_message(event):
             realname = line_bot_api.get_profile(userData[1]).display_name
             if userData[1] in ID_list:
                 sh.delete_rows(unit_row(userData))
-                requests.get("http://127.0.0.1:5000/Update")
+                requests.get("https://line-robot-1017.herokuapp.com/Update")
                 reply = TextSendMessage(text=realname+"刪除了！")
             else:
               reply = TextSendMessage(text="不存在此使用者。")
