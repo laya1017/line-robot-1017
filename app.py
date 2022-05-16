@@ -1101,7 +1101,7 @@ def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
 @app.route("/Update")
-def index():
+def Update():
     global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
     gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
     managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
@@ -1129,7 +1129,7 @@ def index():
             if j[2] == i:
                 cacus.append(str(count)+"."+j[0])
                 count += 1
-    return render_template("index.html")
+    return "更新成功"
 ##SQL CMD 
 @app.route("/")
 def index():
