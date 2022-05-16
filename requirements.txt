@@ -8,3 +8,4 @@ Flask-SQLAlchemy
 sqlparse
 psycopg2
 gspread
+requests
