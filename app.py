@@ -14,6 +14,7 @@ import search
 import pandas as pd
 import csv
 import gspread
+import requests
 #陳逸 莊世煜 周輝燿 
 df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
