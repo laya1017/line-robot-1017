@@ -1226,19 +1226,19 @@ def handle_message(event):
     elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in managers_id) and "add-user" in msg:
         msg = msg.replace("add-user","").replace(" ","")
         userData = msg.split(",")
-        try:
-            realname = line_bot_api.get_profile(userData[1]).display_name
-            if userData[1] not in ID_list:
-                if unit_row(userData) == False:
-                    sh.append_row(userData,unit_row(userData) + 1)
-                else:
-                    sh.insert_row(userData,unit_row(userData) + 1)
-                requests.get("https://line-robot-1017.herokuapp.com/Update")
-                reply = TextSendMessage(text="認證成功！")
+        # try:
+        realname = line_bot_api.get_profile(userData[1]).display_name
+        if userData[1] not in ID_list:
+            if unit_row(userData) == False:
+                sh.append_row(userData,unit_row(userData) + 1)
             else:
-                reply = TextSendMessage(text="此ID已經存在了！")
-        except:
-            reply = TextSendMessage(text="UserID無效。")
+                sh.insert_row(userData,unit_row(userData) + 1)
+            requests.get("https://line-robot-1017.herokuapp.com/Update")
+            reply = TextSendMessage(text="認證成功！")
+        else:
+            reply = TextSendMessage(text="此ID已經存在了！")
+        # except:
+        #     reply = TextSendMessage(text="UserID無效。")
     elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in managers_id) and "del-user" in msg:
         msg = msg.replace("del-user","").replace(" ","")
         userData = msg.split(",")
