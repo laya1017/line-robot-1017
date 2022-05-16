@@ -20,32 +20,32 @@ df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
 app = Flask(__name__)
-gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
-managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
-print()
-sh = gc.open("user_id").sheet1
-users_list = sh.get_all_values()
-ID_list = sh.col_values(2)
-print("第一個讀到的ID_list")
-print(ID_list)
-count_units = sh.col_values(3)
-units = []
-cacus = []
-count_units_sh = []
-for i in users_list:
-  if i[2] not in units:
-    units.append(i[2])
-for i in count_units:
-    if "溪湖" in i :
-        count_units_sh.append(i)
-cacus.append("溪湖分局共"+str(len(count_units_sh))+"人登錄")
-for i in units:
-    count = 1
-    cacus.append(i+"("+str(count_units.count(i))+"人登錄)"+"登錄成員有：")
-    for j in users_list:
-        if j[2] == i:
-            cacus.append(str(count)+"."+j[0])
-            count += 1
+# gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
+# managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
+# print()
+# sh = gc.open("user_id").sheet1
+# users_list = sh.get_all_values()
+# ID_list = sh.col_values(2)
+# print("第一個讀到的ID_list")
+# print(ID_list)
+# count_units = sh.col_values(3)
+# units = []
+# cacus = []
+# count_units_sh = []
+# for i in users_list:
+#   if i[2] not in units:
+#     units.append(i[2])
+# for i in count_units:
+#     if "溪湖" in i :
+#         count_units_sh.append(i)
+# cacus.append("溪湖分局共"+str(len(count_units_sh))+"人登錄")
+# for i in units:
+#     count = 1
+#     cacus.append(i+"("+str(count_units.count(i))+"人登錄)"+"登錄成員有：")
+#     for j in users_list:
+#         if j[2] == i:
+#             cacus.append(str(count)+"."+j[0])
+#             count += 1
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
         template=ButtonsTemplate(
