@@ -1226,8 +1226,8 @@ def handle_message(event):
         reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。\n處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
     elif msg == "MakeCorrections" :
         reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
-    elif uid in managers_id and "sh-users" in msg:
-        reply = TextSendMessage(text="\n".join(cacus))
+    elif uid in r.get("managers_id").decode('utf-8').split(',') and "sh-users" in msg:
+        reply = TextSendMessage(text=r.get("cacus").decode('utf-8'))
     elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in r.get("managers_id").decode('utf-8').split(',')) and "add-user" in msg:
         msg = msg.replace("add-user","").replace(" ","")
         userData = msg.split(",")
@@ -1257,8 +1257,6 @@ def handle_message(event):
               reply = TextSendMessage(text="不存在此使用者。")
         except:
             reply = TextSendMessage(text="此ID無效用")
-    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in managers_id) and "sh-users" in msg:
-        reply = TextSendMessage(text="\n".join(cacus))
     elif len(datalist) == 0:
         if msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
