@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, abort, render_template
+from flask import Flask, request, abort, render_template,g
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -15,37 +15,12 @@ import pandas as pd
 import csv
 import gspread
 import requests
-#陳逸 莊世煜 周輝燿 
+import redis
 df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
 app = Flask(__name__)
-# gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
-# managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
-# print()
-# sh = gc.open("user_id").sheet1
-# users_list = sh.get_all_values()
-# ID_list = sh.col_values(2)
-# print("第一個讀到的ID_list")
-# print(ID_list)
-# count_units = sh.col_values(3)
-# units = []
-# cacus = []
-# count_units_sh = []
-# for i in users_list:
-#   if i[2] not in units:
-#     units.append(i[2])
-# for i in count_units:
-#     if "溪湖" in i :
-#         count_units_sh.append(i)
-# cacus.append("溪湖分局共"+str(len(count_units_sh))+"人登錄")
-# for i in units:
-#     count = 1
-#     cacus.append(i+"("+str(count_units.count(i))+"人登錄)"+"登錄成員有：")
-#     for j in users_list:
-#         if j[2] == i:
-#             cacus.append(str(count)+"."+j[0])
-#             count += 1
+
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
         template=ButtonsTemplate(
@@ -1101,17 +1076,48 @@ def change_var(uid, var, msg):
 def get_var(uid, var):
     sql_cmd = "SELECT "+var+" FROM userstate  WHERE uid = '"+uid+"'"
     return list(db.engine.execute(sql_cmd))[0][0]
+##SQL CMD 
+app.config['SESSION_REDIS'] = redis.Redis(host='redis-17410.c1.asia-northeast1-1.gce.cloud.redislabs.com', port='17410', password='ruV3jiVuCZqqVnZOp7CDOUIJDKuB5ViN')
+r = app.config['SESSION_REDIS']
+# 增加全局变量g.stk_num
+gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
+managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
+sh = gc.open("user_id").sheet1
+users_list = sh.get_all_values()
+ID_list = sh.col_values(2)
+count_units = sh.col_values(3)
+units = []
+cacus = []
+count_units_sh = []
+for i in users_list:
+  if i[2] not in units:
+    units.append(i[2])
+for i in count_units:
+    if "溪湖" in i :
+        count_units_sh.append(i)
+cacus.append("溪湖分局共"+str(len(count_units_sh))+"人登錄")
+for i in units:
+    count = 1
+    cacus.append(i+"("+str(count_units.count(i))+"人登錄)"+"登錄成員有：")
+    for j in users_list:
+        if j[2] == i:
+            cacus.append(str(count)+"."+j[0])
+            count += 1
+r.set('managers_id',",".join(managers_id))
+r.set('ID_list',",".join(ID_list))
+r.set('cacus',"\n".join(cacus))
+@app.route("/")
+def index():
+    return render_template("index.html")
+line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
 @app.route("/Update")
 def Update():
-    global sh,users_list,ID_list,count_units,units,cacus,count_units_sh,managers_id
     gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
     managers_id = gc.open("user_id").get_worksheet(1).col_values(1)
-    print()
     sh = gc.open("user_id").sheet1
     users_list = sh.get_all_values()
     ID_list = sh.col_values(2)
-    print("第一個讀到的ID_list")
-    print(ID_list)
     count_units = sh.col_values(3)
     units = []
     cacus = []
@@ -1130,13 +1136,14 @@ def Update():
             if j[2] == i:
                 cacus.append(str(count)+"."+j[0])
                 count += 1
+    # r.set('gc',str(gc))
+    r.set('managers_id',",".join(managers_id))
+    print(r.get("managers_id").decode('utf-8'))
+    r.set('ID_list',",".join(ID_list))
+    print(r.get("ID_list").decode('utf-8'))
+    r.set('cacus',"\n".join(cacus))
+    print(r.get("cacus").decode('utf-8'))
     return "更新成功"
-##SQL CMD 
-@app.route("/")
-def index():
-    return render_template("index.html")
-line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -1156,9 +1163,7 @@ def handle_message(event):
     uid_data = db.engine.execute(sql_cmd)
     user_name = line_bot_api.get_profile(uid).display_name
     datalist = list(uid_data)
-    print("使用者：",user_name,"UserId：",uid)
-    print(ID_list)
-    if uid not in ID_list :
+    if uid not in r.get("ID_list").decode('utf-8').split(',') :
         if  msg == "告訴我ID":
             reply = TextSendMessage(text=(user_name +","+ uid))
         else:
@@ -1223,28 +1228,28 @@ def handle_message(event):
         reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
     elif uid in managers_id and "sh-users" in msg:
         reply = TextSendMessage(text="\n".join(cacus))
-    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in managers_id) and "add-user" in msg:
+    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in r.get("managers_id").decode('utf-8').split(',')) and "add-user" in msg:
         msg = msg.replace("add-user","").replace(" ","")
         userData = msg.split(",")
-        # try:
-        realname = line_bot_api.get_profile(userData[1]).display_name
-        if userData[1] not in ID_list:
-            if unit_row(userData) == False:
-                sh.append_row(userData,unit_row(userData) + 1)
+        try:
+            realname = line_bot_api.get_profile(userData[1]).display_name
+            if userData[1] not in (r.get("ID_list").decode('utf-8').split(',')):
+                if unit_row(userData) == False:
+                    sh.append_row(userData,unit_row(userData) + 1)
+                else:
+                    sh.insert_row(userData,unit_row(userData) + 1)
+                requests.get("https://line-robot-1017.herokuapp.com/Update")
+                reply = TextSendMessage(text="認證成功！")
             else:
-                sh.insert_row(userData,unit_row(userData) + 1)
-            requests.get("https://line-robot-1017.herokuapp.com/Update")
-            reply = TextSendMessage(text="認證成功！")
-        else:
-            reply = TextSendMessage(text="此ID已經存在了！")
-        # except:
-        #     reply = TextSendMessage(text="UserID無效。")
-    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in managers_id) and "del-user" in msg:
+                reply = TextSendMessage(text="此ID已經存在了！")
+        except:
+            reply = TextSendMessage(text="UserID無效。")
+    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in r.get("managers_id").decode('utf-8').split(',')) and "del-user" in msg:
         msg = msg.replace("del-user","").replace(" ","")
         userData = msg.split(",")
         try:
             realname = line_bot_api.get_profile(userData[1]).display_name
-            if userData[1] in ID_list:
+            if userData[1] in (r.get("ID_list").decode('utf-8').split(',')):
                 sh.delete_rows(unit_row(userData))
                 requests.get("https://line-robot-1017.herokuapp.com/Update")
                 reply = TextSendMessage(text=realname+"刪除了！")
