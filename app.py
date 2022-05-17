@@ -1103,8 +1103,6 @@ for i in units:
         if j[2] == i:
             cacus.append(str(count)+"."+j[0])
             count += 1
-r.set('managers_id',",".join(managers_id))
-r.set('ID_list',",".join(ID_list))
 r.set('cacus',"\n".join(cacus))
 @app.route("/")
 def index():
@@ -1137,10 +1135,6 @@ def Update():
                 cacus.append(str(count)+"."+j[0])
                 count += 1
     # r.set('gc',str(gc))
-    r.set('managers_id',",".join(managers_id))
-    print(r.get("managers_id").decode('utf-8'))
-    r.set('ID_list',",".join(ID_list))
-    print(r.get("ID_list").decode('utf-8'))
     r.set('cacus',"\n".join(cacus))
     print(r.get("cacus").decode('utf-8'))
     return "更新成功"
@@ -1163,7 +1157,7 @@ def handle_message(event):
     uid_data = db.engine.execute(sql_cmd)
     user_name = line_bot_api.get_profile(uid).display_name
     datalist = list(uid_data)
-    if uid not in r.get("ID_list").decode('utf-8').split(',') :
+    if uid not in sh.col_values(2) :
         if  msg == "告訴我ID":
             reply = TextSendMessage(text=(user_name +","+ uid))
         else:
@@ -1226,9 +1220,9 @@ def handle_message(event):
         reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。\n處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
     elif msg == "MakeCorrections" :
         reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
-    elif uid in r.get("managers_id").decode('utf-8').split(',') and "sh-users" in msg:
+    elif uid in gc.open("user_id").get_worksheet(1).col_values(1) and "sh-users" in msg:
         reply = TextSendMessage(text=r.get("cacus").decode('utf-8'))
-    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in r.get("managers_id").decode('utf-8').split(',')) and "add-user" in msg:
+    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in gc.open("user_id").get_worksheet(1).col_values(1)) and "add-user" in msg:
         msg = msg.replace("add-user","").replace(" ","")
         userData = msg.split(",")
         try:
@@ -1244,7 +1238,7 @@ def handle_message(event):
                 reply = TextSendMessage(text="此ID已經存在了！")
         except:
             reply = TextSendMessage(text="UserID無效。")
-    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in r.get("managers_id").decode('utf-8').split(',')) and "del-user" in msg:
+    elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in gc.open("user_id").get_worksheet(1).col_values(1)) and "del-user" in msg:
         msg = msg.replace("del-user","").replace(" ","")
         userData = msg.split(",")
         try:
