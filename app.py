@@ -356,6 +356,309 @@ flex = {
     }
   ]
 }
+noResult = {
+      "type": "bubble",
+      "size": "giga",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。",
+            "weight": "bold",
+            "size": "xxl",
+            "margin": "none",
+            "align": "center",
+            "wrap": True
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "margin": "none",
+            "contents": [
+              {
+                "type": "text",
+                "text": "可點擊下列交通相關法規尋找",
+                "size": "xl",
+                "color": "#eb4034",
+                "margin": "none",
+                "wrap": True,
+                "weight": "bold"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "一、",
+                    "flex": 1,
+                    "size": "lg"
+                  },
+                  {
+                    "type": "text",
+                    "wrap": True,
+                    "size": "lg",
+                    "flex": 6,
+                    "margin": "none",
+                    "contents": [
+                      {
+                        "type": "span",
+                        "text": "道路交通管理處罰條例",
+                        "color": "#0335fc",
+                        "weight": "bold"
+                      },
+                      {
+                        "type": "span",
+                        "text": "搜尋頁面"
+                      }
+                    ]
+                  }
+                ],
+                "action": {
+                  "type": "uri",
+                  "label": "道交條例",
+                  "uri": "https://liff.line.me/1657051965-j3lD0abP"
+                }
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "margin": "lg",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "baseline",
+                    "spacing": "sm",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "二、",
+                        "flex": 1,
+                        "size": "lg"
+                      },
+                      {
+                        "type": "text",
+                        "text": "違反道路交通管理事件統一裁罰基準及處理細則搜尋頁面",
+                        "wrap": True,
+                        "size": "lg",
+                        "flex": 6,
+                        "margin": "none",
+                        "contents": [
+                          {
+                            "type": "span",
+                            "text": "違反道路交通管理事件統一裁罰基準及處理細則",
+                            "color": "#0335fc",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "span",
+                            "text": "搜尋頁面"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "margin": "lg",
+                    "spacing": "sm",
+                    "contents": [
+                      {
+                        "type": "box",
+                        "layout": "baseline",
+                        "spacing": "sm",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "三、",
+                            "flex": 1,
+                            "size": "lg"
+                          },
+                          {
+                            "type": "text",
+                            "wrap": True,
+                            "size": "lg",
+                            "flex": 6,
+                            "margin": "none",
+                            "contents": [
+                              {
+                                "type": "span",
+                                "text": "道路交通安全規則",
+                                "color": "#0335fc",
+                                "weight": "bold"
+                              },
+                              {
+                                "type": "span",
+                                "text": "搜尋頁面"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "action": {
+                  "type": "uri",
+                  "label": "處理細則",
+                  "uri": "https://liff.line.me/1657051965-GZbp43YJ"
+                }
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "margin": "lg",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "baseline",
+                    "spacing": "sm",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "四、",
+                        "flex": 1,
+                        "size": "lg"
+                      },
+                      {
+                        "type": "text",
+                        "wrap": True,
+                        "size": "lg",
+                        "flex": 6,
+                        "margin": "none",
+                        "contents": [
+                          {
+                            "type": "span",
+                            "text": "道路交通標誌標線號誌設置規則",
+                            "color": "#0335fc",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "span",
+                            "text": "搜尋頁面"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "action": {
+                  "type": "uri",
+                  "label": "設置規則",
+                  "uri": "https://liff.line.me/1657051965-X5YR8Ere"
+                }
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "margin": "lg",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "baseline",
+                    "spacing": "sm",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "五、",
+                        "flex": 1,
+                        "size": "lg"
+                      },
+                      {
+                        "type": "text",
+                        "text": "有無攜帶凶器或其他危險物品？\n(加重要件)",
+                        "wrap": True,
+                        "size": "lg",
+                        "flex": 6,
+                        "margin": "none",
+                        "contents": [
+                          {
+                            "type": "span",
+                            "text": " 高速公路及快速公路管制規則",
+                            "color": "#0335fc",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "span",
+                            "text": "搜尋頁面"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "action": {
+                  "type": "uri",
+                  "label": "高管規則",
+                  "uri": "https://liff.line.me/1657051965-RZNxa6Vd"
+                }
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "margin": "lg",
+                "spacing": "sm",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "baseline",
+                    "spacing": "sm",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "六、",
+                        "flex": 1,
+                        "size": "lg"
+                      },
+                      {
+                        "type": "text",
+                        "text": "有無攜帶凶器或其他危險物品？\n(加重要件)",
+                        "wrap": True,
+                        "size": "lg",
+                        "flex": 6,
+                        "margin": "none",
+                        "contents": [
+                          {
+                            "type": "span",
+                            "text": "行政令函",
+                            "color": "#0335fc",
+                            "weight": "bold"
+                          },
+                          {
+                            "type": "span",
+                            "text": "搜尋頁面"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "action": {
+                  "type": "uri",
+                  "label": "行政令函",
+                  "uri": "https://liff.line.me/1657051965-aB0XY34n"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
 #Add User Method
 def unit_row(userData):
     try:
@@ -1489,7 +1792,7 @@ def handle_message(event):
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif search.getListByNos(msg) == [] :
-                reply = TextSendMessage(text="本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。")
+                reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
                 delete_data(uid) 
         elif datalist[0][2] == "nos_mode+P":
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
@@ -1619,7 +1922,7 @@ def handle_message(event):
             else:
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
-                    result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
+                    reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "查詢的內容太多了，請重新輸入關鍵字。"
                 else:
@@ -1629,7 +1932,7 @@ def handle_message(event):
             except:
                 pass
             if len(result) == 0:
-                result = "本系統以裁罰基準表內容為主，如查不到法條請上全國法規網。"
+                reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
             reply = TextSendMessage(text=result)
             reply = Series_Q_Reply(reply)
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
