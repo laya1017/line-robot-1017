@@ -1447,7 +1447,6 @@ def keywords (msg):
             reply = TextSendMessage(text=search.Content_finder(msg))
     else:
         reply = TextSendMessage(search.Content_finder(msg))
-        print(reply)
         if len((reply.text).replace("\n","").replace(" ","")) == 0 :
             reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
         elif len((reply.text).replace("\n","").replace(" ","")) > 5000:
@@ -1461,6 +1460,66 @@ def keywords (msg):
     if len(reply.text) == 0:
         reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
     reply = Series_Q_Reply(reply)
+    return reply
+def nots(msg):
+    if msg == "Machine":
+        reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
+    elif msg == "HMOT":
+        reply = TextSendMessage(text="道交條例§92II：\n汽缸排氣量550立方公分以上大型重型機車，得依交通部公告規定之路段及時段行駛高速公路，其駕駛人應有得駕駛汽缸排氣量550立方公分以上大型重型機車駕駛執照1年以上及小型車以上之駕駛執照。")
+    elif msg == "LightUsing":
+        reply = TextSendMessage(text="道安規則§102,I:\n右轉彎時，應距交岔路口30公尺前顯示方向燈或手勢，換入外側車道、右轉車道或慢車道，駛至路口後再行右轉。但由慢車道右轉彎時應於距交岔路口30至60公尺處，換入慢車道。\n五、左轉彎時，應距交岔路口30公尺前顯示方向燈或手勢，換入內側車道或左轉車道，行至交岔路口中心處左轉，並不得占用來車道搶先左轉。\n道安規則§109:\nI.汽車行駛時，應依下列規定使用燈光：\n  1.夜間應開亮頭燈。\n  2.行經隧道、調撥車道應開亮頭燈。\n  3.遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。\n  4.非遇雨、霧時，不得使用霧燈。\n  5.行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。\n  6.夜間會車時，或同向前方100公尺內有車輛行駛，除第101條第3款之情形外，應使用近光燈。\nII.汽車駕駛人，應依下列規定使用方向燈：\n  1.起駛前應顯示方向燈。\n  2.左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。\n  3.超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。")
+    elif msg == "DoubleYellow":
+        reply = TextSendMessage(text="交通部94.06.15.交路字第0940035842號函：\n查道路交通管理處罰條例第48條應係對汽車駕駛人行駛至轉彎路段未依規定轉彎之處罰，對於本案臺中縣警察局所提汽車於繪有行車分向限制線段左轉彎，應係未依分向限制線標線規定行駛之違規轉彎行為，此與上述第48條之未依規定轉彎情形，應屬有間，本部同意貴署所提適用處罰條例第60條第2項第3款「不遵守道路交通標線之指示」之處罰。")
+    elif msg == "DoubleWhite":
+        reply = TextSendMessage(text="交通部99.07.26.交路字第0990044737號函：\n有關貴署函詢「跨越雙白線變換車道」違規案件之處罰疑義乙案，本部前業以75年8月18日交路(75)字第19567號函示「應依道路交通管理處罰條例第45條第1項第12款裁處」在案，復請查照。")
+    elif msg == "ThreeMinutes":
+        reply = TextSendMessage(text="依據立法院1010508修正理由：\n同時臨時停車之重點實則在於保持可立即行駛之狀態，不應以引擎是否熄火或停止時間來判斷")
+    elif msg == "SideStopping":
+        reply = TextSendMessage(text="道安規則§111 II,III：\nII.汽車臨時停車時，應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾60公分。但大型車不得逾1公尺。\nIII. 大型重型機車及機車臨時停車時，應依車輛順行方向緊靠道路邊緣停放，其前輪或後輪外側距離緣石或路面邊緣不得逾40公分。")
+    elif msg == "SideParking":
+        reply = TextSendMessage(text="道安規則§112 II,III：\nII.汽車停車時應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾40公分。\nIII. 大型重型機車及機車停車時，應依車輛順行方向緊靠道路邊緣平行、垂直或斜向停放，其前輪或後輪外側距離緣石或路面邊緣不得逾30公分。但公路主管機關、市區道路主管機關或警察機關另有特別規定時，應依其規定。")
+    elif msg == "OtherLaw":
+        reply = TextSendMessage(text="道交條例60條2項3款使用時機在於交通違規找不到符合本法之行為以及違反\"禁制\"標誌或標線之情況下適用，故考路以本條款舉發時需多加詳查規定。")
+    elif msg == "wrongWayDriving":
+        reply = TextSendMessage(
+            text="1.遵行方向：\n依據道路交通標誌標線號誌設置規則第2章第3節禁制標誌內容可知，係指道路上設具有方向性質之\"遵行\"標誌（藍底白色箭頭），例如：道路遵行方向、車道遵行方向標誌、單行道標誌等，而車輛必須\"遵行\"其標誌方向行駛。\n2.來車道：\n依據道安規則§97-1項2款規定「在劃有分向限制線之路段，不得駛入來車之車道內。」可得知，在劃有雙黃線之情況駛入來車道（對向車道），符合道交條例45條1項3款之違規行為。",
+            quick_reply=QuickReply(
+                items=[QuickReplyButton(action=MessageAction(label="遵行方向標誌圖形", text="complianceSign"))
+                ]
+                )
+            )
+    elif msg == "TwoCarStoppingNparking":
+        reply = ImageSendMessage(
+            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
+            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
+    elif msg == "OverWeightrange":
+        reply = TextSendMessage(text="處理細則§12,I：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾10%得勸導。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量20%者，責令其於2小時內改正之，逾2小時不改正者，得連續舉發；其超載重量逾核定總重量20%者，當場禁止其通行。")
+    elif msg == "complianceSign":
+        reply = ImageSendMessage(
+            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
+            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg')
+    elif msg == "KeepIssueSpeed":
+        reply = TextSendMessage(text="道交條例§85-1,II：\n(1)逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第33條第1項、第2項之情形，其違規地點相距6公里以上、違規時間相隔6分鐘以上或行駛經過一個路口以上得連續舉發。但其違規地點在隧道內者，不在此限。")
+    elif msg == "KeepIssueParking2":
+        reply = TextSendMessage(text="道交條例§85-1,II：\n二、逕行舉發汽車有第56條第1項、第2項或第57條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾2小時得連續舉發。")
+    elif msg == "KeepIssueParking":
+        reply = TextSendMessage(text="道交條例§85-1,I：\n汽車駕駛人、汽車所有人、汽車買賣業或汽車修理業違反第56條第1項或第57條規定，經舉發後，不遵守交通勤務警察或依法令執行交通稽查任務人員責令改正者，得連續舉發之。")
+    elif msg == "Warning52":
+        reply = ImageSendMessage(
+            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png',
+            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png')
+    elif msg == "StoppingPersuasion":
+        reply = TextSendMessage(text="處理細則§12,I：\n駕駛汽車因上、下客、貨，致有本條例第55條之情形，惟尚無妨礙其他人、車通行。")
+    elif msg == "ParkingPersuasion":
+        reply = TextSendMessage(text="處理細則§12,I：\n深夜時段（0至6時）停車，有本條例第56條第1項之情形。但於身心障礙專用停車位違規停車或停車顯有妨礙消防安全之虞，或妨礙其他人車通行經人檢舉者，不在此限。")
+    elif msg == "FaultSign":
+        reply = TextSendMessage(text="道安規則§112,IV：\n(1)在行車時速40公里以下之路段，應豎立於車身後方5公尺至30公尺之路面上，車前適當位置得視需要設置。\n(2)在行車時速逾40公里之路段，應豎立於車身後方30公尺至100公尺之路面上，車前適當位置得視需要設置。\n(3)交通擁擠之路段，應懸掛於車身之後部，車前適當位置得視需要設置。")
+    elif msg == "CrashSign":
+        reply = TextSendMessage(text="道路交通事故處理辦法§4,I：\n1.高速公路：於事故地點後方100公尺處。\n2.快速道路或最高速限超過60公里之路段：於事故地點後方80公尺處。\n3.最高速限超過50公里至60公里之路段：於事故地點後方50公尺處。\n4.最高速限50公里以下之路段：於事故地點後方30公尺處。\n5.交通壅塞或行車時速低於10公里以下之路段：於事故地點後方5公尺處。\nII：\n前項各款情形，遇雨霧致視線不清時，適當距離應酌予增加；其有雙向或多向車流通過，應另於前方或周邊適當處所為必要之放置。")
+    elif msg == "ProhibitPassDrive":
+        reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。\n處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
+    elif msg == "MakeCorrections" :
+        reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
     return reply
 ##dwiNdwd zone
 ##PlaceCheckMode
@@ -1599,64 +1658,6 @@ def handle_message(event):
             reply = TextSendMessage(text=(user_name +","+ uid))
         else:
             reply = TextSendMessage(text="抱歉，您並非認證之成員，請洽管理員登記，謝謝。")
-    elif msg == "Machine":
-        reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
-    elif msg == "HMOT":
-        reply = TextSendMessage(text="道交條例§92II：\n汽缸排氣量550立方公分以上大型重型機車，得依交通部公告規定之路段及時段行駛高速公路，其駕駛人應有得駕駛汽缸排氣量550立方公分以上大型重型機車駕駛執照1年以上及小型車以上之駕駛執照。")
-    elif msg == "LightUsing":
-        reply = TextSendMessage(text="道安規則§102,I:\n右轉彎時，應距交岔路口30公尺前顯示方向燈或手勢，換入外側車道、右轉車道或慢車道，駛至路口後再行右轉。但由慢車道右轉彎時應於距交岔路口30至60公尺處，換入慢車道。\n五、左轉彎時，應距交岔路口30公尺前顯示方向燈或手勢，換入內側車道或左轉車道，行至交岔路口中心處左轉，並不得占用來車道搶先左轉。\n道安規則§109:\nI.汽車行駛時，應依下列規定使用燈光：\n  1.夜間應開亮頭燈。\n  2.行經隧道、調撥車道應開亮頭燈。\n  3.遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。\n  4.非遇雨、霧時，不得使用霧燈。\n  5.行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。\n  6.夜間會車時，或同向前方100公尺內有車輛行駛，除第101條第3款之情形外，應使用近光燈。\nII.汽車駕駛人，應依下列規定使用方向燈：\n  1.起駛前應顯示方向燈。\n  2.左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。\n  3.超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。")
-    elif msg == "DoubleYellow":
-        reply = TextSendMessage(text="交通部94.06.15.交路字第0940035842號函：\n查道路交通管理處罰條例第48條應係對汽車駕駛人行駛至轉彎路段未依規定轉彎之處罰，對於本案臺中縣警察局所提汽車於繪有行車分向限制線段左轉彎，應係未依分向限制線標線規定行駛之違規轉彎行為，此與上述第48條之未依規定轉彎情形，應屬有間，本部同意貴署所提適用處罰條例第60條第2項第3款「不遵守道路交通標線之指示」之處罰。")
-    elif msg == "DoubleWhite":
-        reply = TextSendMessage(text="交通部99.07.26.交路字第0990044737號函：\n有關貴署函詢「跨越雙白線變換車道」違規案件之處罰疑義乙案，本部前業以75年8月18日交路(75)字第19567號函示「應依道路交通管理處罰條例第45條第1項第12款裁處」在案，復請查照。")
-    elif msg == "ThreeMinutes":
-        reply = TextSendMessage(text="依據立法院1010508修正理由：\n同時臨時停車之重點實則在於保持可立即行駛之狀態，不應以引擎是否熄火或停止時間來判斷")
-    elif msg == "SideStopping":
-        reply = TextSendMessage(text="道安規則§111 II,III：\nII.汽車臨時停車時，應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾60公分。但大型車不得逾1公尺。\nIII. 大型重型機車及機車臨時停車時，應依車輛順行方向緊靠道路邊緣停放，其前輪或後輪外側距離緣石或路面邊緣不得逾40公分。")
-    elif msg == "SideParking":
-        reply = TextSendMessage(text="道安規則§112 II,III：\nII.汽車停車時應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾40公分。\nIII. 大型重型機車及機車停車時，應依車輛順行方向緊靠道路邊緣平行、垂直或斜向停放，其前輪或後輪外側距離緣石或路面邊緣不得逾30公分。但公路主管機關、市區道路主管機關或警察機關另有特別規定時，應依其規定。")
-    elif msg == "OtherLaw":
-        reply = TextSendMessage(text="道交條例60條2項3款使用時機在於交通違規找不到符合本法之行為以及違反\"禁制\"標誌或標線之情況下適用，故考路以本條款舉發時需多加詳查規定。")
-    elif msg == "wrongWayDriving":
-        reply = TextSendMessage(
-            text="1.遵行方向：\n依據道路交通標誌標線號誌設置規則第2章第3節禁制標誌內容可知，係指道路上設具有方向性質之\"遵行\"標誌（藍底白色箭頭），例如：道路遵行方向、車道遵行方向標誌、單行道標誌等，而車輛必須\"遵行\"其標誌方向行駛。\n2.來車道：\n依據道安規則§97-1項2款規定「在劃有分向限制線之路段，不得駛入來車之車道內。」可得知，在劃有雙黃線之情況駛入來車道（對向車道），符合道交條例45條1項3款之違規行為。",
-            quick_reply=QuickReply(
-                items=[QuickReplyButton(action=MessageAction(label="遵行方向標誌圖形", text="complianceSign"))
-                ]
-                )
-            )
-    elif msg == "TwoCarStoppingNparking":
-        reply = ImageSendMessage(
-            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
-            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
-    elif msg == "OverWeightrange":
-        reply = TextSendMessage(text="處理細則§12,I：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾10%得勸導。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量20%者，責令其於2小時內改正之，逾2小時不改正者，得連續舉發；其超載重量逾核定總重量20%者，當場禁止其通行。")
-    elif msg == "complianceSign":
-        reply = ImageSendMessage(
-            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
-            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg')
-    elif msg == "KeepIssueSpeed":
-        reply = TextSendMessage(text="道交條例§85-1,II：\n(1)逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第33條第1項、第2項之情形，其違規地點相距6公里以上、違規時間相隔6分鐘以上或行駛經過一個路口以上得連續舉發。但其違規地點在隧道內者，不在此限。")
-    elif msg == "KeepIssueParking2":
-        reply = TextSendMessage(text="道交條例§85-1,II：\n二、逕行舉發汽車有第56條第1項、第2項或第57條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾2小時得連續舉發。")
-    elif msg == "KeepIssueParking":
-        reply = TextSendMessage(text="道交條例§85-1,I：\n汽車駕駛人、汽車所有人、汽車買賣業或汽車修理業違反第56條第1項或第57條規定，經舉發後，不遵守交通勤務警察或依法令執行交通稽查任務人員責令改正者，得連續舉發之。")
-    elif msg == "Warning52":
-        reply = ImageSendMessage(
-            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png',
-            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png')
-    elif msg == "StoppingPersuasion":
-        reply = TextSendMessage(text="處理細則§12,I：\n駕駛汽車因上、下客、貨，致有本條例第55條之情形，惟尚無妨礙其他人、車通行。")
-    elif msg == "ParkingPersuasion":
-        reply = TextSendMessage(text="處理細則§12,I：\n深夜時段（0至6時）停車，有本條例第56條第1項之情形。但於身心障礙專用停車位違規停車或停車顯有妨礙消防安全之虞，或妨礙其他人車通行經人檢舉者，不在此限。")
-    elif msg == "FaultSign":
-        reply = TextSendMessage(text="道安規則§112,IV：\n(1)在行車時速40公里以下之路段，應豎立於車身後方5公尺至30公尺之路面上，車前適當位置得視需要設置。\n(2)在行車時速逾40公里之路段，應豎立於車身後方30公尺至100公尺之路面上，車前適當位置得視需要設置。\n(3)交通擁擠之路段，應懸掛於車身之後部，車前適當位置得視需要設置。")
-    elif msg == "CrashSign":
-        reply = TextSendMessage(text="道路交通事故處理辦法§4,I：\n1.高速公路：於事故地點後方100公尺處。\n2.快速道路或最高速限超過60公里之路段：於事故地點後方80公尺處。\n3.最高速限超過50公里至60公里之路段：於事故地點後方50公尺處。\n4.最高速限50公里以下之路段：於事故地點後方30公尺處。\n5.交通壅塞或行車時速低於10公里以下之路段：於事故地點後方5公尺處。\nII：\n前項各款情形，遇雨霧致視線不清時，適當距離應酌予增加；其有雙向或多向車流通過，應另於前方或周邊適當處所為必要之放置。")
-    elif msg == "ProhibitPassDrive":
-        reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。\n處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
-    elif msg == "MakeCorrections" :
-        reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
     elif uid in r.get("managers_id").decode('utf-8').split(',') and "sh-users" in msg:
         reply = TextSendMessage(text=r.get("cacus").decode('utf-8'))
     elif (uid in ["Uc0e274a2c86b4e44c9162859362614a9"] or uid in r.get("managers_id").decode('utf-8').split(',')) and "add-user" in msg:
@@ -2596,6 +2597,7 @@ def handle_message(event):
             else:
                 reply = TextSendMessage(text="功能尚未開放。")
               # delete_data(uid)
+        nots(msg)
     line_bot_api.reply_message(event.reply_token,reply)
 if __name__ == "__main__":
     app.run()
