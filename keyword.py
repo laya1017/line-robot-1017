@@ -61,15 +61,15 @@ def keywords (msg):
         elif "毒駕" in msg or "毒" in msg:
             msg = msg.replace("毒駕","毒")
             msg = msg.replace("毒","")
-            reply = TextSendMessage(text=reply = search.NosFiltWords("35,1",msg+" 藥")+"\n"+search.NosFiltWords("35,3",msg)+"\n"+search.NosFiltWords("35,7",msg))
+            reply = TextSendMessage(text=search.NosFiltWords("35,1",msg+" 藥")+"\n"+search.NosFiltWords("35,3",msg)+"\n"+search.NosFiltWords("35,7",msg))
     elif "酒精" in msg and "鎖" in msg :
         msg = msg.replace("酒精","")
         msg = msg.replace("鎖","")
-        reply = TextSendMessage(text=reply = search.NosFiltWords("35-1",msg+" 車輛點火自動鎖定裝置"))
+        reply = TextSendMessage(text=search.NosFiltWords("35-1",msg+" 車輛點火自動鎖定裝置"))
     elif "無照" in msg :
         msg = msg.replace("無照"," 未領有駕駛執照駕")
         if "動力" in msg :
-            reply = TextSendMessage(text=reply = search.getByNos("32,1"))
+            reply = TextSendMessage(text=search.getByNos("32,1"))
         elif "大型" in msg:
             reply = TextSendMessage(text=search.Content_finder(msg)+"\n"+search.NosFiltWords("92,7,3",msg))
         else:
