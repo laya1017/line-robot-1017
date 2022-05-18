@@ -1461,7 +1461,7 @@ def keywords (msg):
         reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
     reply = Series_Q_Reply(reply)
     return reply
-def nots(msg):
+def notes(msg):
     if msg == "Machine":
         reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
     elif msg == "HMOT":
@@ -2597,7 +2597,7 @@ def handle_message(event):
             else:
                 reply = TextSendMessage(text="功能尚未開放。")
               # delete_data(uid)
-        nots(msg)
+        reply = notes(msg)
     line_bot_api.reply_message(event.reply_token,reply)
 if __name__ == "__main__":
     app.run()
