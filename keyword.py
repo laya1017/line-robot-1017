@@ -1,3 +1,14 @@
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,FlexSendMessage
+)
+import search
+import pandas as pd
 def keywords (msg):
     if "兩段" in msg :
         if "慢車" in msg :
