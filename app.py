@@ -1446,7 +1446,7 @@ def keywords (msg):
         else:
             reply = TextSendMessage(text=search.Content_finder(msg))
     else:
-        reply = search.Content_finder(msg)
+        reply = TextSendMessage(search.Content_finder(msg))
         print(reply)
         if len((reply.text).replace("\n","").replace(" ","")) == 0 :
             reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
