@@ -1447,11 +1447,14 @@ def keywords (msg):
             reply = TextSendMessage(text=search.Content_finder(msg))
     else:
         reply = TextSendMessage(search.Content_finder(msg))
-        if len((reply.text).replace("\n","").replace(" ","")) == 0 :
-            reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
-        elif len((reply.text).replace("\n","").replace(" ","")) > 5000:
-            reply = TextSendMessage(text="查詢的內容太多了，請重新輸入關鍵字。")
-        else:
+        try:
+            if len((reply.text).replace("\n","").replace(" ","")) == 0 :
+                reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+            elif len((reply.text).replace("\n","").replace(" ","")) > 5000:
+                reply = TextSendMessage(text="查詢的內容太多了，請重新輸入關鍵字。")
+            else:
+                pass
+        except:
             pass
     try:
         reply.text = (reply.text).lstrip().strip()
