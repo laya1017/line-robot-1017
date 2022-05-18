@@ -1465,7 +1465,10 @@ def keywords (msg):
             reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
     except:
         pass
-    reply = Series_Q_Reply(reply)
+    try:
+        reply = Series_Q_Reply(reply)
+    except:
+        pass
     return reply
 def notes(msg):
     if msg == "Machine":
