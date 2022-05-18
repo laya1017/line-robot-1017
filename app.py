@@ -1460,8 +1460,11 @@ def keywords (msg):
         reply.text = (reply.text).lstrip().strip()
     except:
         pass
-    if len(reply.text) == 0:
-        reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+    try:
+        if len(reply.text) == 0:
+            reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+    except:
+        pass
     reply = Series_Q_Reply(reply)
     return reply
 def notes(msg):
