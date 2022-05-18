@@ -1457,11 +1457,8 @@ def keywords (msg):
         reply.text = (reply.text).lstrip().strip()
     except:
         pass
-    try:
-        if len(reply.text) == 0:
-            reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
-    except:
-        pass
+    if len(reply.text) == 0:
+        reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
     reply = Series_Q_Reply(reply)
     return reply
 def notes(msg):
@@ -1656,6 +1653,10 @@ def handle_message(event):
     uid_data = db.engine.execute(sql_cmd)
     user_name = line_bot_api.get_profile(uid).display_name
     datalist = list(uid_data)
+    try:
+        reply = notes(msg)
+    except:
+        pass
     if uid not in r.get("ID_list").decode('utf-8').split(',') :
         if  msg == "告訴我ID":
             reply = TextSendMessage(text=(user_name +","+ uid))
@@ -1722,10 +1723,6 @@ def handle_message(event):
         else :
             reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
     elif len(datalist) != 0 :
-        try:
-            reply = notes(msg)
-        except:
-            pass
         if  msg == "[關鍵字搜尋模式]":
             change_state(uid,"txt_mode")
             reply = enter_txt_mode(event)
