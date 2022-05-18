@@ -1447,9 +1447,9 @@ def keywords (msg):
             reply = TextSendMessage(text=search.Content_finder(msg))
     else:
         reply = search.Content_finder(msg)
-        if len(result.replace("\n","").replace(" ","")) == 0 :
+        if len(reply.text.replace("\n","").replace(" ","")) == 0 :
             reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
-        elif len(result.replace("\n","").replace(" ","")) > 5000:
+        elif len(reply.text.replace("\n","").replace(" ","")) > 5000:
             reply = TextSendMessage(text="查詢的內容太多了，請重新輸入關鍵字。")
         else:
             pass
