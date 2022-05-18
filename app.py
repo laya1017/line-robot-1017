@@ -1793,6 +1793,7 @@ def handle_message(event):
                 delete_data(uid)
             elif search.getListByNos(msg) == [] :
                 reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+                line_bot_api.reply_message(event.reply_token,reply)
                 delete_data(uid) 
         elif datalist[0][2] == "nos_mode+P":
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
@@ -1923,6 +1924,7 @@ def handle_message(event):
                 result = search.Content_finder(msg)
                 if len(result.replace("\n","").replace(" ","")) == 0 :
                     reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+                    line_bot_api.reply_message(event.reply_token,reply)
                 elif len(result.replace("\n","").replace(" ","")) > 5000:
                     result = "查詢的內容太多了，請重新輸入關鍵字。"
                 else:
@@ -1933,6 +1935,7 @@ def handle_message(event):
                 pass
             if len(result) == 0:
                 reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+                line_bot_api.reply_message(event.reply_token,reply)
             reply = TextSendMessage(text=result)
             reply = Series_Q_Reply(reply)
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
