@@ -1616,6 +1616,11 @@ def index():
     return render_template("index.html")
 line_bot_api = LineBotApi('m2UPwMSn3p4xmDvVQkvo+AFGkZONQ0yKm3vQlm/RKMODbcTLoEPhS3oQNsqmWciOl3+hxaSy1LrUGQAJ0AxbaS2yTchTCy7Ux5gsMQmsUYkQSO27KIeDhR78RcekWmeF/zvvuMsmudmHMc0OdukCuQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('aa64bf9da34389763d2020a499d6d6ec')
+@app.route("/Delete_datas")
+def Delete_datas():
+    sql_cmd = "TRUNCATE TABLE userstate"
+    db.engine.execute(sql_cmd)   
+    return "刪除成功"
 @app.route("/Update")
 def Update():
     gc = gspread.service_account(filename = "vigilant-tract-350212-a22f69b7e842.json")
@@ -1818,6 +1823,8 @@ def handle_message(event):
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
+        elif "@" in msg:
+
         elif msg == 'Previous-nos_mode':
             change_state(uid, "nos_mode")
             reply = TextSendMessage(text="條文搜尋模式。\n先輸入第＿條：")
