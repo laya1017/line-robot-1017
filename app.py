@@ -1434,13 +1434,13 @@ def keywords (msg):
     elif ("中心" in msg) and ("彎" in msg):
         reply = TextSendMessage(text=search.getByNos("48,1,3"))
     elif "電動自行車" in msg :
-        if search.Content_finder(msg) == "":
+        if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
             msg.replace("電動自行車","慢車")
             reply = TextSendMessage(text=search.Content_finder(msg))
         else:
             reply = TextSendMessage(text=search.Content_finder(msg))
     elif "電動輔助" in msg :
-        if search.Content_finder(msg) == "":
+        if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
             msg.replace("電動輔助","慢車")
             reply = TextSendMessage(text=search.Content_finder(msg))
         else:
