@@ -1427,7 +1427,7 @@ def keywords (msg):
     elif "不服稽查" in msg:
         msg = msg.replace("不服稽查","")
         reply = TextSendMessage(text=search.NosFiltWords("60,1",msg)+"\n"+search.NosFiltWords("60,2,1",msg))
-    elif ("禁行機車" in msg) or (("機車" in msg) and ("快車道" in msg)):
+    elif (set(list("禁行機車")).issubset(set(list("msg"))) or set(list("msg")).issubset(set(list("禁行機車")))) or (set(list("快車機車")).issubset(set(list("msg"))) or set(list("msg")).issubset(set(list("快車機車"))))
         reply = TextSendMessage(text=search.getByNos("45,1,13"))
     elif ("左轉" in msg and "車道" in msg) or ("右彎" in msg and "車道" in msg) or ("左彎" in msg and "車道" in msg):
         reply = TextSendMessage(text=search.getByNos("48,1,7"))
@@ -1437,14 +1437,12 @@ def keywords (msg):
         if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
             msg = msg.replace("電動自行車","慢車")
             reply = TextSendMessage(text=search.Content_finder(msg))
-            print(search.Content_finder(msg).replace(" ","").replace("\n",""))
         else:
             reply = TextSendMessage(text=search.Content_finder(msg))
     elif "電動輔助" in msg :
         if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
             msg = msg.replace("電動輔助","慢車")
             reply = TextSendMessage(text=search.Content_finder(msg))
-            print(search.Content_finder(msg).replace(" ","").replace("\n",""))
         else:
             reply = TextSendMessage(text=search.Content_finder(msg))
     else:
@@ -1639,11 +1637,8 @@ def Update():
                 count += 1
     # r.set('gc',str(gc))
     r.set('managers_id',",".join(managers_id))
-    print(r.get("managers_id").decode('utf-8'))
     r.set('ID_list',",".join(ID_list))
-    print(r.get("ID_list").decode('utf-8'))
     r.set('cacus',"\n".join(cacus))
-    print(r.get("cacus").decode('utf-8'))
     return "更新成功"
 @app.route("/callback", methods=['POST'])
 def callback():
