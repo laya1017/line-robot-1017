@@ -201,100 +201,25 @@ def Sort_Mode(event):
         ))
     return reply
 flex = {
-  "type": "carousel",
-  "contents": [
-    {
-      "type": "bubble",
-      "size": "kilo",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "汽機車應到案處所檢核",
-            "size": "xl",
-            "wrap": True
-          }
-        ],
-        "margin": "xxl"
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
+      "type": "carousel",
+      "contents": [
+        {
+          "type": "bubble",
+          "size": "kilo",
+          "header": {
             "type": "box",
             "layout": "vertical",
             "contents": [
               {
                 "type": "text",
-                "text": "一.肇事致⼈傷亡\n二.抗拒稽查致傷害\n三.駕駛⼈或乘客無照且無法查明其⼾籍所在地\n四.汽⾞買賣業或汽⾞修理業違反本條例第57條規定。\n五.違反35條規定",
+                "text": "汽機車應到案處所檢核",
+                "size": "xl",
                 "wrap": True
               }
-            ]
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "符合以上五項之一",
-              "text": "符合以上五項之一"
-            },
-            "color": "#00DB00",
-            "style": "primary",
-            "height": "sm"
+            ],
+            "margin": "xxl"
           },
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "以上皆非(下一步)",
-              "text": "以上皆非(下一步)"
-            },
-            "style": "secondary",
-            "color": "#EA0000",
-            "height": "sm",
-            "margin": "none"
-          },
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "離開",
-              "text": "Exit"
-            },
-            "height": "sm"
-          }
-        ]
-      }
-    },
-    {
-      "type": "bubble",
-      "size": "kilo",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "汽機車應到案處所檢核\n(執業登記證)",
-            "size": "xl",
-            "wrap": True
-          }
-        ]
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
+          "body": {
             "type": "box",
             "layout": "vertical",
             "contents": [
@@ -304,58 +229,133 @@ flex = {
                 "contents": [
                   {
                     "type": "text",
-                    "text": "計程⾞駕駛⼈違反36、37條應受吊扣或廢⽌執業登記證",
-                    "wrap": True,
-                    "size": "lg",
-                    "margin": "sm",
-                    "align": "start"
+                    "text": "一.肇事致⼈傷亡\n二.抗拒稽查致傷害\n三.駕駛⼈或乘客無照且無法查明其⼾籍所在地\n四.汽⾞買賣業或汽⾞修理業違反本條例第57條規定。\n五.違反35條規定",
+                    "wrap": True
                   }
                 ]
               }
             ]
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "符合以上二項之一",
-              "text": "符合以上二項之一"
-            },
-            "color": "#00DB00",
-            "style": "primary",
-            "height": "sm"
           },
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "以上皆非(回上一步)",
-              "text": "以上皆非(回上一步)"
-            },
-            "style": "secondary",
-            "color": "#EA0000",
-            "height": "sm"
-          },
-          {
-            "type": "button",
-            "action": {
-              "type": "message",
-              "label": "離開",
-              "text": "Exit"
-            },
-            "height": "sm"
+          "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "符合以上五項之一",
+                  "text": "符合以上五項之一"
+                },
+                "color": "#00DB00",
+                "style": "primary",
+                "height": "sm"
+              },
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "以上皆非(下一步)",
+                  "text": "以上皆非(下一步)"
+                },
+                "style": "secondary",
+                "color": "#EA0000",
+                "height": "sm",
+                "margin": "none"
+              },
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "離開",
+                  "text": "Exit"
+                },
+                "height": "sm"
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "type": "bubble",
+          "size": "kilo",
+          "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "汽機車應到案處所檢核\n(執業登記證)",
+                "size": "xl",
+                "wrap": True
+              }
+            ]
+          },
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "計程⾞駕駛⼈違反36、37條應受吊扣或廢⽌執業登記證",
+                        "wrap": True,
+                        "size": "lg",
+                        "margin": "sm",
+                        "align": "start"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "符合以上二項之一",
+                  "text": "符合以上二項之一"
+                },
+                "color": "#00DB00",
+                "style": "primary",
+                "height": "sm"
+              },
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "以上皆非(回上一步)",
+                  "text": "以上皆非(回上一步)"
+                },
+                "style": "secondary",
+                "color": "#EA0000",
+                "height": "sm"
+              },
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "離開",
+                  "text": "Exit"
+                },
+                "height": "sm"
+              }
+            ]
+          }
+        }
+      ]
     }
-  ]
-}
 noResult = {
       "type": "bubble",
       "size": "giga",
@@ -508,13 +508,18 @@ noResult = {
                           }
                         ]
                       }
-                    ]
+                    ],
+                    "action": {
+                      "type": "uri",
+                      "label": "道安規則",
+                      "uri": "https://liff.line.me/1657051965-X5YR8Ere"
+                    }
                   }
                 ],
                 "action": {
                   "type": "uri",
-                  "label": "道路交通安全規則",
-                  "uri": "https://liff.line.me/1657051965-X5YR8Ere"
+                  "label": "處理細則",
+                  "uri": "https://liff.line.me/1657051965-GZbp43YJ"
                 }
               },
               {
