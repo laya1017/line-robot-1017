@@ -1437,12 +1437,14 @@ def keywords (msg):
         if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
             msg.replace("電動自行車","慢車")
             reply = TextSendMessage(text=search.Content_finder(msg))
+            print(search.Content_finder(msg).replace(" ","").replace("\n",""))
         else:
             reply = TextSendMessage(text=search.Content_finder(msg))
     elif "電動輔助" in msg :
         if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
             msg.replace("電動輔助","慢車")
             reply = TextSendMessage(text=search.Content_finder(msg))
+            print(search.Content_finder(msg).replace(" ","").replace("\n",""))
         else:
             reply = TextSendMessage(text=search.Content_finder(msg))
     else:
