@@ -513,8 +513,8 @@ noResult = {
                 ],
                 "action": {
                   "type": "uri",
-                  "label": "處理細則",
-                  "uri": "https://liff.line.me/1657051965-GZbp43YJ"
+                  "label": "道路交通安全規則",
+                  "uri": "https://liff.line.me/1657051965-X5YR8Ere"
                 }
               },
               {
@@ -559,7 +559,7 @@ noResult = {
                 "action": {
                   "type": "uri",
                   "label": "設置規則",
-                  "uri": "https://liff.line.me/1657051965-X5YR8Ere"
+                  "uri": "https://liff.line.me/1657051965-Jn6yjwgm"
                 }
               },
               {
