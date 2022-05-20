@@ -1346,6 +1346,7 @@ def keywords (msg):
     msg = msg.replace("迴轉","迴車")
     msg = msg.replace("並排","併排")
     msg = msg.replace("橋梁","橋樑")
+    msg = msg.replace("路面邊線","邊線")
     if "兩段" in msg :
         if "慢車" in msg :
             reply = TextSendMessage(text=search.getByNos("73,1,3"))
