@@ -1427,7 +1427,7 @@ def keywords (msg):
     elif "不服稽查" in msg:
         msg = msg.replace("不服稽查","")
         reply = TextSendMessage(text=search.NosFiltWords("60,1",msg)+"\n"+search.NosFiltWords("60,2,1",msg))
-    elif (set(list("禁行機車")).issubset(set(list("msg"))) or set(list("msg")).issubset(set(list("禁行機車")))) or (set(list("快車機車")).issubset(set(list("msg"))) or set(list("msg")).issubset(set(list("快車機車"))))
+    elif (set(list("禁行機車")).issubset(set(list("msg"))) or set(list("msg")).issubset(set(list("禁行機車")))) or (set(list("快車機車")).issubset(set(list("msg"))) or set(list("msg")).issubset(set(list("快車機車")))):
         reply = TextSendMessage(text=search.getByNos("45,1,13"))
     elif ("左轉" in msg and "車道" in msg) or ("右彎" in msg and "車道" in msg) or ("左彎" in msg and "車道" in msg):
         reply = TextSendMessage(text=search.getByNos("48,1,7"))
