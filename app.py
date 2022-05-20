@@ -1823,8 +1823,6 @@ def handle_message(event):
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
-        elif "@" in msg:
-
         elif msg == 'Previous-nos_mode':
             change_state(uid, "nos_mode")
             reply = TextSendMessage(text="條文搜尋模式。\n先輸入第＿條：")
