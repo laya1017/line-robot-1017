@@ -316,7 +316,7 @@ def newWordsSearch(msg):
         '食':list("食飲"),
         '轉彎不依標誌、標線、號誌指示':list("轉彎兩段式"),
         '越級':list('領有，駕駛'),
-        '拒':list("服從"),
+        '不服':list("拒絕"),
         '乘':list("乘客")
         }
     all_list = word_list + list(symWords.keys())
