@@ -1955,7 +1955,7 @@ def handle_message(event):
             elif search.getListByNos(msg) == [] :
                 reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
                 line_bot_api.reply_message(event.reply_token,reply)
-                delete_data(uid) 
+                delete_data(uid)
         elif datalist[0][2] == "nos_mode+P":
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
                 reply = search.getFlexbyNos(get_var(uid, 'a'))
@@ -2038,6 +2038,8 @@ def handle_message(event):
                 reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "回到酒(毒)駕區":
                 reply = dwiNdwdenterButtons(event, msg)
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwiNdwd": #酒駕與毒駕
             if msg == "DWI Regulation":
                 reply = dwimode(event)
@@ -2048,6 +2050,8 @@ def handle_message(event):
             elif msg == "Back to dwiNdwdenterButtons":
                 change_state(uid, "dwiNdwdenterButtons")
                 reply = dwiNdwdenterButtons(event,msg) #回到進入面板
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwimode" : #酒駕規定區
             if msg == "Cars and Scooters":
                 reply = dwimode_CNS(event)
@@ -2058,6 +2062,8 @@ def handle_message(event):
             elif msg == "Back to dwiNdwd":                
                 reply = dwiNdwd(event)
                 change_state(uid, "dwiNdwd")
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwimode_CNS": #酒駕汽機車違規態樣
             if msg == "Exceed The Maximum Tolerate Standard":
                 reply = dwimode_CNS_Ex(event) #進入汽機車酒駕超標面板
@@ -2068,6 +2074,8 @@ def handle_message(event):
             elif msg == "Back to dwimode":
                 reply = dwimode(event) #回到酒駕規定區
                 change_state(uid, "dwimode")
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwimode_CNS_Ex": #酒駕超標舉發
             if msg == "First Violation":
                 reply = search.getFlexbyNos('35,1,1')
@@ -2138,6 +2146,8 @@ def handle_message(event):
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwimode_CNS_Re":#汽機車拒測舉發
             if msg == "First Violation":
                 reply = search.getFlexbyNos('35,4')
@@ -2255,6 +2265,8 @@ def handle_message(event):
                 change_state(uid, "dwimode_SMV")
             elif msg == "dwimode_SMV_Ex":
                 reply = dwimode_SMV_Ex(event)
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwimode_SMV_Re":
             if msg == "Violation":
                 reply = search.getFlexbyNos('73,3')
@@ -2301,6 +2313,8 @@ def handle_message(event):
                 change_state(uid, "dwimode_SMV")
             elif msg == "dwimode_SMV_Re":
                 reply = dwimode_SMV_Re(event)
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwdmode" : #毒駕規定區
             if msg == "Cars and Scooters":
                 reply = dwdmode_CNS(event)
@@ -2324,6 +2338,8 @@ def handle_message(event):
             elif msg == "Back to dwdmode":
                 reply = dwdmode(event) #回到汽機車毒駕面板
                 change_state(uid, "dwdmode")
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwdmode_CNS_Ex": #毒駕超標舉發
             if msg == "First Violation":
                 reply = search.getFlexbyNos('35,1,2')
@@ -2425,6 +2441,8 @@ def handle_message(event):
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwdmode_CNS_Re":
             if msg == "First Violation":
                 reply = search.getFlexbyNos('35,4')
@@ -2483,6 +2501,8 @@ def handle_message(event):
             elif msg == "Back to dwdmode":
                 reply = dwdmode(event) 
                 change_state(uid, "dwdmode")
+            else :
+                reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
         elif datalist[0][2] == "dwdmode_SMV":
             if msg == "SMV Definition":
                 reply = TextSendMessage(
@@ -2511,63 +2531,6 @@ def handle_message(event):
             else:
                 reply = TextSendMessage(text="已離開~")
                 delete_data(uid)
-        elif datalist[0][2] == "Sort_Mode":
-            if msg == "CarsNscooter":
-                reply = TextSendMessage(
-                    text="汽車違規分類如下方按鈕",
-                    quick_reply = QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="牌照與設備、檢驗", text="platesNeq")),
-                        QuickReplyButton(action=MessageAction(label="駕照", text="driver license")),
-                        QuickReplyButton(action=MessageAction(label="裝載", text="Loading")),
-                        QuickReplyButton(action=MessageAction(label="安全設施", text="SafetyEq")),
-                        QuickReplyButton(action=MessageAction(label="駕車使用物品", text="UsingUnderDriving")),
-                        QuickReplyButton(action=MessageAction(label="駕駛行為", text="Behavior")),
-                        QuickReplyButton(action=MessageAction(label="汽車犯罪與肇事", text="CrimeNAccident")),
-                        QuickReplyButton(action=MessageAction(label="高速公路違規", text="Highways"))
-                        ]
-                        )
-                    )
-            elif msg == "SMV":
-                reply = TextSendMessage(
-                    text="慢車違規分類如下方按鈕",
-                    quick_reply = QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="證照", text="platesNeq")),
-                        QuickReplyButton(action=MessageAction(label="審驗", text="driver license")),
-                        QuickReplyButton(action=MessageAction(label="設備", text="Loading")),
-                        QuickReplyButton(action=MessageAction(label="駕駛行為", text="Behavior")),
-                        QuickReplyButton(action=MessageAction(label="安全設施", text="UsingUnderDriving")),
-                        QuickReplyButton(action=MessageAction(label="裝載", text="RoadRight"))
-                        ]
-                        )
-                    )
-            elif msg == "Pedestrian":
-                reply = TextSendMessage(
-                    text="行人違規分類如下方按鈕",
-                    quick_reply = QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="違反路權違規", text="platesNeq")),
-                        QuickReplyButton(action=MessageAction(label="鐵路平交道", text="driver license")),
-                        QuickReplyButton(action=MessageAction(label="攀登行為", text="Loading")),
-                        QuickReplyButton(action=MessageAction(label="違規攬客", text="Behavior"))
-                        ]
-                        )
-                    )
-            elif msg == "RoadObstacles":
-                reply = TextSendMessage(
-                    text="道路障礙分類如下方按鈕",
-                    quick_reply = QuickReply(
-                        items=[
-                        QuickReplyButton(action=MessageAction(label="道路障礙", text="platesNeq")),
-                        QuickReplyButton(action=MessageAction(label="散發廣告、傳單", text="driver license")),
-                        QuickReplyButton(action=MessageAction(label="販賣物品妨害交通", text="Loading")),
-                        QuickReplyButton(action=MessageAction(label="疏縱或牽繫動物", text="Behavior"))
-                        ]
-                        )
-                    )
-        else :
-            reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
               # delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 if __name__ == "__main__":
