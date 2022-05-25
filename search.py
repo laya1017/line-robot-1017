@@ -1,4 +1,16 @@
 import pandas as pd
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,
+    TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,
+    CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,
+    FlexSendMessage,BubbleContainer,BoxComponent,TextComponent,SeparatorComponent
+)
 df = pd.read_csv("data.csv")
 df.set_index("Nos",inplace = True)
 sort = list(df.index)
