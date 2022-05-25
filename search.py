@@ -332,7 +332,7 @@ def newWordsSearch(msg):
             result.append(TextComponent(text=data.index[i],align="center",size="xl",weight="bold",color='#4260f5'))
             result.append(TextComponent(text=data["Contents"][i],size="lg",wrap = True))
             result.append(TextComponent(text="處罰：\n"+data["Punishment"][i],size="lg",weight="bold",color="#f54242",wrap = True))
-            result.append(TextComponent(text="註記：\n"+data["Remark"][i],size="lg",weight="bold",color="#27d10d",wrap = True))
+            result.append(TextComponent(text="註記：\n"+data["Remark"][i],size="lg",weight="bold",color="#821d73",wrap = True))
             result.append(SeparatorComponent(color='#4f5e5b'))
     reply.contents.body.contents = result
     if len(result) >= 300:
