@@ -1485,7 +1485,7 @@ def YouShouldWarn(event):
                     ),
                 BoxComponent(layout='baseline',contents=[
                     TextComponent(
-                        text="6.",size="lg",flex=1,wrap=True),
+                        text="7.",size="lg",flex=1,wrap=True),
                     TextComponent(
                         text="「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",size="lg",flex=9,wrap=True)]
                     )
