@@ -7,20 +7,18 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,FlexSendMessage
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,
+    TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,
+    CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,
+    FlexSendMessage,BubbleContainer,BoxComponent,TextComponent,SeparatorComponent
 )
 import datetime
 import search
-import pandas as pd
 import csv
 import gspread
 import requests
 import redis
-df = pd.read_csv("data.csv")
-df.set_index("Nos",inplace = True)
-sort = list(df.index)
 app = Flask(__name__)
-
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
         template=ButtonsTemplate(
@@ -732,8 +730,14 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,MakeCorrections,"責令")
     return reply
 def QuickReplySet(reply,condition,Nos):
+    text = ""
+    for i in range(0,len(reply.contents.body.contents),7):
+        try:
+            text += reply.contents.body.contents[i].text
+        except:
+            pass
     news = []
-    if Nos in reply.text:
+    if Nos in text:
         if reply.quick_reply == None:
             reply.quick_reply = condition
             return reply
@@ -1339,204 +1343,157 @@ def dwimode_SMV_Re(event):
             )
         )
     return reply
-def keywords (msg):
-    msg = msg.replace("駕照","駕駛執照")
-    msg = msg.replace("車牌","牌照")
-    msg = msg.replace("號牌","牌照")
-    msg = msg.replace("臨停","臨時停車")
-    msg = msg.replace("違規停車","停車")
-    msg = msg.replace("違停","停車")
-    msg = msg.replace("雙黃線","分向限制線")
-    msg = msg.replace("雙白線","禁止變換車道線")
-    msg = msg.replace("迴轉","迴車")
-    msg = msg.replace("並排","併排")
-    msg = msg.replace("橋梁","橋樑")
-    msg = msg.replace("路面邊線","邊線")
-    if "兩段" in msg :
-        if "慢車" in msg :
-            reply = TextSendMessage(text=search.getByNos("73,1,3"))
-        else:
-            reply = TextSendMessage(text=search.getByNos("48,1,2")+"\n"+search.getByNos("73,1,3"))
-    elif ("分向限制線" in msg and "迴車" in msg) or ("禁止變換車道線" in msg and "迴車" in msg) or "迴車" in msg:
-            reply = TextSendMessage(text=search.NosFiltWords("33",msg)+"\n"+search.NosFiltWords("49",msg)+"\n"+search.getByNos("74,1,4"))
-    elif "分向限制線" in msg  and "左轉" in msg:
-            reply = TextSendMessage(text="交通部94.06.15.交路字第0940035842號函：\n查道路交通管理處罰條例第48條應係對汽車駕駛人行駛至轉彎路段未依規定轉彎之處罰，對於本案臺中縣警察局所提汽車於繪有行車分向限制線段左轉彎，應係未依分向限制線標線規定行駛之違規轉彎行為，此與上述第48條之未依規定轉彎情形，應屬有間，本部同意貴署所提適用處罰條例第60條第2項第3款「不遵守道路交通標線之指示」之處罰。")
-    elif "禁止變換車道線" in msg and "跨越" in msg:
-            reply = TextSendMessage(text=search.getByNos("45,1,12"))
-    elif "逆向" in msg :
-        if ("停車" in msg or "臨時停車" in msg) and "逆向" in msg :
-            msg = msg.replace("逆向","")
-            msg+= " 順行"
-            reply = TextSendMessage(text=search.NosFiltWords("55",msg)+"\n"+search.NosFiltWords("56",msg)+"\n"+search.getByNos("73,1,3")+"\n"+search.getByNos("74,1,4"))
-        elif "行駛" in msg and "逆向" in msg :
-            reply = TextSendMessage(text=search.getByNos("45,1,1")+"\n"+search.getByNos("45,1,3")+"\n"+search.NosFiltWords("74,1,2",msg))
-        else:
-            msg = msg.replace("逆向","")
-            reply = TextSendMessage(text=search.NosFiltWords("45,1,1",msg)+"\n"+search.NosFiltWords("45,1,3",msg)+"\n"+search.NosFiltWords("55,,4",msg)+"\n"+search.NosFiltWords("56,1,6",msg)+"\n"+search.NosFiltWords("73,1,3",msg)+"\n"+search.NosFiltWords("74,1,2",msg)+"\n"+search.NosFiltWords("73,1,3",msg).strip())
-    elif "牌照" in msg:
-        reply = TextSendMessage(text=search.NosFiltWords("12",msg)+"\n"+search.NosFiltWords("13",msg)+"\n"+search.NosFiltWords("14",msg)+"\n"+search.NosFiltWords("15",msg))
-    elif "紅" in msg:
-        reply = TextSendMessage(text=search.NosFiltWords("53",msg)+search.NosFiltWords("53-1",msg)+"\n"+search.NosFiltWords("74,1,1",msg)+search.NosFiltWords("78,1,1",msg))
-    elif ("方向燈" in msg) or ("大燈" in msg) or ("霧燈" in msg) or ("頭燈" in msg and "開" in msg) or ("頭燈" in msg and "開" in msg) :
-        reply = TextSendMessage(text=search.getByNos("42"))
-    elif ("危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg) and "超速" in msg:
-        reply = TextSendMessage(text=search.getByNos("43,1,2"))
-    elif "危險駕車" in msg or "危險駕駛" in msg or "危駕" in msg:
-        msg = msg.replace("危險駕車","")
-        msg = msg.replace("危險駕駛","")
-        msg = msg.replace("危駕","")
-        reply = TextSendMessage(text=search.NosFiltWords("43",msg)+"\n"+search.NosFiltWords("73,1,4",msg))
-    elif "超重" in msg or "超載" in msg:
-        msg = msg.replace("超重","")
-        msg = msg.replace("超載","")
-        reply = TextSendMessage(text=search.NosFiltWords("29-2,1",msg)+"\n"+search.NosFiltWords("29-2,2",msg))
-    elif "機車" in msg and "裝載" in msg:
-        reply = TextSendMessage(text=search.getByNos("31,5"))
-    elif "拒磅" in msg:
-        reply = TextSendMessage(text=search.getByNos("29-2,4"))
-    elif "超速" in msg and ("危險駕車" not in msg or "危險駕駛" not in msg or "危駕" not in msg):
-        msg = msg.replace("慢車","電動自行車")
-        msg = msg.replace("超速","")
-        reply = TextSendMessage(text=search.NosFiltWords("40",msg+"最高")+"\n"+search.NosFiltWords("72-1",msg))
-    elif "酒駕" in msg or "毒駕" in msg or "毒" in msg or "拒測" in msg :
-        msg = msg.replace("累犯","累")
-        msg = msg.replace("累","年內")
-        if "拒測" in msg :
-            msg = msg.replace("拒測","")
-            msg = msg.replace("酒駕","")
-            msg = msg.replace("毒駕","毒")
-            msg = msg.replace("毒","藥")
-            msg = msg.replace("拒測","")
-            reply = TextSendMessage(text=search.NosFiltWords("35,4",msg)+"\n"+search.NosFiltWords("35,5",msg)+"\n"+search.NosFiltWords("73,3",msg))
-        elif "酒駕" in msg:
-            msg = msg.replace("酒駕","")
-            reply = TextSendMessage(text=search.NosFiltWords("35,1",msg)+"\n"+search.NosFiltWords("35,3",msg)+"\n"+search.NosFiltWords("35,7",msg)+"\n"+search.NosFiltWords("35,8",msg)+"\n"+search.NosFiltWords("73,2",msg))
-        elif "毒駕" in msg or "毒" in msg:
-            msg = msg.replace("毒駕","毒")
-            msg = msg.replace("毒","")
-            reply = TextSendMessage(text=search.NosFiltWords("35,1",msg+" 藥")+"\n"+search.NosFiltWords("35,3",msg)+"\n"+search.NosFiltWords("35,7",msg))
-    elif "酒精" in msg and "鎖" in msg :
-        msg = msg.replace("酒精","")
-        msg = msg.replace("鎖","")
-        reply = TextSendMessage(text=search.NosFiltWords("35-1",msg+" 車輛點火自動鎖定裝置"))
-    elif "無照" in msg :
-        msg = msg.replace("無照"," 未領有駕駛執照駕")
-        if "動力" in msg :
-            reply = TextSendMessage(text=search.getByNos("32,1"))
-        elif "大型" in msg:
-            reply = TextSendMessage(text=search.Content_finder(msg)+"\n"+search.NosFiltWords("92,7,3",msg))
-        else:
-            reply = TextSendMessage(text=search.Content_finder(msg)+"\n"+search.NosFiltWords("32,1",msg)+"\n"+search.NosFiltWords("92,7,3",msg))
-    elif "越級" in msg:
-        msg = msg.replace("越級"," 領有")
-        reply = TextSendMessage(text=search.dContent_finder(msg,"未領有 未符 未依規定 號牌"))
-    elif "不服稽查" in msg:
-        msg = msg.replace("不服稽查","")
-        reply = TextSendMessage(text=search.NosFiltWords("60,1",msg)+"\n"+search.NosFiltWords("60,2,1",msg))
-    elif ("機車" in msg) and ("禁行" in msg or "快車" in msg):
-        reply = TextSendMessage(text=search.getByNos("45,1,13"))
-    elif ("左轉" in msg and "車道" in msg) or ("右彎" in msg and "車道" in msg) or ("左彎" in msg and "車道" in msg):
-        reply = TextSendMessage(text=search.getByNos("48,1,7"))
-    elif ("中心" in msg) and ("彎" in msg):
-        reply = TextSendMessage(text=search.getByNos("48,1,3"))
-    elif "電動自行車" in msg :
-        if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
-            msg = msg.replace("電動自行車","慢車")
-            reply = TextSendMessage(text=search.Content_finder(msg))
-        else:
-            reply = TextSendMessage(text=search.Content_finder(msg))
-    elif "電動輔助" in msg :
-        if search.Content_finder(msg).replace(" ","").replace("\n","") == "":
-            msg = msg.replace("電動輔助","慢車")
-            reply = TextSendMessage(text=search.Content_finder(msg))
-        else:
-            reply = TextSendMessage(text=search.Content_finder(msg))
-    else:
-        reply = TextSendMessage(search.Content_finder(msg))
-        try:
-            if len((reply.text).replace("\n","").replace(" ","")) == 0 :
-                reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
-            elif len((reply.text).replace("\n","").replace(" ","")) > 5000:
-                reply = TextSendMessage(text="查詢的內容太多了，請重新輸入關鍵字。")
-            else:
-                pass
-        except:
-            pass
-    try:
-        reply.text = (reply.text).lstrip().strip()
-    except:
-        pass
-    try:
-        if len(reply.text) == 0:
-            reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
-    except:
-        pass
-    try:
-        reply = Series_Q_Reply(reply)
-    except:
-        pass
-    return reply
-def notes(msg):
-    if msg == "Machine":
-        reply = TextSendMessage(text="道安規則§83-2：\n動力機械行駛於道路時，其駕駛人必須領有小型車以上之駕駛執照。但自中華民國96年1月1日起，總重量逾3.5公噸之動力機械，其駕駛人應領有大貨車以上之駕駛執照；自中華民國101年1月1日起，重型及大型重型之動力機械，其駕駛人應領有聯結車駕駛執照。")
-    elif msg == "HMOT":
-        reply = TextSendMessage(text="道交條例§92II：\n汽缸排氣量550立方公分以上大型重型機車，得依交通部公告規定之路段及時段行駛高速公路，其駕駛人應有得駕駛汽缸排氣量550立方公分以上大型重型機車駕駛執照1年以上及小型車以上之駕駛執照。")
-    elif msg == "LightUsing":
-        reply = TextSendMessage(text="道安規則§102,I:\n右轉彎時，應距交岔路口30公尺前顯示方向燈或手勢，換入外側車道、右轉車道或慢車道，駛至路口後再行右轉。但由慢車道右轉彎時應於距交岔路口30至60公尺處，換入慢車道。\n五、左轉彎時，應距交岔路口30公尺前顯示方向燈或手勢，換入內側車道或左轉車道，行至交岔路口中心處左轉，並不得占用來車道搶先左轉。\n道安規則§109:\nI.汽車行駛時，應依下列規定使用燈光：\n  1.夜間應開亮頭燈。\n  2.行經隧道、調撥車道應開亮頭燈。\n  3.遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。\n  4.非遇雨、霧時，不得使用霧燈。\n  5.行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。\n  6.夜間會車時，或同向前方100公尺內有車輛行駛，除第101條第3款之情形外，應使用近光燈。\nII.汽車駕駛人，應依下列規定使用方向燈：\n  1.起駛前應顯示方向燈。\n  2.左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。\n  3.超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。")
-    elif msg == "DoubleYellow":
-        reply = TextSendMessage(text="交通部94.06.15.交路字第0940035842號函：\n查道路交通管理處罰條例第48條應係對汽車駕駛人行駛至轉彎路段未依規定轉彎之處罰，對於本案臺中縣警察局所提汽車於繪有行車分向限制線段左轉彎，應係未依分向限制線標線規定行駛之違規轉彎行為，此與上述第48條之未依規定轉彎情形，應屬有間，本部同意貴署所提適用處罰條例第60條第2項第3款「不遵守道路交通標線之指示」之處罰。")
-    elif msg == "DoubleWhite":
-        reply = TextSendMessage(text="交通部99.07.26.交路字第0990044737號函：\n有關貴署函詢「跨越雙白線變換車道」違規案件之處罰疑義乙案，本部前業以75年8月18日交路(75)字第19567號函示「應依道路交通管理處罰條例第45條第1項第12款裁處」在案，復請查照。")
-    elif msg == "ThreeMinutes":
-        reply = TextSendMessage(text="依據立法院1010508修正理由：\n同時臨時停車之重點實則在於保持可立即行駛之狀態，不應以引擎是否熄火或停止時間來判斷")
-    elif msg == "SideStopping":
-        reply = TextSendMessage(text="道安規則§111 II,III：\nII.汽車臨時停車時，應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾60公分。但大型車不得逾1公尺。\nIII. 大型重型機車及機車臨時停車時，應依車輛順行方向緊靠道路邊緣停放，其前輪或後輪外側距離緣石或路面邊緣不得逾40公分。")
-    elif msg == "SideParking":
-        reply = TextSendMessage(text="道安規則§112 II,III：\nII.汽車停車時應依車輛順行方向緊靠道路邊緣，其前後輪胎外側距離緣石或路面邊緣不得逾40公分。\nIII. 大型重型機車及機車停車時，應依車輛順行方向緊靠道路邊緣平行、垂直或斜向停放，其前輪或後輪外側距離緣石或路面邊緣不得逾30公分。但公路主管機關、市區道路主管機關或警察機關另有特別規定時，應依其規定。")
-    elif msg == "OtherLaw":
-        reply = TextSendMessage(text="道交條例60條2項3款使用時機在於交通違規找不到符合本法之行為以及違反\"禁制\"標誌或標線之情況下適用，故考路以本條款舉發時需多加詳查規定。")
-    elif msg == "wrongWayDriving":
-        reply = TextSendMessage(
-            text="1.遵行方向：\n依據道路交通標誌標線號誌設置規則第2章第3節禁制標誌內容可知，係指道路上設具有方向性質之\"遵行\"標誌（藍底白色箭頭），例如：道路遵行方向、車道遵行方向標誌、單行道標誌等，而車輛必須\"遵行\"其標誌方向行駛。\n2.來車道：\n依據道安規則§97-1項2款規定「在劃有分向限制線之路段，不得駛入來車之車道內。」可得知，在劃有雙黃線之情況駛入來車道（對向車道），符合道交條例45條1項3款之違規行為。",
-            quick_reply=QuickReply(
-                items=[QuickReplyButton(action=MessageAction(label="遵行方向標誌圖形", text="complianceSign"))
+##dwiNdwd zone
+def HabeasCorpusAct(event):
+    reply = FlexSendMessage(
+        alt_text='提審法',
+        contents=BubbleContainer(
+            size="giga",
+            body=BoxComponent(
+                layout='vertical',
+                contents=[
+                TextComponent(text="提審法§1",align="center",size="xl",weight="bold",color="#eb4034"),
+                TextComponent(text='第一項：',size="lg",weight="bold"),
+                TextComponent(text='人民被法院以外之任何機關逮捕、拘禁時，其本人或他人得向逮捕、拘禁地之地方法院聲請提審。但其他法律規定得聲請即時由法院審查者，依其規定。',size="lg",wrap=True),
+                TextComponent(text='第二項',size="lg",weight="bold"),
+                TextComponent(text='前項聲請及第十條之抗告，免徵費用。',size="lg",wrap=True)
                 ]
                 )
             )
-    elif msg == "TwoCarStoppingNparking":
-        reply = ImageSendMessage(
-            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg',
-            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/TwoCarStoppingNparking.jpg')
-    elif msg == "OverWeightrange":
-        reply = TextSendMessage(text="處理細則§12,I：\n駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾10%得勸導。\n處理細則§12,II：\n行為人發生交通事故有前項規定行為，除本條例第14條第2項第3款、第25條第2項、第69條第2項或第71條之情形外，仍得舉發。\n處理細則§13,II：\n貨車超載應責令當場卸貨分裝，如無法當場卸貨分裝者，其超載重量未逾核定總重量20%者，責令其於2小時內改正之，逾2小時不改正者，得連續舉發；其超載重量逾核定總重量20%者，當場禁止其通行。")
-    elif msg == "complianceSign":
-        reply = ImageSendMessage(
-            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg',
-            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/complianceSign.jpg')
-    elif msg == "KeepIssueSpeed":
-        reply = TextSendMessage(text="道交條例§85-1,II：\n(1)逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第33條第1項、第2項之情形，其違規地點相距6公里以上、違規時間相隔6分鐘以上或行駛經過一個路口以上得連續舉發。但其違規地點在隧道內者，不在此限。")
-    elif msg == "KeepIssueParking2":
-        reply = TextSendMessage(text="道交條例§85-1,II：\n二、逕行舉發汽車有第56條第1項、第2項或第57條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾2小時得連續舉發。")
-    elif msg == "KeepIssueParking":
-        reply = TextSendMessage(text="道交條例§85-1,I：\n汽車駕駛人、汽車所有人、汽車買賣業或汽車修理業違反第56條第1項或第57條規定，經舉發後，不遵守交通勤務警察或依法令執行交通稽查任務人員責令改正者，得連續舉發之。")
-    elif msg == "Warning52":
-        reply = ImageSendMessage(
-            original_content_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png',
-            preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/Warning52.png')
-    elif msg == "StoppingPersuasion":
-        reply = TextSendMessage(text="處理細則§12,I：\n駕駛汽車因上、下客、貨，致有本條例第55條之情形，惟尚無妨礙其他人、車通行。")
-    elif msg == "ParkingPersuasion":
-        reply = TextSendMessage(text="處理細則§12,I：\n深夜時段（0至6時）停車，有本條例第56條第1項之情形。但於身心障礙專用停車位違規停車或停車顯有妨礙消防安全之虞，或妨礙其他人車通行經人檢舉者，不在此限。")
-    elif msg == "FaultSign":
-        reply = TextSendMessage(text="道安規則§112,IV：\n(1)在行車時速40公里以下之路段，應豎立於車身後方5公尺至30公尺之路面上，車前適當位置得視需要設置。\n(2)在行車時速逾40公里之路段，應豎立於車身後方30公尺至100公尺之路面上，車前適當位置得視需要設置。\n(3)交通擁擠之路段，應懸掛於車身之後部，車前適當位置得視需要設置。")
-    elif msg == "CrashSign":
-        reply = TextSendMessage(text="道路交通事故處理辦法§4,I：\n1.高速公路：於事故地點後方100公尺處。\n2.快速道路或最高速限超過60公里之路段：於事故地點後方80公尺處。\n3.最高速限超過50公里至60公里之路段：於事故地點後方50公尺處。\n4.最高速限50公里以下之路段：於事故地點後方30公尺處。\n5.交通壅塞或行車時速低於10公里以下之路段：於事故地點後方5公尺處。\nII：\n前項各款情形，遇雨霧致視線不清時，適當距離應酌予增加；其有雙向或多向車流通過，應另於前方或周邊適當處所為必要之放置。")
-    elif msg == "ProhibitPassDrive":
-        reply = TextSendMessage(text="道交條例§85-2,I：\n車輛所有人或駕駛人依本條例規定應予禁止通行、禁止其行駛、禁止其駕駛者，交通勤務警察或依法令執行交通稽查任務人員應當場執行之，必要時，得逕行移置保管其車輛。\n處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
-    elif msg == "MakeCorrections" :
-        reply = TextSendMessage(text="處理細則§11,II：\n對於依規定須責令改正、禁止通行、禁止其行駛、禁止其駕駛者、補換牌照、駕照等事項，應當場告知該駕駛人或同車之汽車所有人，並於通知單記明其事項或事件情節及處理意見，供裁決參考。")
+        )
     return reply
-##dwiNdwd zone
+def CodeOfCriminalProcedure(event):
+    reply = FlexSendMessage(
+        alt_text='刑事訴訟法',
+        contents=BubbleContainer(
+            size="giga",body=BoxComponent(layout='vertical',contents=[
+                BoxComponent(layout='vertical',contents=[
+                    TextComponent(
+                        text="三項權利(刑訴95條)",align="center",size="xl",weight="bold",color="#eb4034"),
+                    TextComponent(
+                        text="◯◯◯先生/小姐您涉嫌＿(罪名)＿，依法得行使下列權利：",size="lg",wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="一、",size="lg",flex=2,wrap=True),
+                    TextComponent(
+                        text="得保持緘默，無須違背自己之意思而為陳述。",size="lg",flex=8,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="二、",size="lg",flex=2,wrap=True),
+                    TextComponent(
+                        text="得選任辯護人。如為低收入戶、中低收入戶、原住民或其他依法令得請求法律扶助者，得請求之。",size="lg",flex=8,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="三、",size="lg",flex=2,wrap=True),
+                    TextComponent(
+                        text="得請求調查有利之證據。",size="lg",flex=8,wrap=True)]
+                    )
+                ]
+                )
+            )
+        )
+    return reply
+def YouShouldWarn(event):
+    reply = FlexSendMessage(
+        alt_text='刑事訴訟法',
+        contents=BubbleContainer(
+            size="giga",body=BoxComponent(layout='vertical',contents=[
+                BoxComponent(layout='vertical',contents=[
+                    TextComponent(
+                        text="⊙拒絕酒測告知事項：",align="center",size="xl",weight="bold",color="#eb4034"),
+                    TextComponent(
+                        text="一、初次違反：",size="lg",wrap=True,color="#a8329b")]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="1.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="罰鍰：新台幣18萬元",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="2.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="吊銷駕駛執照",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="3.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="應受道路交通安全講習",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="4.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="當場移置保管車輛",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="5.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="吊扣所駕車輛牌照2年",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="6.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='vertical',contents=[
+                    TextComponent(
+                        text="二、「如」再次違反：",size="lg",wrap=True,color="#a8326b")]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="1.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="2.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="吊銷駕駛執照",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="3.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="應受道路交通安全講習",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="4.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="當場移置保管車輛",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="5.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="吊扣所駕車輛牌照2年",size="lg",flex=9,wrap=True)]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="6.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="公布姓名、照片及違法事情★",size="lg",flex=9,wrap=True,color="#db5a5a")]
+                    ),
+                BoxComponent(layout='baseline',contents=[
+                    TextComponent(
+                        text="6.",size="lg",flex=1,wrap=True),
+                    TextComponent(
+                        text="「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",size="lg",flex=9,wrap=True)]
+                    )
+                ]
+                )
+            )
+        )
+    return reply
 ##PlaceCheckMode
 def PlaceCheckMode(event):
     reply = TemplateSendMessage(alt_text="應到案處所檢核系統",
@@ -1992,7 +1949,7 @@ def handle_message(event):
                 reply = selects_nos_mode_S(event,uid,get_var(uid, 'a'))
             elif "項" not in "".join(search.getListByNos(msg)) and "款" not in "".join(search.getListByNos(msg)) and search.getListByNos(msg) != []:
                 change_var(uid, 'a', msg)
-                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')))
+                reply = search.getFlexbyNos(get_var(uid,'a'))
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif search.getListByNos(msg) == [] :
@@ -2001,11 +1958,11 @@ def handle_message(event):
                 delete_data(uid) 
         elif datalist[0][2] == "nos_mode+P":
             if msg == "列出第"+get_var(uid, 'a')+"條的所有法條":
-                reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')))
+                reply = search.getFlexbyNos(get_var(uid, 'a'))
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif "款" not in "".join(search.getListByNos(get_var(uid, 'a')+','+msg)):
-                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+','+msg))
+                reply = search.getFlexbyNos(get_var(uid,'a')+','+msg)
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
             else:
@@ -2014,7 +1971,7 @@ def handle_message(event):
                 reply = selects_nos_mode_P_S(event,uid,get_var(uid, 'a'),get_var(uid, 'p'))
         elif datalist[0][2] == "nos_mode+P+S": 
             if msg == "第"+get_var(uid, 'a')+"條第"+get_var(uid, 'p')+"項的所有法條" :
-                reply = TextSendMessage(text=search.getByNos(get_var(uid, 'a')+','+get_var(uid,'p')))
+                reply = search.getFlexbyNos(get_var(uid, 'a')+','+get_var(uid,'p'))
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
             elif msg == "Previous-nos_mode_P":
@@ -2022,16 +1979,21 @@ def handle_message(event):
                 reply = selects_nos_mode_P(event,uid,get_var(uid, 'a'))
             else:
                 change_var(uid,'s',msg)
-                reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+','+get_var(uid,'p')+','+get_var(uid,'s')))
+                reply = search.getFlexbyNos(get_var(uid,'a')+','+get_var(uid,'p')+','+get_var(uid,'s'))
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
         elif datalist[0][2] == "nos_mode+S":
             change_var(uid,'s',msg)
-            reply = TextSendMessage(text=search.getByNos(get_var(uid,'a')+',,'+get_var(uid,'s')))
+            reply = search.getFlexbyNos(get_var(uid,'a')+',,'+get_var(uid,'s'))
             reply = Series_Q_Reply(reply)
             delete_data(uid)
         elif datalist[0][2] == "txt_mode":
-            reply = keywords(msg)
+            reply = search.newWordsSearch(msg)
+            if len(reply.contents.body.contents) == 0:
+                reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+            else:
+                reply = Series_Q_Reply(reply)
+
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
             if "DWI and DUD" in msg:
                 reply = dwiNdwd(event)
@@ -2042,60 +2004,38 @@ def handle_message(event):
                     preview_image_url='https://raw.githubusercontent.com/laya1017/image/main/newisetAct.jpg')
                 delete_data(uid) #進入版面
             elif msg == "提審法":
-                reply = TextSendMessage(
-                    text="提審法§1：\nI .人民被法院以外之任何機關逮捕、拘禁時，其本人或他人得向逮捕、拘禁地之地方法院聲請提審。但其他法律規定得聲請即時由法院審查者，依其規定。\nII.前項聲請及第十條之抗告，免徵費用。",
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = HabeasCorpusAct(event)
+                reply.quick_reply=dwiNdwdbuttonFilt(msg)
             elif msg == "三項權利(刑訴95條)":
-                reply = TextSendMessage(
-                    text="◯◯◯先生/小姐您涉嫌＿(罪名)＿，依法得行使下列權利：\n1.得保持緘默，無須違背自己之意思而為陳述。\n2.得選任辯護人。如為低收入戶、中低收入戶、原住民或其他依法令得請求法律扶助者，得請求之。\n3.得請求調查有利之證據。",
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = CodeOfCriminalProcedure(event)
+                reply.quick_reply=dwiNdwdbuttonFilt(msg)
             elif msg == "汽機車酒駕法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("35,1,1"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("35,1,1")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "汽機車毒駕法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("35,1,2"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("35,1,2")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "累犯法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("35,3"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("35,3")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "汽機車酒駕拒測法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("35,4"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("35,4")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "拒測累犯法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("35,5"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("35,5")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "汽機車酒駕拒測告知":
-                reply = TextSendMessage(
-                    text="⊙拒絕酒測告知事項：\n一、初次違反：\n1.罰鍰：新台幣18萬元\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。\n二、「如」再次違反：\n1.罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.公布姓名、照片及違法事情★\n7.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = YouShouldWarn(event)
+                reply.quick_reply=dwiNdwdbuttonFilt(msg)
             elif msg == "慢車酒駕法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,2"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("73,2")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "慢車酒駕拒測法條":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,3"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("73,3")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "自動點火裝置(酒精鎖)":
-                reply = TextSendMessage(
-                    text=search.getByNos("35-1"),
-                    quick_reply=dwiNdwdbuttonFilt(msg)
-                    )
+                reply = search.getFlexbyNos("35-1")
+                reply.quick_reply = dwiNdwdbuttonFilt(msg)
             elif msg == "回到酒(毒)駕區":
                 reply = dwiNdwdenterButtons(event, msg)
         elif datalist[0][2] == "dwiNdwd": #酒駕與毒駕
@@ -2130,26 +2070,22 @@ def handle_message(event):
                 change_state(uid, "dwimode")
         elif datalist[0][2] == "dwimode_CNS_Ex": #酒駕超標舉發
             if msg == "First Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,1,1').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,1,1')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="與慢車酒駕比較",text="SMV Violation")),
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Recidivism":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,3').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,3')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Dos and Don\'ts":
                 reply = TextSendMessage(
                     text = "1.檢測流程：\n(1)原則於現場攔檢測試。如現場無法或不宜實施檢測時，得向受測者說明，請其至勤務處所或適當場所檢測。\n(2)詢問飲用酒類結束時間，如已達15分鐘以上者，即予檢測。\n(3)受測者不告知時間或距結束時間未達15分鐘者，告知其可於漱口或距該結束時間達15分鐘後進行檢測。\n(4)有請求漱口者，提供漱口。\n(5)告知受測者儀器檢測之流程，請其口含吹嘴連續吐氣至儀器顯示取樣完成。\n(6)受測者吐氣不足致儀器無法完成取樣時，應重新檢測。\n(7)因儀器問題或受測者未符合檢測流程，致儀器檢測失敗，應向受測者說明檢測失敗原因，請其重新接受檢測。\n(8)檢測成功後，不論有無超過規定標準，不得實施第二次檢測。\n(9)遇檢測結果出現明顯異常情形時，應停止使用該儀器並改用其他儀器檢測，並應留存原異常之紀錄。\n(10)檢測後，應告知受測者檢測結果，並請其於檢測結果紙上簽名確認。\n(11)拒絕簽名時，應記明事由。\n(12)有客觀事實足認受測者無法實施吐氣酒精濃度檢測時，得經其同意後送由受委託醫療或檢驗機構對其實施血液之採樣及測試檢定。\n2、標準值：\n(1)道安規則114條：飲用酒類或其他類似物後其吐氣所含酒精濃度達0.15mgl或血液中酒精濃度達0.03%以上。\n(2)刑法185-3條：吐氣所含酒精濃度達0.25mg/l或血液中酒精濃度達0.05%以上\n3.勸導要件：\n(1)駕駛汽車或慢車經測試檢定，其吐氣所含酒精濃度超過規定之標準值(0.15mgl或血液中酒精濃度達0.03%)未逾0.02mg/l。\n(2)行為人發生交通事故時，仍得舉發。\n4.租賃車部分：\n租賃車業者已盡告知本條處罰規定之義務，汽機車駕駛人仍駕駛汽機車違反第1項、第2項至第5項規定之一者，依其各行為所處之罰鍰加罰1/2。",
@@ -2161,25 +2097,21 @@ def handle_message(event):
                         )
                     )
             elif msg == "Owner":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,7').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,7')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Passenger":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,8').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,8')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Impunity Condition":
                 reply = TextSendMessage(
                     text="但年滿七十歲、心智障礙或汽車運輸業之乘客，不在此限。",
@@ -2199,47 +2131,39 @@ def handle_message(event):
                 reply = dwimode_CNS(event)
                 change_state(uid, "dwimode_CNS")
             elif msg == "SMV Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,2"),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos("73,2"),
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
         elif datalist[0][2] == "dwimode_CNS_Re":#汽機車拒測舉發
             if msg == "First Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,4').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,4')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="與慢車拒測比較",text="SMV Violation")),
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "SMV Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,3").strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos("73,3")
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Recidivism":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,5').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,5')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwimode_CNS_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Notification":
                 reply = TextSendMessage(
                     text = "⊙拒絕接受酒精濃度檢定告知事項：\n一、初次違反：\n1.罰鍰：新台幣18萬元\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。\n二、「如」再次違反：\n1.罰鍰：10年內第2次違反處新台幣36萬元，第3次以上按前次處罰加罰18萬元。\n2.吊銷駕駛執照\n3.應受道路交通安全講習\n4.當場移置保管車輛\n5.吊扣所駕車輛牌照2年\n6.公布姓名、照片及違法事情★\n7.「如」租賃車業者已告知本條處罰規定，依所處罰鍰加重1/2。",
@@ -2287,26 +2211,22 @@ def handle_message(event):
                 delete_data(uid)
         elif datalist[0][2] == "dwimode_SMV_Ex": #慢車超標舉發
             if msg == "Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,2"),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos("73,2")
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="與汽機車酒駕規定比較", text="CNS Violation")),
                         QuickReplyButton(action=MessageAction(label="上一步", text="dwimode_SMV_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "CNS Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,1,1').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,1,1')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="dwimode_SMV_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "SMV Definition":
                 reply = TextSendMessage(
                     text="道交條例69條1項：\n慢車種類及名稱如下：\n1.自行車：\n(1)腳踏自行車。\n(2)電動輔助自行車：指經型式審驗合格，以人力為主、電力為輔，最大行駛速率在每小時25公里以下，且車重在40公斤以下之二輪車輛。\n(3)電動自行車：指經型式審驗合格，以電力為主，最大行駛速率在每小時25公里以下，且車重不含電池在四十公斤以下或車重含電池在六十公斤以下之二輪車輛。\n2.其他慢車：\n(1)人力行駛車輛：指客、貨車、手拉（推）貨車等。包含以人力為主、電力為輔，最大行駛速率在每小時25公里以下，且行駛於指定路段之慢車。\n(2)獸力行駛車輛：指牛車、馬車等。",
@@ -2337,26 +2257,22 @@ def handle_message(event):
                 reply = dwimode_SMV_Ex(event)
         elif datalist[0][2] == "dwimode_SMV_Re":
             if msg == "Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('73,3').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('73,3')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="與汽機車拒測規定比較", text="CNS Violation")),
                         QuickReplyButton(action=MessageAction(label="上一步", text="dwimode_SMV_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "CNS Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,4').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,4')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="dwimode_SMV_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "SMV Definition":
                 reply = TextSendMessage(
                     text="道交條例69條1項：\n慢車種類及名稱如下：\n1.自行車：\n(1)腳踏自行車。\n(2)電動輔助自行車：指經型式審驗合格，以人力為主、電力為輔，最大行駛速率在每小時25公里以下，且車重在40公斤以下之二輪車輛。\n(3)電動自行車：指經型式審驗合格，以電力為主，最大行駛速率在每小時25公里以下，且車重不含電池在四十公斤以下或車重含電池在六十公斤以下之二輪車輛。\n2.其他慢車：\n(1)人力行駛車輛：指客、貨車、手拉（推）貨車等。包含以人力為主、電力為輔，最大行駛速率在每小時25公里以下，且行駛於指定路段之慢車。\n(2)獸力行駛車輛：指牛車、馬車等。",
@@ -2410,16 +2326,14 @@ def handle_message(event):
                 change_state(uid, "dwdmode")
         elif datalist[0][2] == "dwdmode_CNS_Ex": #毒駕超標舉發
             if msg == "First Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,1,2').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,1,2')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="慢車沒有毒駕處罰？",text="SMV Violation")),
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "SMV Violation":
                 reply = TextSendMessage(
                     text="一、慢車於道路交通管理處罰條例第73條2項及3項皆處罰為「\"酒精\"濃度超標」及「拒絕\"酒精\"濃度測試」，且於同法中並\"無\"規定服用藥物駕駛之處罰。\n二、但經尿液或血液中檢測有\"毒品、迷幻藥、麻醉藥品及其相類似之管制藥品\"成分時，則屬於刑法185-3條第1項「服用毒品、麻醉藥品或其他相類之物，致不能安全駕駛」，此情況建議將行為人(駕駛人)精神狀況以攝影器材紀錄，如可製作觀測表之情況則更好。",
@@ -2432,25 +2346,21 @@ def handle_message(event):
                         )
                     )
             elif msg == "Check 73-2 and 73-3":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,2")+"\n"+search.getByNos("73,3").strip(),
-                    quick_reply = QuickReply(
+                reply = search.getByNos("73,2")+"\n"+search.getByNos("73,3").strip(),
+                reply.quick_reply = QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="回上一步", text="Back to dwdmode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Recidivism":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,3').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,3')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Dos and Don\'ts":
                 reply = TextSendMessage(
                     text = "一、標準值(供參考用)：\n濫用藥物尿液檢驗作業準則18條：\nI 初步檢驗結果在閾值以上或有疑義之尿液檢體，應再進行確認檢驗。確認檢驗結果在下列閾值以上者，應判定為陽性：\n1、安非他命類藥物：\n（1）安非他命：500ng/mL。\n（2）甲基安非他命：甲基安非他命500ng/mL，且其代謝物安非他命之濃度在100ng/mL以上。\n（3）3,4-亞甲基雙氧甲基安非他命（MDMA）：500ng/mL。同時檢出MDMA及MDA時，兩種藥物之個別濃度均低於500ng/mL，但總濃度在500ng/mL以上者，亦判定為MDMA陽性。\n（4）3,4-亞甲基雙氧安非他命（MDA）：500ng/mL。\n（5）3,4-亞甲基雙氧-N-乙基安非他命（MDEA）：500ng/mL。\n2、海洛因、鴉片代謝物：\n（1）嗎啡：300ng/mL。\n（2）可待因：300ng/mL。\n3、大麻代謝物（四氫大麻酚-9-甲酸，Delta-9-tetrahydrocannabinol-9-carboxylicacid）：15ng/mL。\n4、古柯鹼代謝物（苯甲醯基愛哥寧，Benzoylecgonine）：150ng/mL。\n5、愷他命代謝物：\n（一）愷他命（Ketamine）：100ng/mL。同時檢出愷他命及去甲基愷他命（Norketamine）時，兩種藥物之個別濃度均低於100ng/mL，但總濃度在100ng/mL以上者，亦判定為愷他命陽性。\n（二）去甲基愷他命：100ng/mL。\nII、前項以外之濫用藥物或其代謝物，依衛生福利部食品藥物管理署公告之濃度作為判定檢出之閾值。未有公告者，檢驗機構得依其分析方法最低可定量濃度訂定適當閾值。\n二、建議：\n此情況建議施測前將行為人(駕駛人)精神狀況以攝影器材紀錄、製作觀測表，如涉嫌隨案移請地方檢察署檢察官認定。\n三、租賃車部分：\n1.租賃車業者已盡告知本條處罰規定之義務，汽機車駕駛人仍駕駛汽機車違反第一項、第三項至第五項規定之一者，依其各行為所處之罰鍰加罰1/2。",
@@ -2462,15 +2372,13 @@ def handle_message(event):
                         )
                     )
             elif msg == "Owner":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,7').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,7')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Passenger":
                 reply = TextSendMessage(
                     text="道交條例第35條第8項規定為\"酒精\"濃度超標，並\"無\"服用藥物之同車乘客處罰。",
@@ -2483,15 +2391,13 @@ def handle_message(event):
                         )
                     )
             elif msg == "Check 35-8":
-                reply = TextSendMessage(
-                    text=search.getByNos("35,8"),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos("35,8")
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Impunity Condition":
                 reply = TextSendMessage(
                     text="道交條例第35條第8項規定為\"酒精\"濃度超標，並\"無\"服用藥物之同車乘客處罰。",
@@ -2512,47 +2418,39 @@ def handle_message(event):
                 reply = dwdmode_CNS(event)
                 change_state(uid, "dwdmode_CNS")
             elif msg == "SMV Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,2"),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos("73,2")
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Ex")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
         elif datalist[0][2] == "dwdmode_CNS_Re":
             if msg == "First Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,4').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,4')
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="與慢車拒測比較",text="SMV Violation")),
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "SMV Violation":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,3").strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos("73,3"),
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Recidivism":
-                reply = TextSendMessage(
-                    text=search.getByNos('35,5').strip(),
-                    quick_reply=QuickReply(
+                reply = search.getFlexbyNos('35,5'),
+                reply.quick_reply=QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="上一步", text="Back to dwdmode_CNS_Re")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Notification":
                 reply = TextSendMessage(
                     text = "依據違反道路交通管理事件統一裁罰基準及處理細則第19-2條第5項，須告知法律效果之情形為\"拒絕配合實施第35條第1項第1款檢測\"，故毒駕不適用此規定。",
@@ -2597,15 +2495,14 @@ def handle_message(event):
                         )
                     )
             elif msg == "Check 73-2 and 73-3":
-                reply = TextSendMessage(
-                    text=search.getByNos("73,2")+"\n"+search.getByNos("73,3").strip(),
-                    quick_reply = QuickReply(
+                reply = search.getFlexbyNos("73,2")
+                reply.contents.body.contents += search.getFlexbyNos("73,3").contents.body.contents
+                reply.quick_reply = QuickReply(
                         items=[
                         QuickReplyButton(action=MessageAction(label="回上一步", text="Back to dwdmode_SMV")),
                         QuickReplyButton(action=MessageAction(label="離開", text="Exit"))
                         ]
                         )
-                    )
             elif msg == "Back to dwdmode":
                 reply = dwdmode(event) #回到汽機車毒駕面板
                 change_state(uid, "dwdmode")
@@ -2669,8 +2566,8 @@ def handle_message(event):
                         ]
                         )
                     )
-            else:
-                reply = TextSendMessage(text="功能尚未開放。")
+        else :
+            reply = TextSendMessage(text="不會使用嗎？點選下面選單就知道囉！")
               # delete_data(uid)
     line_bot_api.reply_message(event.reply_token,reply)
 if __name__ == "__main__":
