@@ -1987,13 +1987,13 @@ def handle_message(event):
             reply = search.getFlexbyNos(get_var(uid,'a')+',,'+get_var(uid,'s'))
             reply = Series_Q_Reply(reply)
             delete_data(uid)
-        elif datalist[0][2] == "txt_mode":
+        elif datalist[0][2] == "txt_mode"
             reply = search.newWordsSearch(msg)
+            print("有在這裡喔")
             if len(reply.contents.body.contents) == 0:
                 reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
             else:
                 reply = Series_Q_Reply(reply)
-
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
             if "DWI and DUD" in msg:
                 reply = dwiNdwd(event)
