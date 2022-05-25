@@ -331,11 +331,9 @@ def newWordsSearch(msg):
         if set(msg_D1).issubset(set(Contents_list[i])):
             result.append(TextComponent(text=data.index[i],align="center",size="xl",weight="bold",color='#4260f5'))
             result.append(TextComponent(text=data["Contents"][i],size="lg",wrap = True))
-            result.append(TextComponent(text="處罰：",size="lg",weight="bold",color="#f54242"))
-            result.append(TextComponent(text=data["Punishment"][i],size="lg",wrap = True))
-            result.append(TextComponent(text="註記：",size="lg",weight="bold",color="#27d10d"))
-            result.append(TextComponent(text=data["Remark"][i],size="lg",wrap = True))
-            result.append(SeparatorComponent(color='#0000FF'))
+            result.append(TextComponent(text="處罰：\n"+data["Punishment"][i],size="lg",weight="bold",color="#f54242",wrap = True))
+            result.append(TextComponent(text="註記：\n"+data["Remark"][i],size="lg",weight="bold",color="#27d10d",wrap = True))
+            result.append(SeparatorComponent(color='#4f5e5b'))
     reply.contents.body.contents = result
     if len(result) >= 300:
         reply = FlexSendMessage(
@@ -345,7 +343,7 @@ def newWordsSearch(msg):
                 body=BoxComponent(
                     layout='vertical',
                     contents=[
-                    TextComponent(text="內容太多了，請增加關鍵字以利縮小範圍喔！",align="center",size="xl",weight="bold",color='#4260f5')
+                    TextComponent(text="內容太多了，請增加關鍵字以利縮小範圍喔！",align="center",size="xl",weight="bold",color='#4260f5',wrap=True)
                     ]
                     )
                 )
