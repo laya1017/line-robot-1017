@@ -730,7 +730,7 @@ def Series_Q_Reply(reply):
     reply = QuickReplySet(reply,MakeCorrections,"責令")
     return reply
 def QuickReplySet(reply,condition,Nos):
-    text = ""
+    target = ""
     for i in range(0,len(reply.contents.body.contents),5):
         try:
             target += reply.contents.body.contents[i].text
