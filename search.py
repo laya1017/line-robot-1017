@@ -269,6 +269,8 @@ def newWordsSearch(msg):
                     )
             )
         )
+    if "依規定" in msg:
+        msg = msg.replace("依規定","")
     if "危險駕車" in msg or "危駕" in msg or "危險駕駛" in msg :
         data = df.loc[getListByNos("43")+getListByNos("73,1,4")]
         msg = msg.replace("危險駕車","")
