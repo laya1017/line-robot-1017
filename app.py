@@ -671,7 +671,7 @@ def unit_row(userData):
 def Series_Q_Reply(reply):
     DoubleYellow = QuickReply(items=[QuickReplyButton(action=URIAction(label="雙黃線左轉問題",uri="https://liff.line.me/1657051965-wvDXaNOY"))])
     DoubleWhite = QuickReply(items=[QuickReplyButton(action=URIAction(label="跨越雙白線問題",uri="https://liff.line.me/1657051965-Z4EmryBM"))])
-    OtherLaw = QuickReply(items=[QuickReplyButton(action=MessageAction(label="60-2-3使用時機",uri="https://liff.line.me/1657051965-K9976wvQ"))])
+    OtherLaw = QuickReply(items=[QuickReplyButton(action=URIAction(label="60-2-3使用時機",uri="https://liff.line.me/1657051965-K9976wvQ"))])
     ThreeMinutes = QuickReply(items=[QuickReplyButton(action=MessageAction(label="3分鐘問題",text="ThreeMinutes"))])
     TwoCarStoppingNparking = QuickReply(items=[QuickReplyButton(action=MessageAction(label="併排停車認定標準",text="TwoCarStoppingNparking"))])
     StoppingPersuasion = QuickReply(items=[QuickReplyButton(action=MessageAction(label="臨時停車勸導要件",text="StoppingPersuasion"))])
