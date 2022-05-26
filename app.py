@@ -1741,7 +1741,7 @@ def handle_message(event):
                     TextComponent(text="處理細則§12",align="center",size="xl",weight="bold",color="#eb4034"),
                     TextComponent(text='1項13款：',size="lg",weight="bold"),
                     TextComponent(text='駕駛汽車裝載貨物超過核定之總重量或總聯結重量，未逾10%',size="lg",wrap=True),
-                    TextComponent(text='2項：',size="lg",weight="bold"),0
+                    TextComponent(text='2項：',size="lg",weight="bold"),
                     TextComponent(text='行為人發生交通事故有前項規定行為，除本條例第十四條第二項第二款、第二十五條第二項、第六十九條第二項或第七十一條之情形外，仍得舉發。',size="lg",wrap=True),
                     TextComponent(text="處理細則§13",align="center",size="xl",weight="bold",color="#eb4034"),
                     TextComponent(text='2項：',size="lg",weight="bold"),
