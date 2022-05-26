@@ -394,10 +394,8 @@ def getFlexbyNos(Nos):
     for i in range(0,len(result_df)):
         content.append(TextComponent(text=result_df.index[i],align="center",size="xl",weight="bold",color='#4260f5'))
         content.append(TextComponent(text=result_df["Contents"][i],size="lg",wrap = True))
-        content.append(TextComponent(text="處罰：",size="lg",weight="bold",color="#f54242"))
-        content.append(TextComponent(text=result_df["Punishment"][i],size="lg",wrap = True))
-        content.append(TextComponent(text="註記：",size="lg",weight="bold",color="#27d10d"))
-        content.append(TextComponent(text=result_df["Remark"][i],size="lg",wrap = True))
+        content.append(TextComponent(text="處罰：\n"+result_df["Punishment"][i],size="lg",weight="bold",color="#f54242",wrap = True))
+        content.append(TextComponent(text="註記：\n"+result_df["Remark"][i],size="lg",weight="bold",color="#821d73",wrap = True))
         content.append(SeparatorComponent(color='#0000FF'))
     reply.contents.body.contents = content
     return reply
