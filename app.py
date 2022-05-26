@@ -734,6 +734,7 @@ def QuickReplySet(reply,condition,Nos):
     for i in range(0,len(reply.contents.body.contents),4):
         try:
             text += reply.contents.body.contents[i].text
+            print(text)
         except:
             pass
     news = []
