@@ -731,7 +731,7 @@ def Series_Q_Reply(reply):
     return reply
 def QuickReplySet(reply,condition,Nos):
     text = ""
-    for i in range(0,len(reply.contents.body.contents),7):
+    for i in range(0,len(reply.contents.body.contents),4):
         try:
             text += reply.contents.body.contents[i].text
         except:
