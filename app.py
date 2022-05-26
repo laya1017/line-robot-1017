@@ -731,14 +731,13 @@ def Series_Q_Reply(reply):
     return reply
 def QuickReplySet(reply,condition,Nos):
     text = ""
-    for i in range(0,len(reply.contents.body.contents),4):
+    for i in range(0,len(reply.contents.body.contents),5):
         try:
-            text += reply.contents.body.contents[i].text
-            print(reply.contents.body.contents[i].text)
+            target += reply.contents.body.contents[i].text
         except:
             pass
     news = []
-    if Nos in text:
+    if Nos in target:
         if reply.quick_reply == None:
             reply.quick_reply = condition
             return reply
