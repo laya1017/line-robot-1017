@@ -2188,6 +2188,7 @@ def handle_message(event):
             else:
                 change_var(uid,'s',msg)
                 reply = search.getFlexbyNos(get_var(uid,'a')+','+get_var(uid,'p')+','+get_var(uid,'s'))
+                print(reply)
                 reply = Series_Q_Reply(reply)
                 delete_data(uid)
         elif datalist[0][2] == "nos_mode+S":
