@@ -271,6 +271,8 @@ def newWordsSearch(msg):
         )
     if "依規定" in msg:
         msg = msg.replace("依規定","")
+    if "記" in msg:
+        msg = msg.replace("記","紀")
     if "危險駕車" in msg or "危駕" in msg or "危險駕駛" in msg :
         data = df.loc[getListByNos("43")+getListByNos("73,1,4")]
         msg = msg.replace("危險駕車","")
@@ -305,7 +307,6 @@ def newWordsSearch(msg):
         '並排':list('並併排'),
         '橋梁':list('橋梁樑'),
         '邊線':list('路面邊線'),
-        '記錄':['記','錄','紀'],
         '聯結車':list('聯結大型車'),'大客車':list('客大型車'),'大貨車':list('大貨型車'),
         '慢車':['電動自行車','電動輔助自行車','慢車'],'電動自行車':['電動自行車','慢車'],'電動輔助自行車':['電動輔助自行車','慢車'],
         '次':['累','次'],
@@ -316,7 +317,8 @@ def newWordsSearch(msg):
         '越級':list('領有，駕駛'),
         '不服':list("拒絕"),'不聽':list("拒絕不服聽"),
         '攤位':list("攤位販架"),
-        '乘':list("乘客")
+        '乘':list("乘客"),
+        '視野輔助':list("視野影像輔助")
         }
     all_list = word_list + list(symWords.keys())
     Contents_list = []
