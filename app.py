@@ -857,7 +857,7 @@ def dwiNdwdenterButtons(event,msg):
                     ),
                 URIAction(
                     label='員警告發須知(最新修訂)',
-                    uri='https://line-robot-1017.herokuapp.com/dwinewregulation'
+                    uri='https://liff.line.me/1657051965-0qjow8PZ'
                     ),
                 MessageAction(
                     label='離開',
