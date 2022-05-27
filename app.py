@@ -9,7 +9,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,
     TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,URIAction,
-    CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,
+    CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,ButtonComponent
     FlexSendMessage,BubbleContainer,BoxComponent,TextComponent,SeparatorComponent
 )
 import datetime
