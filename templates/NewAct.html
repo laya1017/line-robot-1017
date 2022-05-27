@@ -7,10 +7,14 @@
     <title>Document</title>
   </head>
   <body>
-    <iframe
-      src="{{ url_for('static',filename='newisetAct.pdf')}}"
+    <embed
+      src="/static/newisetAct.pdf#page=1&zoom=110"
+      alt="Label Preview"
+      type="application/pdf"
+      frameBorder="0"
+      scrolling="auto"
       height="900"
       width="100%"
-    ></iframe>
+    />
   </body>
 </html>
