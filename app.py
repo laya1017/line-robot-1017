@@ -1991,16 +1991,18 @@ def handle_message(event):
         elif "@" in msg:
             msg = msg.replace("@","")
             msg = msg.replace(" ","")
-            reply = TemplateSendMessage(alt_text="酒(毒)駕專區",
-                template=ButtonsTemplate(
-                    title="交通部函文搜尋(只能一個關鍵字)",
-                    text="您以關鍵字\""+msg+"\"搜尋的結果如下：",
-                    actions=[
-                    URIAction(
-                        label="點我進網站",
-                        uri="https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg+"&Conj1=AND&Conj2=AND"
+            reply = FlexSendMessage(
+                alt_text='函文搜尋',
+                contents=BubbleContainer(
+                    size="mega",
+                    body=BoxComponent(
+                        layout='vertical',
+                        contents=[
+                        TextComponent(text="交通部函文搜尋(只能一個關鍵字)",align="center",size="xl",weight="bold",color='#4260f5',wrap=True),
+                        TextComponent(text="您以關鍵字\""+msg+"\"搜尋的結果如下：",size="lg",wrap = True),
+                        ButtonComponent(style='primary',action=URIAction(label="連結",uri="https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg+"&Conj1=AND&Conj2=AND"))
+                        ]
                         )
-                    ]
                     )
                 )
         elif "reset" in msg :
