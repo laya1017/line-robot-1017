@@ -855,9 +855,9 @@ def dwiNdwdenterButtons(event,msg):
                     label="取締酒(毒)駕規定",
                     text="DWI and DUD"
                     ),
-                MessageAction(
+                URIAction(
                     label='員警告發須知(最新修訂)',
-                    text='The Newist Announcement'
+                    uri='https://line-robot-1017.herokuapp.com/dwinewregulation'
                     ),
                 MessageAction(
                     label='離開',
@@ -1608,7 +1608,7 @@ def Update():
     r.set('ID_list',",".join(ID_list))
     r.set('cacus',"\n".join(cacus))
     return "更新成功"
-@app.route("/new")
+@app.route("/dwinewregulation")
 def NewAct():
     return render_template("NewAct.html")
 @app.route("/callback", methods=['POST'])
