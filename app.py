@@ -1932,6 +1932,18 @@ def handle_message(event):
               reply = TextSendMessage(text="不存在此使用者。")
         except:
             reply = TextSendMessage(text="此ID無效用")
+    elif "@" in msg or "＠" in msg:
+    msg = msg.replace("@","")
+    msg = msg.replace("＠","")
+    msg = msg.split(" ")
+        if len(msg) >= 4:
+            reply = TextSendMessage(text = "依據監理服務網系統，關鍵字最多3個。")
+        elif len(msg) == 3:
+            reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&KWD2="+msg[2]+"&Conj1=AND&Conj2=AND")
+        elif len(msg) == 2:
+            reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&Conj1=AND&Conj2=AND")
+        elif len(msg) == 1:
+            reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&Conj1=AND&Conj2=AND")
     elif len(datalist) == 0:
         if msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
@@ -1988,18 +2000,6 @@ def handle_message(event):
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
-        elif "@" in msg or "＠" in msg:
-            msg = msg.replace("@","")
-            msg = msg.replace("＠","")
-            msg = msg.split(" ")
-            if len(msg) >= 4:
-                reply = TextSendMessage(text = "依據監理服務網系統，關鍵字最多3個。")
-            elif len(msg) == 3:
-                reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&KWD2="+msg[2]+"&Conj1=AND&Conj2=AND")
-            elif len(msg) == 2:
-                reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&Conj1=AND&Conj2=AND")
-            elif len(msg) == 1:
-                reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&Conj1=AND&Conj2=AND")
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
