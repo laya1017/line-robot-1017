@@ -10,7 +10,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,
     TemplateSendMessage,ButtonsTemplate,PostbackAction,MessageAction,URIAction,
     CarouselTemplate,CarouselColumn,QuickReply,QuickReplyButton,
-    FlexSendMessage,BubbleContainer,BoxComponent,TextComponent,SeparatorComponent,ButtonComponent
+    FlexSendMessage,BubbleContainer,BoxComponent,TextComponent,SeparatorComponent
 )
 import datetime
 import search
@@ -1989,27 +1989,16 @@ def handle_message(event):
             change_state(uid,"QnA")
             reply = Other_QnA(event)
         elif "@" in msg:
-            msg = msg.replace("@","")
-            msg = msg.replace(" ","")
-            reply = FlexSendMessage(
-                alt_text='函文搜尋',
-                contents=BubbleContainer(
-                    size="mega",
-                    body=BoxComponent(
-                        layout='vertical',height='sm',
-                        contents=[
-                        TextComponent(text="交通部函文搜尋(只能一個關鍵字)",align="center",size="xl",weight="bold",color='#4260f5',wrap=True),
-                        TextComponent(text="您以關鍵字\""+msg+"\"搜尋的結果如下：",size="lg",wrap = True),
-                        ButtonComponent(
-                            style='primary',height='sm',
-                            action=URIAction(
-                                label="連結",
-                                uri="https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg+"&Conj1=AND&Conj2=AND")
-                            )
-                        ]
-                        )
-                    )
-                )
+            msg = msg.replace("@"."")
+            msg = msg.split(" ")
+            if len(msg) >= 4:
+                reply = TextSendMessage(text = "依據監理服務網系統，關鍵字最多3個。")
+            elif len(msg) == 3:
+                reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&KWD2="+msg[2]+"&Conj1=AND&Conj2=AND")
+            elif len(msg) == 2:
+                reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&Conj1=AND&Conj2=AND")
+            elif len(msg) == 1:
+                reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&Conj1=AND&Conj2=AND")
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
