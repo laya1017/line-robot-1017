@@ -1988,6 +1988,10 @@ def handle_message(event):
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
+        elif "@" in msg:
+            msg = msg.replace("@"."")
+            msg = msg.replace(" ","")
+            reply = TextSendMessage(text = "您以關鍵字\""+msg+"\"搜尋的交通行政令函結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg+"&Conj1=AND&Conj2=AND")
         elif "reset" in msg :
             delete_data(uid)
             reply = TextSendMessage(text="重新啟動")
