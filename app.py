@@ -18,7 +18,7 @@ import csv
 import gspread
 import requests
 import redis
-app = Flask(__name__)
+app = Flask(__name__,static_folder='/')
 def enter_nos_mode(event):
     reply = TemplateSendMessage(alt_text="條號搜尋模式。\n請輸入條號(第＿條)：",
         template=ButtonsTemplate(
