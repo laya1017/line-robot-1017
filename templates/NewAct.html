@@ -7,6 +7,10 @@
     <title>Document</title>
   </head>
   <body>
-    <iframe src="newisetAct.pdf?zoom=50" height="900" width="100%"></iframe>
+    <iframe
+      src="{{ url_for('static',filename=newisetAct.pdf?zoom=50}})"
+      height="900"
+      width="100%"
+    ></iframe>
   </body>
 </html>
