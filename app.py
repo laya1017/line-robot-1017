@@ -1988,8 +1988,9 @@ def handle_message(event):
         elif msg == "[[其他交通問題]]":
             change_state(uid,"QnA")
             reply = Other_QnA(event)
-        elif "@" in msg:
+        elif "@" in msg or "＠" in msg:
             msg = msg.replace("@","")
+            msg = msg.replace("＠","")
             msg = msg.split(" ")
             if len(msg) >= 4:
                 reply = TextSendMessage(text = "依據監理服務網系統，關鍵字最多3個。")
