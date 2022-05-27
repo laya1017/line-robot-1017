@@ -1608,6 +1608,9 @@ def Update():
     r.set('ID_list',",".join(ID_list))
     r.set('cacus',"\n".join(cacus))
     return "更新成功"
+@app.route("/new")
+def NewAct():
+    return render_template("NewAct.html")
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -1675,9 +1678,9 @@ def handle_message(event):
                     TextComponent(text='左轉彎時，應距交岔路口三十公尺前顯示方向燈或手勢，換入內側車道或左轉車道，行至交岔路口中心處左轉，並不得占用來車道搶先左轉。',size="lg",wrap=True),
                     TextComponent(text="道安規則§109",align="center",size="xl",weight="bold",color="#eb4034"),
                     TextComponent(text='1項：',size="lg",weight="bold"),
-                    TextComponent(text='汽車行駛時，應依下列規定使用燈光：\n1.夜間應開亮頭燈。2.行經隧道、調撥車道應開亮頭燈。3.遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。4.非遇雨、霧時，不得使用霧燈。5.行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。6.夜間會車時，或同向前方100公尺內有車輛行駛，除第101條第3款之情形外，應使用近光燈。',size="lg",wrap=True),
+                    TextComponent(text='汽車行駛時，應依下列規定使用燈光：\n1.夜間應開亮頭燈。\n2.行經隧道、調撥車道應開亮頭燈。\n3.遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。\n4.非遇雨、霧時，不得使用霧燈。\n5.行經公路主管機關或警察機關公告之山區或特殊路線之路段，涵洞或車行地下道，應依標誌指示使用燈光。\n6.夜間會車時，或同向前方100公尺內有車輛行駛，除第101條第3款之情形外，應使用近光燈。',size="lg",wrap=True),
                     TextComponent(text='2項',size="lg",weight="bold"),
-                    TextComponent(text='汽車駕駛人，應依下列規定使用方向燈：\n1.起駛前應顯示方向燈。\n2.左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。3.超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。',size="lg",wrap=True)
+                    TextComponent(text='汽車駕駛人，應依下列規定使用方向燈：\n1.起駛前應顯示方向燈。\n2.左（右）轉彎時，應先顯示車輛前後之左（右）邊方向燈光；變換車道時，應先顯示欲變換車道方向之燈光，並應顯示至完成轉彎或變換車道之行為。\n3.超越同一車道之前車時應顯示左方向燈並至與前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。',size="lg",wrap=True)
                     ]
                     )
                 )
@@ -1763,8 +1766,8 @@ def handle_message(event):
                     layout='vertical',
                     contents=[
                     TextComponent(text="道交條例§85-1",align="center",size="xl",weight="bold",color="#eb4034"),
-                    TextComponent(text='2項：',size="lg",weight="bold"),
-                    TextComponent(text='一、逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第33條第1項、第2項之情形，其違規地點相距6公里以上、違規時間相隔6分鐘以上或行駛經過一個路口以上得連續舉發。但其違規地點在隧道內者，不在此限。',size="lg",wrap=True)
+                    TextComponent(text='2項1款：',size="lg",weight="bold"),
+                    TextComponent(text='逕行舉發汽車行車速度超過規定之最高速限或低於規定之最低速度或有違反第33條第1項、第2項之情形，其違規地點相距6公里以上、違規時間相隔6分鐘以上或行駛經過一個路口以上得連續舉發。但其違規地點在隧道內者，不在此限。',size="lg",wrap=True)
                     ]
                     )
                 )
@@ -1778,8 +1781,8 @@ def handle_message(event):
                     layout='vertical',
                     contents=[
                     TextComponent(text="道交條例§85-1",align="center",size="xl",weight="bold",color="#eb4034"),
-                    TextComponent(text='2項：',size="lg",weight="bold"),
-                    TextComponent(text='n二、逕行舉發汽車有第56條第1項、第2項或第57條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾2小時得連續舉發。',size="lg",wrap=True)
+                    TextComponent(text='2項2款：',size="lg",weight="bold"),
+                    TextComponent(text='n逕行舉發汽車有第56條第1項、第2項或第57條規定之情形，而駕駛人、汽車所有人、汽車買賣業、汽車修理業不在場或未能將汽車移置每逾2小時得連續舉發。',size="lg",wrap=True)
                     ]
                     )
                 )
