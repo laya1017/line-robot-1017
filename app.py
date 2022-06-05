@@ -1944,6 +1944,16 @@ def handle_message(event):
             reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&KWD2="+msg[1]+"&Conj1=AND&Conj2=AND")
         elif len(msg) == 1:
             reply = TextSendMessage(text = "您以關鍵字\""+",".join(msg)+"\"搜尋結果如下：\n"+"https://www.mvdis.gov.tw/webMvdisLaw/SorderList.aspx?&ckbAll=0&ckb=1,2,3,4,5,6,7,8,9&KWD1="+msg[0]+"&Conj1=AND&Conj2=AND")
+    elif "$" in msg:
+        msg = msg.replace("$","")
+        reply = search.getFlexbyNos(msg)
+    elif "#" in msg:
+        msg = msg.replace("#","")
+        reply = search.newWordsSearch(msg)
+        if len(reply.contents.body.contents) == 0:
+            reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
+        else:
+            reply = Series_Q_Reply(reply)
     elif len(datalist) == 0:
         if msg == "[關鍵字搜尋模式]":
             keep_state(uid,"txt_mode")
@@ -2216,17 +2226,7 @@ def handle_message(event):
             if len(reply.contents.body.contents) == 0:
                 reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
             else:
-                reply = Series_Q_Reply(reply)
-        elif "$" in msg:
-            msg = msg.replace("$","")
-            reply = search.getFlexbyNos(msg)
-        elif "#" in msg:
-            msg = msg.replace("#","")
-            reply = search.newWordsSearch(msg)
-            if len(reply.contents.body.contents) == 0:
-                reply = FlexSendMessage(alt_text='查無結果',contents=noResult)
-            else:
-                reply = Series_Q_Reply(reply)            
+                reply = Series_Q_Reply(reply)         
         elif datalist[0][2] == "dwiNdwdenterButtons":#酒毒駕進入面板
             if "DWI and DUD" in msg:
                 reply = dwiNdwd(event)
