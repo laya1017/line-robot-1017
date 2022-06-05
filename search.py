@@ -340,7 +340,7 @@ def newWordsSearch(msg):
     reply.contents.body.contents = result
     if len(result) >= 300:
         reply = FlexSendMessage(
-            alt_text='內容太多了',
+            alt_text='交通部函文搜尋(只能一個關鍵字)',
             contents=BubbleContainer(
                 size="giga",
                 body=BoxComponent(
