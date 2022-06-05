@@ -2219,7 +2219,6 @@ def handle_message(event):
                 reply = Series_Q_Reply(reply)
         elif "$" in msg:
             msg = msg.replace("$","")
-            msg = msg.split(",")
             reply = search.getFlexbyNos(msg)
         elif "#" in msg:
             msg = msg.replace("#","")
