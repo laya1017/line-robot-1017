@@ -288,7 +288,7 @@ def newWordsSearch(msg):
         data = df.loc[getListByNos("60,2,3")]
         msg = msg.replace("雙黃線左轉","")
     elif "個人器具" in msg or "個人行動器具" in msg or "行動器具" in msg:
-        data = df.loc[getListByNos("72")+getListByNos("73")+getListByNos("74")+getListByNos("75")+getListByNos("76")]
+        data = df.loc[getListByNos("72,1")+getListByNos("73,1")+getListByNos("73,2")+getListByNos("73,3")+getListByNos("74")+getListByNos("75")+getListByNos("76,1")]
         msg = msg.replace("個人器具","")
         msg = msg.replace("個人行動器具","")
         msg = msg.replace("行動器具","")
