@@ -271,11 +271,6 @@ def newWordsSearch(msg):
         )
     if "電動自行車" in msg:
         msg = msg.replace("電動自行車","微型電動二輪車")
-    if "個人器具" in msg or "個人行動器具" in msg or "行動器具" in msg:
-        data = df.loc[getListByNos("72")+getListByNos("73")+getListByNos("74")+getListByNos("75")+getListByNos("76")]
-        msg = msg.replace("個人器具","")
-        msg = msg.replace("個人行動器具","")
-        msg = msg.replace("行動器具","")
     if "依規定" in msg:
         msg = msg.replace("依規定","")
     if "記" in msg:
@@ -292,6 +287,11 @@ def newWordsSearch(msg):
     elif set(msg).issubset(set("雙黃線左轉")):
         data = df.loc[getListByNos("60,2,3")]
         msg = msg.replace("雙黃線左轉","")
+    elif "個人器具" in msg or "個人行動器具" in msg or "行動器具" in msg:
+        data = df.loc[getListByNos("72")+getListByNos("73")+getListByNos("74")+getListByNos("75")+getListByNos("76")]
+        msg = msg.replace("個人器具","")
+        msg = msg.replace("個人行動器具","")
+        msg = msg.replace("行動器具","")
     else:
         pass
     word_list = ["駕駛人","救護車","救險車","行人","慢車道","個人","人行","超車","吊銷","註銷","業經","公路","改善","危險物品","有危險","高速公路","傳單"]
@@ -331,6 +331,7 @@ def newWordsSearch(msg):
     Contents_list = []
     msg_d2 = setstring(msg,all_list)
     msg_D1 = D2toD1(msg_d2,symWords)
+    print(data)
     try:
         if "行動器具" in msg:
             msg_D1.remove("人行")
@@ -417,4 +418,4 @@ def getFlexbyNos(Nos):
         content.append(SeparatorComponent(color='#0000FF'))
     reply.contents.body.contents = content
     return reply
-print(newWordsSearch("個人行動器具"))
+print(newWordsSearch("個人器具"))
