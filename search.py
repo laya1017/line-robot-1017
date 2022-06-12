@@ -315,7 +315,7 @@ def newWordsSearch(msg):
         '橋梁':list('橋梁樑'),
         '邊線':list('路面邊線'),
         '聯結車':list('聯結大型車'),'大客車':list('客大型車'),'大貨車':list('大貨型車'),
-        '慢車':['電動輔助自行車','慢車','微型','電動','二輪'],'微型電動二輪車':['微型','電動','二輪','慢車'],'電動輔助自行車':['電動輔助自行車','慢車'],
+        '慢車':['電動輔助自行車','慢車']+list('微型電動二輪車'),'微型電動二輪車':list('微型電動二輪車'),'電動輔助自行車':['電動輔助自行車','慢車'],
         '次':['累','次'],
         '轉彎':list('左右轉彎'),
         '交通事故':list("交通事故肇事"),
@@ -418,4 +418,4 @@ def getFlexbyNos(Nos):
         content.append(SeparatorComponent(color='#0000FF'))
     reply.contents.body.contents = content
     return reply
-print(newWordsSearch("個人器具"))
+print(newWordsSearch("微型二輪"))
