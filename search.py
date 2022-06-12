@@ -289,7 +289,7 @@ def newWordsSearch(msg):
         msg = msg.replace("雙黃線左轉","")
     else:
         pass
-    word_list = ["駕駛人","救護車","救險車","行人","慢車道","人行","超車","吊銷","註銷","業經","公路","改善","危險物品","有危險","高速公路","傳單"]
+    word_list = ["駕駛人","救護車","救險車","行人","慢車道","行動載具","人行","超車","吊銷","註銷","業經","公路","改善","危險物品","有危險","高速公路","傳單"]
     symWords = {
         '機車':["機車",'機','車'],
         '無照':list("駕駛執照"),
@@ -310,7 +310,8 @@ def newWordsSearch(msg):
         '橋梁':list('橋梁樑'),
         '邊線':list('路面邊線'),
         '聯結車':list('聯結大型車'),'大客車':list('客大型車'),'大貨車':list('大貨型車'),
-        '慢車':['電動輔助自行車','慢車','微型電動二輪車','個人行動器具'],'微型電動二輪車':['微型電動二輪車','慢車'],'電動輔助自行車':['電動輔助自行車','慢車'],'個人行動器具':['個人行動器具','慢車'],
+        '慢車':['電動輔助自行車','慢車','微型','電動','二輪','行動載具'],'微型電動二輪車':['微型','電動','二輪','慢車'],'電動輔助自行車':['電動輔助自行車','慢車'],
+        '個人行動載具':['個人行動載具','慢車'],
         '次':['累','次'],
         '轉彎':list('左右轉彎'),
         '交通事故':list("交通事故肇事"),
@@ -326,6 +327,13 @@ def newWordsSearch(msg):
     Contents_list = []
     msg_d2 = setstring(msg,all_list)
     msg_D1 = D2toD1(msg_d2,symWords)
+    try:
+        if "行動載具" in msg_D1:
+            msg_D1.remove("人行")
+    except:
+        pass
+
+    print(msg_D1)
     for i in data["Contents"]:   
         Contents_list.append(setstring(i,all_list))
     for i in Contents_list :
@@ -405,3 +413,4 @@ def getFlexbyNos(Nos):
         content.append(SeparatorComponent(color='#0000FF'))
     reply.contents.body.contents = content
     return reply
+print(newWordsSearch("行動載具"))
