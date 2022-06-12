@@ -418,4 +418,3 @@ def getFlexbyNos(Nos):
         content.append(SeparatorComponent(color='#0000FF'))
     reply.contents.body.contents = content
     return reply
-print(newWordsSearch("微型二輪"))
