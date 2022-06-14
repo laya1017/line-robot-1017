@@ -292,6 +292,9 @@ def newWordsSearch(msg):
         msg = msg.replace("個人器具","")
         msg = msg.replace("個人行動器具","")
         msg = msg.replace("行動器具","")
+    elif "禁行" in msg and "機車" in msg:
+        data = df.loc[getListByNos("45,1,13")]
+        msg = ""
     else:
         pass
     word_list = ["駕駛人","救護車","救險車","行人","慢車道","個人","人行","超車","吊銷","註銷","業經","公路","改善","危險物品","有危險","高速公路","傳單"]
