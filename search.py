@@ -295,6 +295,21 @@ def newWordsSearch(msg):
     elif "禁行" in msg and "機車" in msg:
         data = df.loc[getListByNos("45,1,13")]
         msg = ""
+    elif "停止線" in msg or "越線" in msg:
+        data = df.loc[getListByNos("60,2,3")]
+        msg = ""
+    elif ("雙黃實線" in msg or "雙黃線" in msg or "分向限制線" in msg or "禁止超車線" in msg) and ("左轉") in msg:
+        data = df.loc[getListByNos("60,2,3")]
+        msg = ""
+    elif ("雙白實線" in msg or "雙白線" in msg or "禁止變換車道線" in msg ) and ("跨越") in msg:
+        data = df.loc[getListByNos("45,1,12")]
+        msg = ""
+    elif "禁止" in msg and "進入" in msg:
+        data = df.loc[getListByNos("60,2,3")]
+        msg = ""
+    elif "停" in msg and "道" in msg and "專用" in msg and "行人" not in msg:
+        data = df.loc[getListByNos("60,2,3")]
+        msg = ""
     else:
         pass
     word_list = ["駕駛人","救護車","救險車","行人","慢車道","個人","人行","超車","吊銷","註銷","業經","公路","改善","危險物品","有危險","高速公路","傳單"]
